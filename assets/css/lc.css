@@ -1,0 +1,690 @@
+
+
+
+/* Reset
+-------------------------------------*/
+/*@import url(http://reset5.googlecode.com/hg/reset.min.css);*/
+
+
+
+
+/* Typography
+------------------------- */
+
+                    /* TOOD: add .otf, svg  url("type/filename.otf") format("opentype"),*/
+
+@font-face {
+  font-family: "Exo Regular";
+  src: url("type/exo-regular-webfont.eot");
+  src: local("☺"),
+    url("type/exo-regular-webfont.woff") format("woff");
+  }
+
+@font-face {
+  font-family: "Exo Demi Bold";
+  src: url("type/exo-demibold-webfont.eot");
+  src: local("☺"),
+    url("type/exo-demibold-webfont.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Aller Regular";
+  src: url("type/aller_rg-webfont.eot");
+  src: local("☺"),
+    url("type/aller_rg-webfont.woff") format("woff");
+  }
+
+@font-face {
+  font-family: "Aller Display";
+  src: url("type/allerdisplay-webfont.eot");
+  src: local("☺"),
+    url("type/allerdisplay-webfont.woff") format("woff");
+  }
+
+@font-face {
+  font-family: "Archive";
+  src: url("type/archive-webfont.eot");
+  src: local("☺"),
+    url("type/archive-webfont.woff") format("woff");
+}
+
+
+
+  
+.title { 
+    color: rgba(55,55,55,1);
+    font-family: "Aller Regular", Helvetica, sans-serif; 
+    font-weight: bold;
+    font-size: 2em;
+    padding-bottom: 10px;
+    margin-top: -5px;
+    opacity: 0.9;
+}
+
+.title img {
+    max-width: 28px;
+    padding: 4px 4px 0 0;
+    float:left;
+}
+
+
+
+/* Basic Elements
+-------------------------------------*/
+
+
+/* Body and structure
+-------------------------------------*/
+
+body {
+    font: normal "Aller Regular", Helvetica, sans-serif;
+    color: #333;
+    background-color: #E6E6E6;
+    background-image: url(assets/img/logo_lc.png);
+    background-repeat: repeat;
+}
+
+a:link, a:visited {
+	text-decoration: none;
+	font-weight: normal;
+	color: rgba(255,255,255,0.9);
+	outline: none;
+}
+
+a:hover{
+	color: #39c;
+}
+
+
+
+
+/* Global top navigation
+-------------------------------------------------- */
+
+/* Topbar
+------------------------- */
+.topbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.25);
+     -moz-box-shadow: 0 1px 3px rgba(0,0,0,.25);
+          box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+
+/* Set the height for the divs here for applying effects and styles */
+.global-nav,
+.global-nav-outer {
+  height: 40px;
+}
+/* levels of topbar for background effects */
+.global-nav {
+  position: relative;
+  width: 100%;
+}
+/* move the nav to the edge of the container so it looks super hawt */
+.global-nav .container {
+/*    background:#000000;*/
+/*  width: auto;
+  max-width: 865px;
+  margin: 0 auto;
+  
+*/}
+
+/* Navigation
+------------------------- */
+.nav,
+.nav > li {
+  float: left;
+}
+.nav {
+  margin-right: 12px;
+}
+/* set position relative for dropdowns mostly */
+.nav li {
+  position: relative;
+  display: inline;
+}
+/* topbar links */
+.nav li a {
+  position: relative; 
+  font-size: 12px;
+  color: rgb(245,128,32);
+/*  text-shadow: 0 -1px 0 rgba(0,0,0,.75);  */
+}
+
+
+.nav li > a {
+  display: block;
+  padding: 13px 12px 15px;
+  font-weight: bold;
+  line-height: 1;
+  opacity: 0.9;
+}
+.nav > li > a {
+  height: 12px;
+}
+/* hover and active states */
+.nav .active > a,
+.nav li a:hover {
+  color: rgba(240,240,240,1);
+  font-weight: bold;
+  font-size: 0.9em;
+  text-decoration: none;
+  background: rgb(245,128,32);
+  text-shadow: none;
+  
+
+}
+/* Active state */
+.nav .active > a,
+.nav .active > a:hover,
+.nav .dropdown.open .dropdown-toggle {
+  background-color: #222;
+  -webkit-box-shadow: inset 0 5px 10px rgba(0,0,0,.5);
+     -moz-box-shadow: inset 0 5px 10px rgba(0,0,0,.5);
+          box-shadow: inset 0 5px 10px rgba(0,0,0,.5);
+/*  border-bottom: 4px solid #C06D4A;*/     /*    // TODO: fix border;*/
+}
+
+/* Nav styles */
+.nav li {
+    font-family: "Aller Dsiplay", sans-serif;
+    font-weight: 600;
+}
+
+
+/* Nav icons */
+.nav i {
+    opacity: 0.7;
+}
+/* Use the full logo */
+.nav .nav-home-logged-out {
+  width: 105px;
+  height: 20px;
+/*  background-image: url(../t1/img/twitter_logo_top_bar.png);*/
+  background-position: 0 0;
+  margin-top: -4px;
+}
+/* Float secondary nav ul to the right */
+.secondary-nav {
+  float: right;
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+/* Backgrounds
+------------------------- */
+.global-nav {
+/*  background-image: url(../t1/img/twitter_web_sprite_bgs.png);*/
+  background-position: 0 0; background-color: rgba(240,240,240,0.9);
+  background-repeat: repeat-x;
+}
+
+
+
+
+
+.logo, .logo a {
+    font-family: "Aller Regular",Helvetica, sans-serif;
+    font-weight: 200;
+    color: rgba(245,128,32,1);
+    padding:-20px;
+/*    letter-spacing: 0em;*/
+    font-size: 1.1em;
+
+/*    vertical-align: text-top;*/
+}
+
+
+.logo img {
+/*    width: 15px;*/
+    max-width: 60px;
+/*    height: 16px;*/
+/*    margin: 0 -3px 0 10px;*/
+}
+
+@media screen and (max-width: 440px) { 
+    .logo, .logo a {
+        font-size: 1em;
+        text-align:left;
+        margin-top:-2px;
+/*        vertical-align: text-bottom;*/
+         }
+         
+    .logo img {
+        max-width: 30%;
+        margin: 1px 2px 1px 2px;        
+    }
+}
+
+
+#wrapper {
+
+}
+
+#head{
+    width: 100%;
+}
+
+#navbar{
+    background: #3F3F3F;
+
+/*    margin: 0 0 10px 0;*/
+    
+}
+
+#navbar-container{
+/*    -moz-box-shadow: 0 0 1px 1px #CCC;
+    -webkit-box-shadow: 0 0 1px 1px#CCC;
+    box-shadow: 0 0 1px 1px #CCC;    
+*/    
+/*    overflow: hidden;*/
+}
+
+
+
+#navbar ul{
+/*    float:left;*/
+/*    display:inline;*/
+}
+
+#navbar li{
+    display: inline;
+/*    padding: 20px;*/
+/*    float: right;*/
+}
+/* Generic Classes
+-------------------------------------*/
+/* --- Link list --- */
+/* --- News list --- */
+/* --- Attachments list --- */
+/* --- Links --- */
+/* --- Messages --- */
+/* --- photo frame & content photos --- */
+/* --- Other --- */
+.hidden {
+    display: none;
+}
+.unhidden {
+    display: block;
+}
+
+.bio h2{
+    color: rgba(245,128,32,1);
+/*    letter-spacing: 0.1em;*/
+/*    font-weight: 400;*/
+}
+
+
+
+
+/* Basic Layout
+-------------------------------------*/
+
+/* Header
+-------------------------------------*/
+
+/* --- Logo --- */
+
+
+/* Content
+-------------------------------------*/
+/* external link */
+/* --- video --- */
+/* --- unsorted list --- */
+/* --- numbered list --- */
+/* --- tables --- */
+/* --- Icons in content --- */
+/* --- Search results --- */
+/* --- Photogallery --- */
+/* --- News --- */
+
+/* Sidebar
+-------------------------------------*/
+
+/* Footer
+-------------------------------------*/
+#footer {
+    margin: 0 10px 0 10px;
+}
+
+
+/* Navigation
+-------------------------------------*/
+
+
+
+/* --- Breadcrumbs --- */
+/* --- Sitemap --- */
+/* --- Main Menu --- */
+/*.navbar {
+    background: #3f3f3f;
+    overflow: hidden;
+    padding: 0 0 0 30px;
+}
+
+.navbar li {
+    display: inline;
+}
+
+.navigation {
+    padding: 0 20px 0 0;
+}
+
+
+.nav-top {
+    margin: 10px 20px 0 0;
+    padding: 20px 0px 0 0;
+    overflow: hidden;
+    background: #3F3F3F;
+    -webkit-box-shadow: 0px 1px 5px #333333;
+}
+
+.nav-top ul {
+    font-weight: 300;
+    font-family: "Exo Regular";
+    margin: 0 0 0 8px;
+    font-size: 1em;
+}
+
+.nav-top li {
+    display: inline;
+    padding: 10px;
+}
+
+
+.nav-top a {
+    color: rgba(255,255,255,.5);
+}
+
+.nav-top a:hover {
+    color: rgba(179,104,74,1);
+    text-decoration: none;
+}
+
+.nav-top i {
+    opacity: .5;
+}
+
+.nav-top i:hover; {
+    opacity: 1;
+    color: rgba(179,104,74,1);
+}
+
+*/
+/* Forms
+-------------------------------------*/
+
+/* Modules
+-------------------------------------*/
+/* --- Stream --- */
+.stream-container {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 3px #888;
+    -webkit-box-shadow: 0 0 3px#888;
+    box-shadow: 0 0 3px #888;
+}
+
+
+.stream-header {
+    background: rgba(244,244,244,1);
+    border-bottom: 1px solid #ccc;
+    line-height: 1em;
+    padding: 4px;
+    margin-bottom: 2px;
+}
+
+.stream-header h3 {
+    font-family: "Exo Regular", Georgia, "Times New Roman", Times, serif;
+    font-weight: 600;
+    color: #3F3F3F;
+    opacity: .8;
+}
+
+.stream-footer {
+    background: rgba(244,244,244,1);
+    line-height: 2.5em;
+    text-align: center;
+}
+
+.stream-footer a {
+    text-decoration: none;
+}
+
+.stream-track {
+    padding: 4px 2px 6px 4px;
+    margin: 2px 0 0px 0;
+    border: 1px ;
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+}
+
+
+
+.stream-track-image {
+    width: 64px;
+    height: 64px;
+    background: #F5AD73 url(../img/ico-music.png) center no-repeat;/*rgba(240,40,40,.5);*/
+    border-radius: 5px;
+    float: left;
+
+}
+
+
+.stream-track-image img {
+    border-radius: 5px;
+    width: 64px;
+}
+
+.stream-track-info {
+    width: 80%;
+    height: 62px;
+    margin-left: -20px;
+    float: left;
+    line-height: 1.5em;
+}
+
+.stream-track-info a:hover {
+    color: rgba(245,173,115,1);
+    text-decoration: none;
+}
+
+.stream-track-info li {
+    list-style-type: none;
+}
+
+
+/* --- Track --- */
+.track-name, .track-name a {
+    line-height: 2em;
+    margin-left: 2px;
+    font-weight: bold;
+    font-size: 1em;
+    color: rgba(51,51,51,1);
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.track-artist, .track-artist a {
+    color: rgba(153,153,153,1);
+    font-size: 1em;
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+
+.track-album, .track-album a {
+    color: rgba(153,153,153,1);
+    font-size: .8em;
+    font-weight: 200;
+    margin-left: 8px;
+}
+
+
+.track-dtm {
+    font-size: 0.8em;
+    text-align: left;
+    color: rgba(204,204,204,1);
+    float:right;
+}
+
+
+/* --- Totals --- */
+.totals {
+    color: #3F3F3F;
+    background: rgba(230,230,230,.8);
+    margin: 0px 0 10px -20px;
+    padding: 20px 0 10px 0px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 3px #888;
+    -webkit-box-shadow: 0 0 3px#888;
+    box-shadow: 0 0 3px #888;
+}
+.totals li {
+    display: inline;
+    font-weight: 500;
+    padding: 1em 2em 1em 2em;
+    border-right: 1px solid #ccc;
+    font-size: .9em;
+}
+
+.totals li:nth-child(3) {
+    border-right: 0px;
+}
+
+
+/* --- Charts --- */
+.charts-container {
+    padding: 0 10px 0 10px;
+    margin-bottom: 10px;
+    background-color: rgba(244,244,244,1);
+    border: 1px solid #eee;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 3px #888;
+    -webkit-box-shadow: 0 0 3px#888;
+    box-shadow: 0 0 3px #888;
+}
+
+
+
+.charts-header {
+    padding: 4px;
+    margin-bottom: 2px;
+}
+
+.charts-header h3 {
+    font-family: "Exo Regular", Arial, sans-serif;
+    font-size: 1.1em;
+    font-weight: normal;
+    color: #3F3F3F;
+    text-shadow: 0 1px 0 rgba(250, 250, 250, 1);
+    opacity: .8;
+}
+
+.charts-bars {
+    margin: 0 10px 0 10px;
+}
+
+.progress {
+    overflow: hidden;
+    height: 14px;
+    margin-bottom: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.progress .bar {
+    width: 0%;
+    height: 14px;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #0e90d2;
+    background-image: -moz-linear-gradient(top, #149bdf, #0480be);
+    background-image: -ms-linear-gradient(top, #149bdf, #0480be);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#149bdf), to(#0480be));
+    background-image: -webkit-linear-gradient(top, #149bdf, #0480be);
+    background-image: -o-linear-gradient(top, #149bdf, #0480be);
+    background-image: linear-gradient(top, #149bdf, #0480be);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#149bdf', endColorstr='#0480be', GradientType=0);
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: width 0.6s ease;
+    -moz-transition: width 0.6s ease;
+    -ms-transition: width 0.6s ease;
+    -o-transition: width 0.6s ease;
+    transition: width 0.6s ease;
+}
+
+.progress-top .bar {
+    background-color: #F5AD73;
+    background-image: -webkit-linear-gradient(top, #F5AD73, #C26F4B);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5AD73', endColorstr='#C26F4B', GradientType=0);
+}
+
+/* --- Details --- */
+
+/* --- Other --- */
+
+
+.toptracks .track-artist {
+    font-size:0.9em;
+}
+
+
+.top-track {
+    padding: 4px 2px 6px 4px;
+    margin: 2px 0 0px 0;
+    border: 1px;
+    overflow: hidden;
+}
+
+
+.tab-content {
+}
+
+
+
+
+/* Print styles
+-------------------------------------*/
+@media print {
+
+/* Your print styles go here */
+}
+

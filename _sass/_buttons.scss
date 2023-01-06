@@ -1,0 +1,164 @@
+// - - - - - - - - - - - - - - - - - -
+
+// Buttons
+
+// - - - - - - - - - - - - - - - - - -
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Basics
+
+.button {
+  &--text {
+    font-family: $body-font;
+    display: inline-block;
+    color: $text-dark-color;
+    font-weight: $button-weight;
+    letter-spacing: $button-spacing;
+    cursor: pointer;
+    font-weight: 600;
+
+    &.--right {
+      --color-var: #{$text-dark-color};
+
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 20px;
+        height: 10px;
+        mask: url($baseurl + "/images/icons/arrow-right-accent.svg") right center no-repeat;
+        -webkit-mask: url($baseurl + "/images/icons/arrow-right-accent.svg") right center no-repeat;
+        margin-left: 4px;
+        background-color: var(--color-var);
+      }
+
+      &:hover {
+        transform: translateX(2px);
+        opacity: 0.7;
+      }
+    }
+
+    &.--left {
+      --color-var: #{$text-dark-color};
+
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 20px;
+        height: 10px;
+        mask: url($baseurl + "/images/icons/arrow-right-accent.svg") right center no-repeat;
+        -webkit-mask: url($baseurl + "/images/icons/arrow-right-accent.svg") right center no-repeat;
+        margin-right: 4px;
+        background-color: var(--color-var);
+        transform: rotate(180deg);
+      }
+
+      &:hover {
+        transform: translateX(-2px);
+        opacity: 0.7;
+      }
+    }
+
+    &--accent {
+      @extend .button--text;
+      color: $accent-color;
+
+      &.--right::after,
+      &.--left::before {
+        background-color: $accent-color;
+      }
+    }
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+
+  &--large {
+    font-size: 24px;
+    min-width: 300px;
+    font-weight: 300;
+    padding: 13px 20px 14px;
+  }
+
+
+  &--fill {
+    @extend .button--text;
+    color: $text-lighter-color;
+    background-color: $accent-color;
+    border: 3px solid $accent-color;
+    border-radius: 80px;
+
+    &:hover {
+      color: white;
+      background-color: darken($color: $accent-color, $amount: 5);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &--outline {
+    @extend .button--text;
+    color: $accent-color;
+    background-color: white;
+    border: 3px solid $accent-color;
+    padding: 13px 20px 14px;
+    border-radius: 80px;
+
+    &:hover {
+      color: white;
+      background-color: darken($color: $accent-color, $amount: 5);
+      border-color: darken($color: $accent-color, $amount: 5);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &--inverse {
+    @extend .button--text;
+    color: $text-lighter-color;
+    background-color: transparent;
+    border: 3px solid $accent-color;
+    padding: 13px 20px 14px;
+    border-radius: 80px;
+
+    &:hover {
+      color: white;
+      background-color: darken($color: $accent-color, $amount: 5);
+      border-color: darken($color: $accent-color, $amount: 5);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &--close-modal {
+    background: url($baseurl + "/images/icons/arrow-cross-accent.svg") transparentize($accent-color, 0.92) center center no-repeat;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:active {
+      background-color: transparentize($accent-color, 0.86);
+    }
+  }
+
+  @include mq(tabletp) {
+
+    &--large {
+      min-width: 500px;
+    }
+
+    &--text {
+      font-size: 24px;
+    }
+  }
+}

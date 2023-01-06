@@ -1,0 +1,130 @@
+// - - - - - - - - - - - - - - - - - -
+
+// Section - About
+
+// - - - - - - - - - - - - - - - - - -
+
+.about {
+
+  hr {
+    margin-bottom: 80px;
+  }
+
+  .about__image {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title {
+    margin-bottom: 16px;
+  }
+
+  .about__content {
+     background-color: white;
+     margin-bottom: 4rem;
+
+    .title {
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      margin-bottom: 16px;
+      color: #757575;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    .cta {
+      margin: 8px 0 0 -4px;
+    }
+	}
+
+
+  @include mq(tabletp) {
+
+    background-image: url("/images/profile_lg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    height: 1010px;
+
+    .wrap {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .about__image {
+      visibility: hidden;
+    }
+
+    hr {
+      margin-bottom: 120px;
+    }
+
+    .wrap {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .about__image {
+      width: 100%;
+      margin-left: 0;
+		}
+
+		.about__content {
+      padding: 1rem 2rem;
+      padding: 1rem 2rem;
+      margin-bottom: 21rem;
+     box-shadow: 0px 10px 10px -8px rgba(33,33,33,1);
+
+			.subtitle {
+				margin-bottom: 24px;
+			}
+		}
+  }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Social Icons
+
+.socials {
+  display: inline-flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.socials__item {
+  margin-left: 24px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.socials__item__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 100%;
+  background: transparent;
+  font-size: 24px;
+  color: $accent-color;
+  border: 3px solid;
+  border-color: transparentize($accent-color, 0.46);
+
+  &:hover {
+    background: $accent-color;
+    color: $background-color;
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+}

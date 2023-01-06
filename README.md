@@ -1,4 +1,3 @@
-lc-dot-com
-==========
+# lc-dot-com
 
 luiscielak.com

@@ -25,7 +25,7 @@ contact_settings:
   send_button_text: 'Get in touch'
 
 social_settings:
-  linkedin_url: 'https://www.linkedin.com/in/luiscielak'
+  linkedin_url: 'https://www.linkedin.com/in/cielak'
   instagram_url: ''
   twitter_url: ''
   facebook_url: ''
@@ -181,8 +181,8 @@ menu_settings:
     - title: Home
       url: /
     - title: About
-      url: /about
+      url: ../#about
     - title: Work
-      url: /work
+      url: ../#case-studies
     - title: Resume
       url: /resume

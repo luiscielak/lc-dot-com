@@ -1,0 +1,7 @@
+		<div class="selected-clients__logos">
+			{% for client in site.data.settings.selected_clients %}
+			<div class="selected-clients__logo">
+				<img src="{{ client.logo | relative_url }}" alt="{{ client.name }}" class="selected-clients__logo__img">
+			</div>
+			{% endfor %}
+		</div> 

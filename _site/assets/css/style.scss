@@ -1,0 +1,99 @@
+// Logo styles (shared between header and footer)
+.header__logo,
+.footer__logo {
+  display: flex;
+  align-items: center;
+  
+  &__link {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: var(--accent-color);
+    }
+  }
+}
+
+// Footer copyright styles
+.footer__copyright {
+  p {
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin: 0;
+  }
+}
+
+// Header navigation and CTA styles
+.header__menu {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.header__cta {
+  .button {
+    padding: 15px 25px;
+    font-size: 1rem;
+    background: var(--accent-color);
+    color: var(--background-color);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: darken(var(--accent-color), 10%);
+    }
+  }
+}
+
+// Responsive styles
+@media screen and (max-width: 1024px) {
+  .header__logo__link,
+  .footer__logo__link {
+    font-size: 1.35rem;
+  }
+  
+  .header__cta .button {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header__logo__link,
+  .footer__logo__link {
+    font-size: 1.2rem;
+    letter-spacing: -0.3px;
+  }
+  
+  .header__menu {
+    gap: 1.5rem;
+  }
+  
+  .header__cta .button {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header__logo__link,
+  .footer__logo__link {
+    font-size: 1rem;
+    letter-spacing: -0.2px;
+  }
+  
+  .header__menu {
+    gap: 1rem;
+  }
+  
+  .header__cta .button {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+} 

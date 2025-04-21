@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background rectangle -->
+  <rect width="120" height="30" fill="none"/>
+  
+  <!-- "LC" text -->
+  <text x="60" y="20" 
+        font-family="EB Garamond, serif" 
+        font-size="18" 
+        font-weight="700" 
+        text-anchor="middle" 
+        fill="#6C7A89">
+    LC
+  </text>
+</svg> 

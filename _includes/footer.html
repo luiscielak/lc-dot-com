@@ -1,0 +1,31 @@
+<footer class="footer">
+	<div class="wrap grid">
+
+		{% if site.data.settings.footer_settings.logo_image %}
+		<span href="{{ site.baseurl }}/" class="footer__logo">
+			<img src="{{ site.data.settings.footer_settings.logo_image | relative_url }}" class="footer__logo__img">
+		</span>
+		{% else %}
+
+		<div>
+			<span class="footer__title">
+				{{ site.data.settings.basic_settings.site_title }}
+			</span>
+			<span class="footnote subtitle">
+				{% if site.data.settings.footer_settings.tagline %}
+				<p>{{ site.data.settings.footer_settings.tagline }}</p>
+				{% endif %}
+			</span>
+		</div>
+
+		{% endif %}
+
+		<div class="footer__cta">
+			<a href="#" class="button--inverse contact-trigger js-contact">Let's chat</a>
+			<div class="footer__social">
+				{% include component-socials.html %}
+			</div>
+		</div>
+
+
+	</div>

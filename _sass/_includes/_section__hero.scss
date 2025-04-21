@@ -1,0 +1,86 @@
+// - - - - - - - - - - - - - - - - - -
+
+// Section - Hero
+
+// - - - - - - - - - - - - - - - - - -
+
+
+.hero {
+	position: relative;
+	padding: 40px 0 100px;
+
+	.wrap {
+		grid-gap: 0;
+	}
+
+	.title {
+		margin-bottom: 24px;
+		max-width: 380px;
+	}
+
+	.title .subtitle {
+		margin-bottom: 8px;
+	}
+
+	.intro {
+		position: relative;
+		max-width: 340px;
+	}
+
+	.tagline {
+    padding-left: 0;
+    padding-right: 0;
+
+	}
+
+	.hero__cta {
+		text-align: center;
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+		display: block;
+	}
+
+	@include mq(tabletp) {
+		padding: 40px 0 120px;
+
+		.wrap {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.title {
+			margin-bottom: 0;
+			max-width: none;
+		}
+
+		.intro {
+			align-self: end;
+			margin-bottom: -80px;
+			max-width: 458px;
+		}
+
+		.tagline {
+			padding-left: 8rem;
+			padding-right: 8rem;
+		}
+
+
+		.hero__cta {
+			display: none;
+		}
+	}
+
+}
+
+.hero__background {
+	display: block;
+	position: absolute;
+	top: 15%;
+	left: 50%;
+	transform: translateX(-60%);
+	z-index: -1;
+	// max-width: 190%;
+
+	@include mq(tabletp) {
+		display: block;
+	}
+}

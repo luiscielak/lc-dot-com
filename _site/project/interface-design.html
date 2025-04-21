@@ -33,16 +33,14 @@
 
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title"
-		content="Interface Design – Luis Cielak">
+	<meta name="twitter:title" content="Interface Design – Luis Cielak">
 	<meta name="twitter:description" content="I craft intuitive interfaces that reduce friction, enhance usability, and reflect the product&apos;s purpose. A good UI is a conduit between users and technology. I make it simple so users can get things done efficiently, and with maybe a little joy too.Tools I use&amp;#58; wireframes, prototypes, pattern libraries, design systems">
-	<meta name="twitter:image:src" content="http://localhost:4002/ui-01.png">
+	<meta name="twitter:image:src" content="ui-01.png">
 
 	<!-- Facebook OpenGraph -->
-	<meta property="og:title"
-		content="Interface Design – Luis Cielak" />
+	<meta property="og:title" content="Interface Design – Luis Cielak" />
 	<meta property="og:description" content="I craft intuitive interfaces that reduce friction, enhance usability, and reflect the product&apos;s purpose. A good UI is a conduit between users and technology. I make it simple so users can get things done efficiently, and with maybe a little joy too.Tools I use&amp;#58; wireframes, prototypes, pattern libraries, design systems" />
-	<meta property="og:image" content="http://localhost:4002/ui-01.png" />
+	<meta property="og:image" content="ui-01.png" />
 
 	
 	<!-- Font Embed Code -->
@@ -51,21 +49,19 @@
 
 	<!-- Styles -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.fluidbox/2.0.5/css/fluidbox.min.css">
 	<link rel="stylesheet" href="/css/style.css">
 
 	<!-- Icons -->
-	<script defer src="https://use.fontawesome.com/releases/v5.1.1/js/brands.js"
-		integrity="sha384-0inRy4HkP0hJ038ZyfQ4vLl+F4POKbqnaUB6ewmU4dWP0ki8Q27A0VFiVRIpscvL"
-		crossorigin="anonymous"></script>
-	<script defer src="https://use.fontawesome.com/releases/v5.1.1/js/fontawesome.js"
-		integrity="sha384-NY6PHjYLP2f+gL3uaVfqUZImmw71ArL9+Roi9o+I4+RBqArA2CfW1sJ1wkABFfPe"
-		crossorigin="anonymous"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.1.1/js/solid.js" integrity="sha384-GXi56ipjsBwAe6v5X4xSrVNXGOmpdJYZEEh/0/GqJ3JTHsfDsF8v0YQvZCJYAiGu" crossorigin="anonymous"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.1.1/js/brands.js" integrity="sha384-0inRy4HkP0hJ038ZyfQ4vLl+F4POKbqnaUB6ewmU4dWP0ki8Q27A0VFiVRIpscvL" crossorigin="anonymous"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.1.1/js/fontawesome.js" integrity="sha384-NY6PHjYLP2f+gL3uaVfqUZImmw71ArL9+Roi9o+I4+RBqArA2CfW1sJ1wkABFfPe" crossorigin="anonymous"></script>
 
 	
 	<!-- Custom Styles -->
-	<style>
-		
-	</style>
+	<style></style>
 	
 
 	
@@ -82,15 +78,13 @@
 
 
 <body class="loading ajax-loading"
-	data-site-url="http://localhost:4002" data-page-url="/project/interface-design">
+	data-site-url="http://localhost:4001" data-page-url="/project/interface-design">
 
 
-	<header class="header--main">
-
+	<header class="header">
 	<div class="wrap grid__2-col">
-
 		<div class="header__logo">
-			<a href="http://localhost:4002" class="header__logo__link">
+			<a href="/" class="header__logo__link">
 				LUiS CiELAK
 			</a>
 		</div>
@@ -100,35 +94,19 @@
 		</div>
 
 		<nav class="header__menu">
-			<div class="menu__wrap">
-				<ul class="menu__list">
-					
-					<li class="menu__list__item">
-						<a href="/" class="menu__list__item__link button--text">Home</a>
-					</li>
-					
-					<li class="menu__list__item">
-						<a href="/#about" class="menu__list__item__link button--text">About</a>
-					</li>
-					
-					<li class="menu__list__item">
-						<a href="/#case-studies" class="menu__list__item__link button--text">Work</a>
-					</li>
-					
-					<li class="menu__list__item">
-						<a href="/resume" class="menu__list__item__link button--text">Resume</a>
-					</li>
-					
-					<li class="menu__cta">
-						<a href="#" class="menu__cta__link button--text contact-trigger js-contact">Let's chat →</a>
-					</li>
-				</ul>
-			</div>
+			
+			<a href="/" class="header__menu__item">Home</a>
+			
+			<a href="../#about" class="header__menu__item">About</a>
+			
+			<a href="../#case-studies" class="header__menu__item">Work</a>
+			
+			<a href="/resume" class="header__menu__item">Resume</a>
+			
+
+			<a href="#" class="header__menu__item button contact-trigger js-contact">Let's chat →</a>
 		</nav>
-
-		<a href="#" class="header__cta button--outline contact-trigger js-contact">Let's chat →</a>
 	</div>
-
 </header>
 
 
@@ -320,21 +298,26 @@
 
 	<!-- Javascript Assets -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/js/jquery-3.2.1.min.js"><\/script>')</script>
+	
+	<!-- Plugin JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.fluidbox/2.0.5/js/jquery.fluidbox.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<!-- Theme JS -->
 	<script src="/js/plugins-min.js"></script>
 	<script src="/js/made-min.js"></script>
-
-	<!-- Custom Javascript -->
 	<script src="/js/custom.js"></script>
-
-	<script src="/assets/js/main.js"></script>
 	<script src="/assets/js/smooth-scroll.js"></script>
 
 	
 	<!-- Extra Footer JS Code -->
 	
 	
-
-
 
 </body>
 

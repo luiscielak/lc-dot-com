@@ -49,6 +49,9 @@
 
 	<!-- Styles -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.fluidbox/2.0.5/css/fluidbox.min.css">
 	<link rel="stylesheet" href="{{ site.baseurl }}/css/style.css">
 
 	<!-- Icons -->
@@ -122,8 +125,19 @@
 
 	<!-- Javascript Assets -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="{{ site.baseurl }}/js/made-min.js"></script>
+	<script>window.jQuery || document.write('<script src="{{ site.baseurl }}/js/jquery-3.2.1.min.js"><\/script>')</script>
+	
+	<!-- Plugin JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.fluidbox/2.0.5/js/jquery.fluidbox.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<!-- Theme JS -->
 	<script src="{{ site.baseurl }}/js/plugins-min.js"></script>
+	<script src="{{ site.baseurl }}/js/made-min.js"></script>
 	<script src="{{ site.baseurl }}/js/custom.js"></script>
 	<script src="{{ site.baseurl }}/assets/js/smooth-scroll.js"></script>
 
@@ -131,8 +145,6 @@
 	<!-- Extra Footer JS Code -->
 	{{ site.data.settings.advanced_settings.footer_js }}
 	{% endif %}
-
-
 
 </body>
 

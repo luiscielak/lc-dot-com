@@ -1,5 +1,33 @@
 // - - - - - - - - - - - - - - - - - -
 
+// CSS Variables
+
+// - - - - - - - - - - - - - - - - - -
+
+:root {
+  --text-color: #17181E;
+  --background-color: #ffffff;
+  --accent-color: #4C60E6;
+  --hover-color: #3346CC;
+  
+  --spacing-xs: 0.5rem;
+  --spacing-s: 1rem;
+  --spacing-m: 2rem;
+  --spacing-l: 3rem;
+  --spacing-xl: 4rem;
+
+  --border-radius: 4px;
+  --box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+// - - - - - - - - - - - - - - - - - -
+
+// Reset
+
+// - - - - - - - - - - - - - - - - - -
+
+// - - - - - - - - - - - - - - - - - -
+
 // Basics
 
 // - - - - - - - - - - - - - - - - - -

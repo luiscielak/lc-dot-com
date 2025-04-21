@@ -187,10 +187,42 @@ $baseurl: '{{ site.baseurl }}';
 @import "_includes/_section__cta";
 @import "_includes/_section__clients";
 
+.hero {
+  position: relative;
+  padding: 4rem 0;
+  
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-medium-color);
+    animation: bounce 2s infinite;
+    
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
 .project__preview {
   position: relative;
   margin-bottom: 4rem;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  overflow: hidden;
   
   &:hover {
     transform: translateY(-5px);
@@ -198,14 +230,21 @@ $baseurl: '{{ site.baseurl }}';
     .project__hover {
       opacity: 1;
       visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .project__image {
+      transform: scale(1.05);
     }
   }
 }
 
-.project__role {
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  color: var(--text-medium-color);
+.project__images {
+  overflow: hidden;
+}
+
+.project__image {
+  transition: transform 0.3s ease;
 }
 
 .project__hover {
@@ -219,14 +258,22 @@ $baseurl: '{{ site.baseurl }}';
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
+  transform: translateY(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
 }
 
+.project__role {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  color: var(--text-medium-color);
+}
+
 .project__tldr {
   font-size: 1rem;
   line-height: 1.5;
   color: var(--text-dark-color);
+}
 }

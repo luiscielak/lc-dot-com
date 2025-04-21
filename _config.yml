@@ -60,3 +60,9 @@ plugins:
 
 paginate: 7
 paginate_path: "/blog/page-:num/"
+
+logo: /images/logos/logo-lc.svg
+logo_alt: /images/logos/logo-lc-alt.svg
+logo_dark: /images/logos/logo-lc-dark.svg
+logo_light: /images/logos/logo-lc-light.svg
+favicon: /images/logos/logo-lc-favicon.svg

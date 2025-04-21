@@ -175,3 +175,14 @@ advanced_settings:
   custom_styles: ""
   header_js: ""
   footer_js: ""
+
+menu_settings:
+  menu_items:
+    - title: Home
+      url: /
+    - title: About
+      url: /about
+    - title: Work
+      url: /work
+    - title: Resume
+      url: /resume

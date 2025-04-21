@@ -11,9 +11,7 @@
 
 // - - - - - - - - - - Variables
 
-
 // Colors
-
 $background-color: {{ site.data.settings.color_settings.background_color }};
 $background-alt-color: {{ site.data.settings.color_settings.background_alt_color }};
 $border-color: {{ site.data.settings.color_settings.border_color }};
@@ -24,7 +22,8 @@ $text-light-color: {{ site.data.settings.color_settings.text_light_color }};
 $text-lighter-color: {{ site.data.settings.color_settings.text_lighter_color }};
 $text-link-color: {{ site.data.settings.color_settings.text_link_color }};
 
-$accent-color: {{ site.data.settings.color_settings.accent_color }};
+$accent-color: #067F8A;
+$hover-color: #056974;
 
 $error-color: {{ site.data.settings.color_settings.error_color }};
 

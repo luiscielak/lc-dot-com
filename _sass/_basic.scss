@@ -5,10 +5,11 @@
 // - - - - - - - - - - - - - - - - - -
 
 :root {
-  --text-color: #17181E;
-  --background-color: #ffffff;
-  --accent-color: #067F8A;
-  --hover-color: #056974;
+  --text-color: #{$text-dark-color};
+  --background-color: #{$background-color};
+  --accent-color: #{$accent-color};
+  --hover-color: #{$hover-color};
+  --border-color: #{$border-color};
   
   --spacing-xs: 0.5rem;
   --spacing-s: 1rem;

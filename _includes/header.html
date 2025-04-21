@@ -1,9 +1,7 @@
-<header class="header--main">
-
+<header class="header">
 	<div class="wrap grid__2-col">
-
 		<div class="header__logo">
-			<a href="{{ site.url }}" class="header__logo__link">
+			<a href="{{ site.baseurl }}/" class="header__logo__link">
 				LUiS CiELAK
 			</a>
 		</div>
@@ -13,21 +11,11 @@
 		</div>
 
 		<nav class="header__menu">
-			<div class="menu__wrap">
-				<ul class="menu__list">
-					{% for item in site.data.settings.menu_settings.menu_items %}
-					<li class="menu__list__item">
-						<a href="{{ item.url | relative_url }}" class="menu__list__item__link button--text">{{ item.title }}</a>
-					</li>
-					{% endfor %}
-					<li class="menu__cta">
-						<a href="#" class="menu__cta__link button--text contact-trigger js-contact">Let's chat →</a>
-					</li>
-				</ul>
-			</div>
+			{% for item in site.data.settings.menu_settings.menu_items %}
+			<a href="{{ site.baseurl }}{{ item.url }}" class="header__menu__item">{{ item.title }}</a>
+			{% endfor %}
+
+			<a href="#" class="header__menu__item button contact-trigger js-contact">Let's chat →</a>
 		</nav>
-
-		<a href="#" class="header__cta button--outline contact-trigger js-contact">Let's chat →</a>
 	</div>
-
 </header>

@@ -1,8 +1,8 @@
 ---
 layout: default
-overtitle: SQ Design Labs
-title: UX. UI. DataViz.
-description: We build business applications and data visualization tools that tell stories, spark curiosity, and help people solve problems and make decisions.
+overtitle: Luis Cielak
+title: Designing clarity into complex systems.
+description: I'm Luis Cielak — a product designer focused on UX strategy, workflows, and design systems for B2B and enterprise platforms.
 featured_image: /images/social.jpg
 ---
 
@@ -21,7 +21,7 @@ featured_image: /images/social.jpg
 
 			<p class="intro subtitle--light">
 				{{ page.description }}
-				<a href="#" class="hero__cta button--fill contact-trigger js-contact">Schedule a consultation</a>
+				<a href="#" class="hero__cta button--fill contact-trigger js-contact">Get in touch</a>
 			</p>
 		</div>
 	</section>
@@ -35,6 +35,7 @@ featured_image: /images/social.jpg
 
 			<article class="project__preview">
 				<h3 class="project__title"><a href="{{ project.url | relative_url }}" style="--accent: {{ accent_color }}">{{ project.title }}</a></h3>
+				<p class="project__role subtitle--light">{{ project.role }}</p>
 
 				<div class="project__images owl-carousel" style="--accent: {{ accent_color }}">
 					{% for image in project.gallery_images %}
@@ -47,8 +48,11 @@ featured_image: /images/social.jpg
 					<p class="project__description --small">
 						{{ project.description }}
 						<a href="{{ project.url | relative_url }}" class="project__link button--text --right"
-							style="color: {{ accent_color }}; --color-var: {{ accent_color }}">View Case Study</a>
+							style="color: {{ accent_color }}; --color-var: {{ accent_color }}">Read case study →</a>
 					</p>
+					<div class="project__hover">
+						<p class="project__tldr">{{ project.tldr }}</p>
+					</div>
 				</div>
 			</article>
 

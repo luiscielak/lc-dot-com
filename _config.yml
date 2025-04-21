@@ -1,7 +1,8 @@
 site: Luis Cielak
-
-url:
-baseurl:
+title: Luis Cielak – Product & UX Designer
+description: Product designer focused on UX strategy, workflows, and design systems for B2B and enterprise platforms.
+url: https://luiscielak.com
+baseurl: ""
 
 collections:
   pages:

@@ -461,5 +461,15 @@
 
 
 
+	// Header shadow on scroll
+	$(window).on('scroll', function() {
+		if ($(window).scrollTop() > 0) {
+			$('.header').addClass('is-scrolled');
+		} else {
+			$('.header').removeClass('is-scrolled');
+		}
+	});
+
+
 
 }(jQuery));

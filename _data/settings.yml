@@ -180,9 +180,9 @@ menu_settings:
   menu_items:
     - title: Home
       url: /
-    - title: About
-      url: ../#about
     - title: Work
-      url: ../#case-studies
+      url: /#case-studies
+    - title: About
+      url: /#about
     - title: Resume
       url: /resume

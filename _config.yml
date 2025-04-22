@@ -2,7 +2,7 @@ site: Luis Cielak
 title: "LUiS CiELAK"
 description: "Product & UX Designer"
 url: "http://127.0.0.1:4000"
-baseurl: ""
+baseurl: "/"
 
 collections:
   pages:

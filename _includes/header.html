@@ -1,7 +1,7 @@
 <header class="header">
 	<div class="wrap">
 		<div class="header__logo">
-			<a href="{{ site.baseurl }}/" class="header__logo__link">
+			<a href="/" class="header__logo__link">
 				LUiS CiELAK
 			</a>
 		</div>
@@ -12,7 +12,14 @@
 
 		<nav class="header__menu">
 			{% for item in site.data.settings.menu_settings.menu_items %}
-			<a href="{{ site.baseurl }}{{ item.url }}" class="header__menu__item">{{ item.title }}</a>
+			{% assign current_url = page.url | remove: 'index.html' %}
+			{% assign menu_url = item.url | remove: '.html' %}
+			{% if item.url contains '#' %}
+				{% assign section_id = item.url | split: '#' | last %}
+				<a href="{{ item.url }}" class="header__menu__item" data-section="{{ section_id }}">{{ item.title }}</a>
+			{% else %}
+				<a href="{{ item.url }}" class="header__menu__item {% if current_url == menu_url %}active{% endif %}">{{ item.title }}</a>
+			{% endif %}
 			{% endfor %}
 
 			<a href="#" class="header__menu__item button contact-trigger js-contact">Let's chat →</a>

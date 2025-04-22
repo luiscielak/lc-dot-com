@@ -317,3 +317,42 @@ $baseurl: '{{ site.baseurl }}';
     }
   }
 }
+
+.header__menu__item {
+	margin-left: 1.5rem;
+	font-size: 17px;
+	font-weight: 600;
+	position: relative;
+	transition: all 0.3s ease;
+
+	&:after {
+		content: '';
+		position: absolute;
+		bottom: -2px;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		background: {{ site.data.settings.color_settings.accent_color }};
+		opacity: 0;
+		transform: scaleX(0.7);
+		transition: all 0.3s ease;
+	}
+
+	&:hover {
+		color: {{ site.data.settings.color_settings.accent_color }};
+
+		&:after {
+			opacity: 0.4;
+			transform: scaleX(1);
+		}
+	}
+
+	&.active {
+		color: {{ site.data.settings.color_settings.accent_color }};
+
+		&:after {
+			opacity: 1;
+			transform: scaleX(1);
+		}
+	}
+}

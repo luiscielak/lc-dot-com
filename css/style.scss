@@ -22,8 +22,8 @@ $text-light-color: {{ site.data.settings.color_settings.text_light_color }};
 $text-lighter-color: {{ site.data.settings.color_settings.text_lighter_color }};
 $text-link-color: {{ site.data.settings.color_settings.text_link_color }};
 
-$accent-color: #067F8A;
-$hover-color: #056974;
+$accent-color: {{ site.data.settings.color_settings.accent_color }};
+$hover-color: darken($accent-color, 10%);
 
 $error-color: {{ site.data.settings.color_settings.error_color }};
 

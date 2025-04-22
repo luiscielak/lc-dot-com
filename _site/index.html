@@ -78,7 +78,7 @@
 
 
 <body class="loading ajax-loading"
-	data-site-url="http://127.0.0.1:4000" data-page-url="/">
+	data-site-url="http://localhost:4001" data-page-url="/">
 
 
 	<header class="header">
@@ -154,9 +154,20 @@
       </header>
       <!-- Calendly inline widget begin -->
       <div class="calendly-inline-widget" data-url="https://calendly.com/design-help/15min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=067f8a" style="min-width:320px;height:630px;"></div>
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      <script type="text/javascript">
+        window.onload = function() {
+          if (typeof Calendly !== 'undefined') {
+            Calendly.initInlineWidget({
+              url: 'https://calendly.com/design-help/15min',
+              parentElement: document.querySelector('.calendly-inline-widget'),
+              prefill: {},
+              utm: {}
+            });
+          }
+        };
+      </script>
       <!-- Calendly inline widget end -->
-
     </div>
   </div>
 </section>

@@ -139,6 +139,16 @@
 		$('.contact').addClass('visible');
 		lockPage();
 
+		// Initialize Calendly widget
+		if (typeof Calendly !== 'undefined') {
+			Calendly.initInlineWidget({
+				url: 'https://calendly.com/design-help/15min',
+				parentElement: document.querySelector('.calendly-inline-widget'),
+				prefill: {},
+				utm: {}
+			});
+		}
+
 		$('.button--close-modal').on('click', function () {
 			$('.contact').removeClass('visible');
 			unlockPage();

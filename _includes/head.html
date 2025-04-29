@@ -1,0 +1,28 @@
+<head>
+	<!-- Basic Page Needs -->
+	<meta charset="utf-8">
+	<title>{% if page.title %}{{ page.title }}{% else %}{{ site.data.settings.basic_settings.site_title }}{% endif %}</title>
+	<meta name="description" content="{{ page.description }}">
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Font Embed Code -->
+	{{ site.data.settings.font_settings.font_embed }}
+
+	<!-- Styles -->
+	<link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href="{{ site.favicon | relative_url }}">
+
+	{% if site.data.settings.advanced_settings.custom_styles %}
+	<!-- Custom Styles -->
+	<style>{{ site.data.settings.advanced_settings.custom_styles }}</style>
+	{% endif %}
+
+	{% if site.data.settings.advanced_settings.header_js %}
+	<!-- Header JS Code -->
+	{{ site.data.settings.advanced_settings.header_js }}
+	{% endif %}
+</head> 

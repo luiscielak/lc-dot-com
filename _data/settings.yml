@@ -1,6 +1,6 @@
 basic_settings:
   site_title: Luis Cielak
-  favicon_image: /images/favicon.png
+  favicon_image: /images/logos/logo-lc-favicon.svg
 
 header_settings:
   logo_image: /images/logos/logo-lc.svg

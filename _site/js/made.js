@@ -482,4 +482,137 @@
 
 
 
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Active Navigation
+
+	// Handle scroll-based navigation
+	function updateActiveSection() {
+		var scrollPosition = $(window).scrollTop();
+		var headerHeight = $('.header').outerHeight();
+		var windowHeight = $(window).height();
+		var documentHeight = $(document).height();
+		var threshold = 100; // Threshold for section activation
+
+		// Special case for home when at the top
+		if (scrollPosition < threshold) {
+			$('.header__menu__item').removeClass('active');
+			$('.header__menu__item[href="/"]').addClass('active');
+			return;
+		}
+
+		// Check each section with improved accuracy
+		var currentSection = '';
+		var closestDistance = Infinity;
+		
+		$('section[id]').each(function() {
+			var section = $(this);
+			var sectionTop = section.offset().top - headerHeight;
+			var sectionMiddle = sectionTop + (section.outerHeight() / 2);
+			var distance = Math.abs(scrollPosition - sectionTop);
+
+			// If this section is closer to our scroll position than the previous closest
+			if (distance < closestDistance) {
+				closestDistance = distance;
+				currentSection = section.attr('id');
+			}
+		});
+
+		// Update active state with a small delay for smoothness
+		if (currentSection) {
+			$('.header__menu__item').removeClass('active');
+			$('.header__menu__item[data-section="' + currentSection + '"]').addClass('active');
+		}
+
+		// Special case for bottom of page
+		if (scrollPosition + windowHeight > documentHeight - 100) {
+			var lastSection = $('section[id]').last().attr('id');
+			$('.header__menu__item').removeClass('active');
+			$('.header__menu__item[data-section="' + lastSection + '"]').addClass('active');
+		}
+	}
+
+	// Update active section on scroll with improved throttling
+	$(window).on('scroll', _.throttle(updateActiveSection, 150));
+
+	// Handle all navigation clicks
+	$(document).on('click', '.header__menu__item', function(e) {
+		e.preventDefault();
+		var $this = $(this);
+		var href = $this.attr('href');
+		var section = $this.attr('data-section');
+		
+		// Handle home link
+		if (href === '/') {
+			$('html, body').animate({
+				scrollTop: 0
+			}, {
+				duration: 800,
+				easing: 'easeInOutCubic',
+				complete: function() {
+					updateActiveSection();
+					if (history.pushState) {
+						history.pushState(null, null, '/');
+					} else {
+						location.hash = '';
+					}
+				}
+			});
+			return;
+		}
+		
+		// Handle section links
+		if (section) {
+			var target = $('#' + section);
+			if (target.length) {
+				var headerHeight = $('.header').outerHeight();
+				$('html, body').animate({
+					scrollTop: target.offset().top - headerHeight + 2
+				}, {
+					duration: 800,
+					easing: 'easeInOutCubic',
+					complete: function() {
+						updateActiveSection();
+						if (history.pushState) {
+							history.pushState(null, null, '#' + section);
+						} else {
+							location.hash = '#' + section;
+						}
+					}
+				});
+			}
+		}
+	});
+
+	// Handle direct URL navigation
+	$(document).ready(function() {
+		// Check for hash in URL
+		var hash = window.location.hash;
+		if (hash) {
+			var target = $(hash);
+			if (target.length) {
+				var headerHeight = $('.header').outerHeight();
+				$('html, body').animate({
+					scrollTop: target.offset().top - headerHeight + 2
+				}, {
+					duration: 800,
+					easing: 'easeInOutCubic',
+					complete: function() {
+						updateActiveSection();
+					}
+				});
+			}
+		} else {
+			// If no hash, update active section based on scroll position
+			updateActiveSection();
+		}
+	});
+
+	// Add jQuery easing function if not exists
+	if (typeof $.easing.easeInOutCubic !== 'function') {
+		$.extend($.easing, {
+			easeInOutCubic: function(x) {
+				return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+			}
+		});
+	}
+
 }(jQuery));

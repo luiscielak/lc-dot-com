@@ -1,24 +1,32 @@
+// Smooth scroll implementation
 document.addEventListener('DOMContentLoaded', function() {
-  // Select all anchor links that start with #
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return; // Skip if it's just a # link
-      
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        // Calculate the offset to account for fixed header
-        const headerOffset = 80; // Adjust this value based on your header height
-        const elementPosition = targetElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    // Get all links with hash
+    const links = document.querySelectorAll('a[href*="#"]');
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
+    // Add click event listener to each link
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only prevent default if the link has a hash
+            if (this.hash !== '') {
+                e.preventDefault();
+
+                // Get the target element
+                const target = document.querySelector(this.hash);
+
+                if (target) {
+                    // Get header height for offset
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+
+                    // Scroll to target with offset
+                    window.scrollTo({
+                        top: target.offsetTop - headerHeight,
+                        behavior: 'smooth'
+                    });
+
+                    // Update URL
+                    history.pushState(null, null, this.hash);
+                }
+            }
         });
-      }
     });
-  });
 }); 

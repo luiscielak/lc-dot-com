@@ -3,22 +3,62 @@
     <h5 class="section-title">Case Studies</h5>
     <div class="case-studies__list grid">
 
-      <article class="post__card">
-        <a href="/case-study-pmi-da" class="post__link">
-          <div class="post__image" style="background-image: url(/images/case-studies/case-study-01.png)">
-          </div>
-        </a>
-      </article>
+      {% include component__case-study-card.html 
+        title="Redesigning the learning journey for 250,000+ global users"
+        subtitle="Led UX design, research synthesis, and iterative validation across global markets"
+        role="Lead UX Designer & Researcher"
+        metric1_value="40%"
+        metric1_label="Efficiency Improvement"
+        metric1_description="Reduction in time spent searching for project information"
+        metric2_value="92%"
+        metric2_label="User Satisfaction"
+        metric2_description="Of project managers reported improved decision-making"
+        audio_file="case-study-pmi-da.mp3"
+        audio_duration="1:16"
+        url="/case-study-pmi-da"
+      %}
 
-      <article class="post__card">
-        <a href="/case-study-mss" class="post__link">
-          <div class="post__image" style="background-image: url(/images/case-studies/case-study-02.png)">
-          </div>
-        </a>
-      </article>
+      {% include component__case-study-card.html 
+        title="Streamlining technician dispatch for 100K+ annual moves"
+        subtitle="Streamlining communication and workflows with a modern mobile experience"
+        role="Lead UX Designer: Field research, wireframes, mobile-first design, testing, and design system."
+        metric1_value="95%"
+        metric1_label="📱 Mobile adoption"
+        metric1_description="Reduction in communication delays and task handoffs"
+        metric2_value="0"
+        metric2_label="🚫 Paper dispatching eliminated"
+        metric2_description="Average rating across iOS and Android platforms"
+        audio_file="case-study-mss.mp3"
+        audio_duration="1:08"
+        url="/case-study-mss"
+      %}
+<!-- 
+      {% include component__case-study-card.html 
+        title="Healthcare Analytics Dashboard"
+        subtitle="Visualizing patient data and trends for improved clinical decision making"
+        role="UX/UI Designer"
+        metric1_value="85%"
+        metric1_label="Data Accuracy"
+        metric1_description="Improvement in data visualization accuracy"
+        metric2_value="3x"
+        metric2_label="Faster Analysis"
+        metric2_description="Speed increase in analyzing patient trends"
+        url="/case-study-healthcare"
+      %}
 
+      {% include component__case-study-card.html 
+        title="E-commerce Design System"
+        subtitle="Building a scalable component library for consistent shopping experiences"
+        role="Design Systems Lead"
+        metric1_value="60%"
+        metric1_label="Dev Velocity"
+        metric1_description="Increase in development team velocity"
+        metric2_value="98%"
+        metric2_label="Component Reuse"
+        metric2_description="Reusability rate across product teams"
+        url="/case-study-ecommerce"
+      %} -->
 
     </div>
-
   </div>
 </section>

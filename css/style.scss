@@ -168,6 +168,7 @@ $baseurl: '{{ site.baseurl }}';
 
 @import "_includes/_component__header";
 @import "_includes/_component__footer";
+@import "_includes/_component__case-study-card";
 
 @import "_includes/_syntax";
 @import "_includes/_gallery";

@@ -16,24 +16,50 @@ featured_image: /images/social.jpg
 
 	<section class="hero">
 		<div class="wrap">
-			<h1 class="tagline tagline-headline">
-				Designing with purpose, clarity, and real-world impact.
-			</h1>
-			<h2 class="tagline tagline-subheadline">
-				Rooted in research. Guided by systems. Delivered with care.
-			</h2>
+			<p class="tagline">I partner with teams to craft intuitive digital products that create meaningful impact through research-driven design, systematic thinking, and thoughtful execution.</p>
+			<div class="h3">LUiS CiELAK</div>
+			<span class="h5">Product Design Lead</span>
+			<!-- Designing with purpose, clarity, and real-world impact. Rooted in research. Guided by systems. Delivered with care. -->
+		</div>
+	</section>
+
+	<section class="features">
+		<div class="wrap grid features__list">
+			<article class="post__card">
+				<div class="post__image" style="background-image: url(/images/features/feature-ux.svg)"></div>
+				<h4 class="post__title">User Experience</h4>
+				<p class="post__intro">I design with empathy and intention, crafting seamless, human-centered experiences that make technology feel effortless. My goal is to solve real problems for real people—through clarity, simplicity, and thoughtful design choices.</p>
+			</article>
+			<article class="post__card">
+				<div class="post__image" style="background-image: url(/images/features/feature-ui.svg)"></div>
+				<h4 class="post__title">Interface Design</h4>
+				<p class="post__intro">I believe great interfaces are both intuitive and beautiful. I bring structure, rhythm, and a sense of play into the visual layer—creating clean, practical designs that feel as good as they look.</p>
+			</article>
+			<article class="post__card">
+				<div class="post__image" style="background-image: url(/images/features/feature-dataviz.svg)"></div>
+				<h4 class="post__title">Data Visualization</h4>
+				<p class="post__intro">I turn complex data into meaningful stories. Through dashboards, visual systems, and custom reports, I help teams see patterns, ask better questions, and make smarter decisions.</p>
+			</article>
+			<article class="post__card">
+				<div class="post__image" style="background-image: url(/images/features/feature-uxr.svg)"></div>
+				<h4 class="post__title">User Research</h4>
+				<p class="post__intro">Interviews, usability testing, and data-driven insights to inform and validate design decisions.</p>
+				<ul class="post__bullets">
+					<li>50+ user interviews conducted</li>
+					<li>Expert in usability testing & surveys</li>
+					<li>Translating research into actionable insights</li>
+				</ul>
+			</article>
 		</div>
 	</section>
 
 	<section class="recent-posts">
 		<div class="wrap grid">
-
 			<div class="recent-posts__list grid">
 				{% for post in site.posts %}
 				{% include component__post-preview.html %}
 				{% endfor %}
 			</div>
-
 		</div>
 	</section>
 

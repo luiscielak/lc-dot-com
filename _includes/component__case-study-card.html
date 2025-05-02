@@ -1,0 +1,121 @@
+{% assign audio_file = include.audio_file | default: "case-study-pmi-da.mp3" %}
+{% assign audio_duration = include.audio_duration | default: "1:16" %}
+
+<div class="case-study-card">
+  <div class="case-study-tag">
+    <span>Case Study</span>
+  </div>
+
+  <div class="content">
+    <h2 class="title">{{ include.title }}</h2>
+    <p class="subtitle">{{ include.subtitle }}</p>
+    
+    <div class="role">{{ include.role | default: "UX Designer & Researcher" }}</div>
+    
+    <div class="metrics">
+      <div class="metric">
+        <div class="value">{{ include.metric1_value | default: "40%" }}</div>
+        <div class="label">{{ include.metric1_label | default: "Efficiency Improvement" }}</div>
+        <div class="description">{{ include.metric1_description | default: "Reduction in time spent searching for project information" }}</div>
+      </div>
+      <div class="metric">
+        <div class="value">{{ include.metric2_value | default: "92%" }}</div>
+        <div class="label">{{ include.metric2_label | default: "User Satisfaction" }}</div>
+        <div class="description">{{ include.metric2_description | default: "Of project managers reported improved decision-making" }}</div>
+      </div>
+    </div>
+
+    <div class="audio-player" data-audio="{{ audio_file }}">
+      <button class="play-button" aria-label="Play audio narration">
+        <svg class="play-icon" viewBox="0 0 24 24">
+          <path d="M8 6v12l10-6z"/>
+        </svg>
+        <svg class="pause-icon" viewBox="0 0 24 24">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+      </button>
+      <div class="narration-info">
+        <span class="ai-tag">AI Narration</span>
+        <time class="duration">{{ audio_duration }}</time>
+      </div>
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress"></div>
+      </div>
+    </div>
+
+    <a href="{{ include.url | default: '#' }}" class="view-case-study">
+      View full case study
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const players = document.querySelectorAll('.audio-player');
+  
+  players.forEach(player => {
+    const button = player.querySelector('.play-button');
+    const progress = player.querySelector('.progress');
+    const progressBar = player.querySelector('.progress-bar');
+    const audioFile = player.dataset.audio;
+    const audio = new Audio('/audio/' + audioFile);
+    
+    // Set audio properties for better quality
+    audio.preload = 'metadata';
+    audio.volume = 1.0;
+
+    // Handle loading errors
+    audio.addEventListener('error', (e) => {
+      console.error('Error loading audio:', e);
+      button.style.opacity = 0.5;
+      button.disabled = true;
+    });
+
+    // Ensure audio is ready before playing
+    audio.addEventListener('canplaythrough', () => {
+      button.disabled = false;
+    });
+    
+    let isPlaying = false;
+    
+    button.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        button.classList.remove('playing');
+      } else {
+        // Reset audio if it ended
+        if (audio.ended) {
+          audio.currentTime = 0;
+        }
+        audio.play().catch(error => {
+          console.error('Error playing audio:', error);
+        });
+        button.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+    });
+    
+    audio.addEventListener('timeupdate', () => {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progress.style.width = percent + '%';
+      progressBar.setAttribute('aria-valuenow', Math.round(percent));
+    });
+    
+    audio.addEventListener('ended', () => {
+      button.classList.remove('playing');
+      isPlaying = false;
+      progress.style.width = '0%';
+      progressBar.setAttribute('aria-valuenow', 0);
+    });
+    
+    progressBar.addEventListener('click', (e) => {
+      const rect = progressBar.getBoundingClientRect();
+      const percent = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = percent * audio.duration;
+    });
+  });
+});
+</script> 

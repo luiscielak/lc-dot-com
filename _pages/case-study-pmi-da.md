@@ -1,38 +1,36 @@
 ---
-title: "PMI Disciplined Agile Certification Toolkit"
-subtitle: "Case Study. Progressive Web App (PWA)"
+title: "Empowering Agile Learners: Redesigning the Certification Experience"
+subtitle: "Progressive Web App & Learning Toolkit for Agile Professionals"
 description: Case Study, Progressive Web App (PWA)
 featured_image: /images/case-studies/case-study-03.png
 ---
 
-<img width="712" alt="Screen Shot 2022-09-26 at 3 43 07 PM" src="https://user-images.githubusercontent.com/349454/192366593-7e238555-ed61-48b2-ae37-d66d388931fe.png">
+Agile Certification Experience
+
+<!-- <img width="712" alt="Screen Shot 2022-09-26 at 3 43 07 PM" src="https://user-images.githubusercontent.com/349454/192366593-7e238555-ed61-48b2-ae37-d66d388931fe.png"> -->
+
+### 📚 Streamlined Learning
+Unified experience across certification pathways
+
+### 🎯 Clear Direction
+Guided learning flows for each certification track
+
+### 🌐 Global Access
+Localized content for international learners
+
+### 📱 Mobile-First Design
+Learn and reference materials on any device
 
 
-## 🪧 Case Study Card Teaser
+### TL;DR
 
-**PMI Disciplined Agile Certification**  
-**Redesigning the learning journey for 250,000+ global users**
-
-✅ Reduced learner progression time by **23%**  
-✅ Lowered support tickets by **18%**  
-✅ +12 point gain in learner satisfaction  
-🔍 Led UX design, research synthesis, and iterative validation across global markets  
-📈 Delivered a mobile-first dashboard with clear guidance, progress tracking, and contextual support
-
-👉 [Read the full case study](https://luiscielak.com/case-study-pmi-da)
-
----
+> Led the redesign of a progressive web app and learning toolkit to modernize the certification experience for agile professionals. Delivered a mobile-optimized platform that empowers users to learn, reference, and share agile tools seamlessly.
 
 
-# PMI Disciplined Agile Certification Toolkit
-
-## Empowering Agile Learners: Redesigning PMI’s Certification Experience
-
----
 
 ### Overview
 
-In 2022, PMI needed to evolve its Disciplined Agile (DA) certification experience to meet the needs of a growing global audience. With over 250,000 users engaging with PMI’s learning platforms, it became clear that fragmented pathways and outdated workflows were leading to user frustration and business inefficiencies.
+PMI needed to evolve its Disciplined Agile (DA) certification experience to meet the needs of a growing global audience. With over 250,000 users engaging with PMI’s learning platforms, it became clear that fragmented pathways and outdated workflows were leading to user frustration and business inefficiencies.
 
 I partnered closely with product managers, business analysts, and developers to lead user research synthesis, define the learner journey, and design a streamlined digital experience that better supported certification candidates from first interest to course completion.
 

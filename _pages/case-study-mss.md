@@ -1,12 +1,12 @@
 ---
-title: "Streamline communication and workflows utilizing a new mobile app"
-subtitle: "Case Study. Progressive Web App (PWA)"
+title: "Optimizing Field Operations: Redesigning the Technician Dispatch Experience"
+subtitle: "Modernizing Logistics: A Mobile-First Technician Dispatch System"
 description: Case Study, iOS and Android App
 featured_image: /images/case-studies/case-study-02.png
 ---
-![Screen Shot 2022-09-26 at 6 59 13 PM](https://user-images.githubusercontent.com/349454/192395399-9483480f-6788-4b31-89e1-d0f829359bb4.png)
+<!-- ![Screen Shot 2022-09-26 at 6 59 13 PM](https://user-images.githubusercontent.com/349454/192395399-9483480f-6788-4b31-89e1-d0f829359bb4.png) -->
 
----
+<!-- ---
 
 Moving Specialty Services (MSS)
 Streamlining technician dispatch for 100K+ annual moves
@@ -14,19 +14,31 @@ Streamlining technician dispatch for 100K+ annual moves
 ✅ Replaced paper workflows with a mobile-first digital platform
 ✅ Achieved 95% technician adoption in first month
 ✅ Enabled real-time updates and faster dispatching
-📱 Designed for offline use, tap-friendly controls, and daily job visibility
+ Designed for offline use, tap-friendly controls, and daily job visibility
 🔍 Led research, prototyping, and system design for both dispatcher and technician views
 
 👉 Read the full case study
 
----
+--- -->
+
+### 📱 95% Mobile Adoption
+Technicians switched from paper to mobile in the first month.
+
+### 📄 Zero Paper-Based Dispatching
+Legacy workflows fully digitized.
+
+### 🔄 Real-Time Visibility
+40% faster dispatch-to-completion with live updates
+
+### 👆 Optimized for Field Use
+Designed for offline use, tap-friendly controls, and daily job visibility
 
 
-# MSS Technician Dispatch Platform
+### TL;DR
 
-## Modernizing Technician Dispatch: Digitizing MSS’s Logistics Operations
+> Redesigned a mobile-first dispatch platform for technicians and dispatchers, replacing manual, paper-based workflows with a real-time, centralized system. The result: 95% mobile adoption, faster job completion, and streamlined nationwide logistics.
 
----
+
 
 ### Overview
 

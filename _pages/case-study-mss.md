@@ -1,136 +1,107 @@
 ---
-title: "Optimizing Field Operations: Redesigning the Technician Dispatch Experience"
-subtitle: "Modernizing Logistics: A Mobile-First Technician Dispatch System"
+title: "Redefining Field Dispatch: Mobile-First & Real-Time"
+subtitle: "🚚 A mobile-first dispatch system that slashed paperwork and sped up operations."
 description: Case Study, iOS and Android App
 featured_image: /images/case-studies/case-study-02.png
 ---
-<!-- ![Screen Shot 2022-09-26 at 6 59 13 PM](https://user-images.githubusercontent.com/349454/192395399-9483480f-6788-4b31-89e1-d0f829359bb4.png) -->
 
-<!-- ---
+<!-- # 🪧 Case Study Card
 
-Moving Specialty Services (MSS)
-Streamlining technician dispatch for 100K+ annual moves
-
-✅ Replaced paper workflows with a mobile-first digital platform
-✅ Achieved 95% technician adoption in first month
-✅ Enabled real-time updates and faster dispatching
- Designed for offline use, tap-friendly controls, and daily job visibility
-🔍 Led research, prototyping, and system design for both dispatcher and technician views
-
-👉 Read the full case study
+**Title:** 🚚 Redefining Field Dispatch: Mobile-First & Real-Time  
+**TL;DR:** A mobile-first dispatch system that slashed paperwork and sped up operations.  
+**Achievements:**  
+- 📱 **95% Mobile Adoption**  
+- ⏱️ **40% Faster Job Completion**
 
 --- -->
 
-### 📱 95% Mobile Adoption
-Technicians switched from paper to mobile in the first month.
+<!-- # Case Study: Technician Dispatch Platform -->
 
-### 📄 Zero Paper-Based Dispatching
-Legacy workflows fully digitized.
+<!-- ## 🚀 Hook -->
 
-### 🔄 Real-Time Visibility
-40% faster dispatch-to-completion with live updates
+## TL;DR
 
-### 👆 Optimized for Field Use
-Designed for offline use, tap-friendly controls, and daily job visibility
-
-
-### TL;DR
-
-> Redesigned a mobile-first dispatch platform for technicians and dispatchers, replacing manual, paper-based workflows with a real-time, centralized system. The result: 95% mobile adoption, faster job completion, and streamlined nationwide logistics.
-
-
+Led the redesign of a mobile-first dispatch platform that transformed paper-based workflows into a real-time digital system. Achieved 95% mobile adoption in 30 days and reduced dispatch-to-completion time by 40%.
 
 ### Overview
 
-Moving Specialty Services (MSS) is a nationwide logistics company coordinating over 100,000 specialized residential moves annually. Technicians were relying on outdated systems—pen and paper, Excel, and PDF schedules—to manage dispatches, parts, and client information.
+A nationwide logistics company was coordinating over 100,000 specialized moves annually using outdated methods—paper schedules, Excel sheets, and PDF forms. Technicians in the field lacked a cohesive digital tool, leading to inefficiencies and miscommunication across teams.
 
-I led the UX design of a new technician dispatch platform that streamlined day-to-day operations, enabled real-time updates, and replaced legacy workflows with a modern digital tool tailored to mobile-first field use.
-
----
+I led the UX design of a mobile-first dispatch platform that modernized operations, offering real-time visibility and intuitive tools tailored for technicians and dispatchers alike.
 
 ### Problem
 
-Technicians lacked a centralized digital system to manage dispatches and client tasks. Common challenges included:
+The dispatch process was fragmented and manual, causing frequent delays and errors:
 
-- Manual paperwork led to frequent scheduling errors
-- Limited visibility into job progress for HQ and dispatchers
-- Inefficient routing and status reporting delayed service delivery
-
-This lack of operational clarity affected both technician productivity and customer satisfaction.
-
----
+- ❌ **Paperwork Overload:** Manual job tracking increased error rates.
+- ❌ **No Real-Time Updates:** Dispatchers lacked visibility into field progress.
+- ❌ **Poor Usability:** Tools weren’t optimized for mobile use in the field.
 
 ### Solution
 
-We built a web-based dispatching system that:
-- Centralized job information, parts tracking, and status updates
-- Enabled dispatchers to assign and update work orders in real time
-- Allowed technicians to access schedules, log work, and complete jobs via mobile
+We built a digital dispatch platform optimized for field use and HQ monitoring, with:
+
+- Centralized job information and status tracking.
+- Offline functionality and mobile-first design.
+- Real-time job assignment, tracking, and rerouting.
+
+<!-- ## ✍️ Journey -->
+
+### Research & Insights
+
+Methods:
+
+- Shadowed dispatchers and rode along with technicians.
+- 10+ contextual interviews.
+
+Findings:
+
+- **Spotty Connectivity:** Offline access was critical.
+- **Simplicity First:** Field techs wanted less clutter, clearer visibility.
+- **Visibility Gaps:** Dispatchers needed real-time insights.
+
+> “I don’t need a ton of features—just my list of jobs and a quick way to mark them done.” — Field Technician 
+
+
+> “We lose track of where each tech is at during the day. Once they’re out, we’re basically blind.” — Dispatcher
 
 ---
 
-## Discovery & Research
+### Decision Decisions
 
-To define the problem space, I joined field observations, shadowed dispatchers, and ran contextual interviews with 10+ technicians and managers.
+_A look at the pivotal design decisions that shaped the experience, balancing real-world constraints with user needs._
 
-#### Key Insights:
-- Technicians often worked in areas with spotty internet, needing robust offline support
-- Dispatchers struggled to track technician status across hundreds of simultaneous jobs
-- Most technicians preferred a simple, minimal UI optimized for mobile or tablet use
+Mapped full workflow: _Dispatch → Technician View → Progress → Completion Sync._
 
-> “I don’t need more features. I just need to see my jobs and mark them done.”  
-> — Technician, MSS
+Key UX decisions:
 
----
+- 📅 Simplified daily scheduling.
+- 🗂️ Job cards with detailed instructions.
+- 👆 One-tap status updates.
+- 📈 Dispatcher dashboard for live monitoring.
 
-## Design & Prototyping
-
-With these constraints in mind, I created low-fidelity wireframes to map the core job workflow:  
-→ Dispatch assignment → Technician view → Job progress → Completion sync
-
-We focused on:
-
-- **Day-view scheduling**: An agenda-like calendar to reduce missed jobs
-- **Job cards**: Containing all relevant instructions, tools needed, and notes
-- **Smart status updates**: Allowing one-tap progress tracking for field workers
-- **Dispatcher dashboard**: Offering real-time job monitoring and exception handling
-
-I led multiple prototype review sessions with internal stakeholders and ran usability testing with 8 technicians using interactive mobile prototypes.
+Usability tests led to offline sync, larger tap targets, and UI refinements.
 
 ---
 
-### Iteration Highlights
+<!-- ## 🏁 Outcome -->
 
-- Simplified calendar UI after confusion during early tests
-- Replaced dropdowns with large tap targets for gloves-on field use
-- Added offline save + sync fallback for unreliable connection zones
+### Final Design
 
----
+- Technician mobile interface for job tracking.
+- Real-time dispatcher console.
+- Modular design system for future scalability.
 
-## Final Design
+### Impact
 
-The final platform included:
+- ⏱️ **95% Mobile Adoption** within 30 days.
+- 📝 **Zero Paper Dispatching** within 6 weeks.
+- ⏱️ **40% Faster Job Completion.**
 
-- Technician mobile views with job-by-job tracking
-- Real-time dispatch interface for admin staff
-- Role-specific access and visibility
-
-The design system was modular, enabling MSS to expand it to other business units in the future.
-
----
-
-## Impact
-
-- 📱 Mobile usage adoption reached **95%** within the first month
-- 🚫 Paper-based dispatching dropped to nearly zero
-- 🕒 Dispatchers reported faster re-routing and rescheduling
-- 📉 Reduction in job-switching errors and friction
-
----
+> “It’s night and day from before. Dispatch is faster, and my techs are way more confident in the field.” — Operations Manager
 
 ## Reflection
 
-This project showed the importance of designing for real-world conditions — like low connectivity and physical labor constraints.  
-Keeping the interface simple, offline-ready, and field-tested led to faster adoption and real operational improvements.
+Designing for real-world constraints like low connectivity and gloves-on usage was key. Next time, I’d prioritize deeper early-stage field testing.
 
----
+

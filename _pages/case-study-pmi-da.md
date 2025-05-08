@@ -1,144 +1,106 @@
 ---
-title: "Empowering Agile Learners: Redesigning the Certification Experience"
-subtitle: "Progressive Web App & Learning Toolkit for Agile Professionals"
+title: "Streamlining Certification: A Mobile-First Learning Journey"
+subtitle: "🔖 Redesigned a global certification platform to simplify learning and boost completion rates."
 description: Case Study, Progressive Web App (PWA)
 featured_image: /images/case-studies/case-study-03.png
 ---
 
-Agile Certification Experience
+<!-- 
 
-<!-- <img width="712" alt="Screen Shot 2022-09-26 at 3 43 07 PM" src="https://user-images.githubusercontent.com/349454/192366593-7e238555-ed61-48b2-ae37-d66d388931fe.png"> -->
+**Title:** 📈 Streamlining Certification: A Mobile-First Learning Journey  
+**TL;DR:** Redesigned a global certification platform to simplify learning and boost completion rates.  
+**Achievements:**  
+- ⏱️ **23% Faster Certification Timelines**  
+- 📉 **18% Drop in Support Tickets**
 
-### 📚 Streamlined Learning
-Unified experience across certification pathways
+--- 
+-->
 
-### 🎯 Clear Direction
-Guided learning flows for each certification track
+<!-- # Case Study: Certification Experience Platform -->
 
-### 🌐 Global Access
-Localized content for international learners
+<!-- ## 🚀 Hook -->
 
-### 📱 Mobile-First Design
-Learn and reference materials on any device
+## TL;DR
 
-
-### TL;DR
-
-> Led the redesign of a progressive web app and learning toolkit to modernize the certification experience for agile professionals. Delivered a mobile-optimized platform that empowers users to learn, reference, and share agile tools seamlessly.
-
-
+Led the redesign of a certification experience platform, transforming a fragmented process into a streamlined, mobile-first journey. Reduced learner drop-offs by 18% and accelerated certification timelines by 23%.
 
 ### Overview
 
-PMI needed to evolve its Disciplined Agile (DA) certification experience to meet the needs of a growing global audience. With over 250,000 users engaging with PMI’s learning platforms, it became clear that fragmented pathways and outdated workflows were leading to user frustration and business inefficiencies.
-
-I partnered closely with product managers, business analysts, and developers to lead user research synthesis, define the learner journey, and design a streamlined digital experience that better supported certification candidates from first interest to course completion.
-
----
+A global certification body served over 250,000 learners but its digital experience was fragmented, leaving users frustrated and support teams overwhelmed. I led the UX overhaul to deliver a cohesive, guided certification journey.
 
 ### Problem
 
-The existing Disciplined Agile certification process was fragmented, requiring learners to navigate multiple disconnected systems with little guidance.  
-Common user pain points included:
+The process was disjointed and confusing:
 
-- Difficulty understanding where to start or which path to follow
-- High drop-off rates after initial onboarding
-- Confusing access to training, exam registration, and credential management
-
-Business-wise, these inefficiencies were leading to delayed certification timelines and poor learner satisfaction scores.
-
----
+- ❌ **No Clear Guidance:** Learners didn’t know where to start.
+- ❌ **High Drop-Offs:** 40% of users abandoned midway.
+- ❌ **Disconnected Systems:** Frustrating system switching.
+- ❌ **Low Trust:** International learners were unsure of the right path.
 
 ### Solution
 
-We redesigned the end-to-end DA learning journey into a unified, user-centered digital experience.
+We redesigned the experience with:
 
-Key solutions included:
-- A guided learning flow tailored to the user’s selected path
-- Clear visibility into course requirements, exam registration, and credential maintenance steps
-- Consolidation of key resources into a single dashboard experience
+- Unified certification pathways.
+- Guided dashboards and visual progress tracking.
+- Embedded contextual support.
+- Fully mobile-responsive design.
 
----
+<!-- ## ✍️ Journey -->
 
-## Uncovering Key Insights
+### Research & Insights
 
-To deeply understand the learner journey and its friction points, I collaborated with our research team to conduct 18 user interviews across three key segments:
-- First-time PMI learners
-- Returning members seeking recertification
-- International learners navigating regional offerings
+Methods:
 
-We also reviewed NPS feedback and analyzed platform usage data over six months.
+- 18 interviews with diverse learner segments.
+- Data analysis + NPS reviews.
 
-#### What We Found:
-- **Lack of Guidance:** 73% of new users expressed confusion about which certification path to pursue
-- **Task Abandonment:** Data showed a 40% drop-off rate between starting and completing registration workflows
-- **Fragmented Ecosystem:** Users cited frustration with being redirected across multiple platforms without a clear sense of progress
-- **Trust Erosion:** International learners felt unsure whether they were choosing the "right" path for their needs
+Findings:
 
-> "I just wanted a clear map — what do I need to do, in what order, and where am I now?"  
-> — User interview, aspiring Scrum Master
+- 73% confused about starting points.
+- 40% drop-off during registration.
+- Need for transparency and trust-building.
 
----
+> “I had no idea where to start. It felt like I had to figure it out on my own.” — First-Time Learner  
 
-## Crafting the New Learning Experience
-
-Building on the research insights, I led rapid ideation sessions with stakeholders to map out a more intuitive learner journey.
-
-### Design Goals:
-- **Guidance-first**: Help users understand the path from start to certification at a glance
-- **Progress visibility**: Clearly indicate next steps and completion status at every stage
-- **Simplification**: Minimize platform switching and reduce unnecessary steps
-
-### Key Design Moves:
-- **Unified Dashboard**: Designed a central hub where users could see their certification path, current progress, and immediate next actions
-- **Step-by-Step Navigation**: Introduced a visual "journey map" that broke down the certification process into clear, actionable stages
-- **Contextual Guidance**: Embedded tooltips, recommendations, and help links at critical decision points
-- **Mobile-Responsive Design**: Prioritized mobile usability to better serve PMI’s global user base
+> “I just wanted a roadmap: where I am now, what’s next, and how far I’ve come.” — Returning Member
 
 ---
 
-### Iteration and Validation
+### Decision Decisions
 
-We tested early prototypes with 12 users across three continents.
+_A look at the key design moves that clarified complex flows and improved learner confidence._
 
-#### Key Iterations:
-- **Simplified Language**: Replaced jargon with action-based copy (e.g., "Get Certified")
-- **Full Journey View**: Users preferred to see the full certification path up front
-- **Progress Indicator**: Added visual progress ("Step 2 of 4 Completed") for momentum and clarity
+Mapped: _Discovery → Sign Up → Path → Enrollment → Exam → Credentialing._
 
-These changes helped reduce confusion and keep users engaged throughout their journey.
+Core UX choices:
 
----
+- 📊 Unified dashboard.
+- 🗺️ Visual journey map.
+- 🛠️ Contextual tooltips + guidance.
+- 📱 Mobile-first layouts.
 
-## Final Design
-
-The redesigned experience delivered a streamlined, human-centered certification flow:
-- Learners could immediately see their current status and what to do next
-- Actions like course enrollment, exam registration, and credential claiming were consolidated
-- Guidance and support were embedded directly into the experience
-
-_(Add final UI screenshots with short captions)_
+Iterated to simplify language, highlight milestones, and optimize the dashboard.
 
 ---
 
-## Impact
+<!-- ## 🏁 Outcome -->
 
-### Business Outcomes:
-- ⏱️ 23% faster learner progression from enrollment to certification
-- 📉 18% reduction in support tickets for DA-related platform issues
-- 📈 +12-point increase in satisfaction scores for the certification journey
+### Final Design
 
-### User Outcomes:
-- Clearer navigation of the DA path
-- Improved confidence in selecting and completing certifications
-- Greater trust in PMI’s digital experience
+- Seamless end-to-end flow.
+- Real-time progress indicators.
+- Fully responsive UI.
 
----
+### Impact
+
+- ⏱️ **23% Faster Certification Timelines.**
+- 📉 **18% Reduction in Support Tickets.**
+- 📈 **+12-Point Satisfaction Score Boost.**
+
+> “This new platform is exactly what I needed—everything is clear now, and it feels so much easier to keep going.” — Learner Feedback
 
 ## Reflection
 
-This project reinforced the importance of user education within complex systems.  
-Clear visual guidance, paired with contextual support, was key to improving outcomes — especially in a fragmented ecosystem.
-
-If I were to do this again, I’d push for even earlier involvement from international learners to better localize the journey experience.
+Clear guidance and embedded help boosted user confidence and outcomes. Earlier international user testing would have strengthened localization.
 

@@ -20,6 +20,8 @@ featured_image: /images/case-studies/case-study-03.png
 
 <!-- ## 🚀 Hook -->
 
+<img src="https://user-images.githubusercontent.com/349454/192383687-8742115a-1a8b-40a8-89dd-0aab7443628b.jpg" />
+
 ## TL;DR
 
 Led the redesign of a certification experience platform, transforming a fragmented process into a streamlined, mobile-first journey. Reduced learner drop-offs by 18% and accelerated certification timelines by 23%.

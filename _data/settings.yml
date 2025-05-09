@@ -49,7 +49,7 @@ social_settings:
   etsy_url: ''
 
 color_settings:
-  background_color: '#ffffff'
+  background_color: '#fafafa'
   background_alt_color: '#f4f5f6'
   text_dark_color: '#202224'
   text_medium_color: '#6C7A89'
@@ -180,7 +180,7 @@ menu_settings:
   menu_items:
     - title: Home
       url: /
-    - title: Work
+    - title: Projects
       url: /#case-studies
     - title: About
       url: /#about

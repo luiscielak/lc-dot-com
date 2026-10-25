@@ -1,0 +1,81 @@
+---
+import { getCollection } from "astro:content";
+import { Picture } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import { workImage } from "../lib/images";
+
+const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Luis Cielak — Lead Product Designer">
+  <div class="wrap hero">
+    <h1>Turning complexity into clarity.</h1>
+    <p class="lede">
+      I’m Luis. I design web and mobile products for B2B, B2C, and SaaS teams —
+      currently building at the intersection of product design, AI workflows, and
+      community. Founder of The Hooman Loop. Organizer of Cursor Philly, where
+      designers, builders, and operators explore how AI changes the way we create
+      software.
+    </p>
+    <p class="lede">Lead Product Designer · design engineer.</p>
+    <p class="clients">
+      <span>PMI</span>
+      <span>JPMorgan Chase</span>
+      <span>USA.gov</span>
+      <span>Celgene</span>
+      <span>Westat</span>
+      <span>Elsevier</span>
+      {/* TODO(Luis): Vanguard wordmark on the live logo strip is an open decision. Named in the Vanguard case study as contract work; not using the SVG wordmark here. */}
+    </p>
+  </div>
+
+  <section class="wrap" id="work">
+    <h2 class="section-title">Work</h2>
+    <div class="work-grid">
+      {
+        studies.map((s, i) => {
+          const img = workImage(s.data.cover);
+          const cap = Math.min(s.data.coverMaxCssPx, Math.floor(img.width / 1.5));
+          return (
+            <a
+              class:list={["work-card", i === 0 && "featured"]}
+              href={`/work/${s.id}`}
+            >
+              <Picture
+                src={img}
+                alt={s.data.coverAlt}
+                formats={["avif", "webp"]}
+                widths={[640, 960, 1280, 1600, 1920].filter((w) => w <= img.width)}
+                sizes={i === 0 ? `(min-width: 48rem) min(100vw - 2rem, ${cap}px), min(100vw - 2rem, ${cap}px)` : `min(100vw - 2rem, ${cap}px)`}
+              />
+              <div class="meta">
+                {s.data.draft ? <span class="badge">Draft</span> : null}
+                {s.data.company ? <span class="badge">{s.data.company}</span> : null}
+                <h2>{s.data.title}</h2>
+                <p>{s.data.subtitle}</p>
+              </div>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2 class="section-title">What I do</h2>
+    <div class="prose">
+      <p>
+        I help product teams bring clarity to complex systems—whether that means
+        improving usability, visualizing data, or scaling design infrastructure.
+        My work spans product strategy, research, interface design, and data
+        storytelling—all rooted in systems thinking and business impact.
+      </p>
+      <p>
+        User experience, user research, interface design, and data visualization:
+        seamless, human-centered products; practical interfaces; interviews,
+        testing, and journey mapping; dashboards and visual systems that support
+        faster decisions.
+      </p>
+    </div>
+  </section>
+</Base>

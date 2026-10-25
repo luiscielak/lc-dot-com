@@ -1,0 +1,80 @@
+---
+title: "Making “Compare” Actually Compare"
+subtitle: "One native design for comparing advice tiers on iOS and Android: swipeable cards or a table, a fixed row order, and disclosures one tap away."
+company: "Vanguard (contract)"
+role: "Lead UX Product Designer"
+years: "2025–present"
+status: "In development"
+tags: ["Native mobile", "Design systems"]
+platforms: "Native iOS (SwiftUI) and Android (Kotlin), one shared design"
+tools: "Figma, SwiftUI, Kotlin, design system tokens"
+order: 5
+draft: true
+recreatedNote: "Screens recreated from public information, with branding removed."
+cover: "vanguard/cover.png"
+coverAlt: "Four advice-tier cards in a native comparison, recreated from public information with branding removed"
+coverMaxCssPx: 960
+researchHeading: "Why it mattered"
+tldr: "Led the redesign of an advice comparison inside Vanguard’s native investing app, replacing a web view with one native design for iOS and Android. People can swipe through tier cards or switch to a table, every tier shows the same rows in the same order, and disclosures sit one tap from the number they explain. In development, not shipped yet."
+overview: "Inside Vanguard’s native investing app, investors choose between four advice tiers, from Digital Advisor to Wealth Management, with minimums from $100 to $5M+. Each tier has its own minimum, fee, and features, plus a lot of required disclosure.\n\nThe screen meant to help people choose was called “compare,” but it didn’t let anyone compare. It was a web page loaded into the app. I redesigned it as a native experience, adapted the components for SwiftUI and Kotlin, and worked with the iOS and Android developers and the design systems team so the pieces could be reused well beyond this screen.\n\nThe question I kept coming back to: what does “compare” have to mean on a phone?"
+challenges:
+  - title: "No real comparison"
+    body: "Each tier was a long stacked card. Comparing fees meant scrolling, remembering, and scrolling again."
+  - title: "Felt like a web page"
+    body: "Spacing and type didn’t match the app, and the header’s back and forward arrows looked disabled."
+  - title: "Key numbers buried"
+    body: "The accordion listed tier names only, with no minimum or fee."
+  - title: "Footnotes and dashes"
+    body: "Superscripts pointed to disclosures far below, and columns of dashes for “not included” made you read what you don’t get."
+solution: "I rebuilt it as one native design for iOS and Android, with:\n\n- A Cards / Table toggle, so people choose how they compare\n- The same 12 rows in the same order on every tier, minimum and fee first\n- Clear “Included” and “Not included” labels instead of dashes\n- Disclosures in a bottom sheet, one tap from what they explain\n- Reusable components, proposed as design system patterns and accepted"
+research: "There was no formal research study on this project. This section covers what user feedback and the team told me.\n\nThis one screen was costing something for everyone who touched it:\n\n- Investors: user feedback said the tiers were hard to compare\n- Stakeholders: wanted the advice products positioned better\n- Developers: kept recreating the same components, screen after screen\n- QA: kept testing the same things over and over\n\nFixing the comparison would help investors decide, and building it the right way would stop the team rebuilding and retesting the same parts."
+decisions: "A look at the key design moves, made inside three limits: disclosures can’t be cut, one design has to work on two platforms, and everything has to fit the design system.\n\n- Cards or a table. People compare differently, so a toggle lets them swipe one tier at a time or scan them all. Both views use the same rows in the same order.\n- Fixed row order, basics first. Every tier starts with the minimum and fee, and every row stays in the same spot. “Included” and “Not included” replace the dashes. The tier-name accordion stays.\n- Footnotes in a bottom sheet. The legal text stays complete. It moves next to what it explains, one tap away in either view.\n- One platform-agnostic spec. Designed once and specified to behave the same on iOS and Android.\n- Components built to be reused. The parts a comparison is made of were proposed as design system patterns. The proposal was accepted."
+outcome: "The redesign is in development, not shipped, so I’m not claiming any results. I worked directly with the iOS and Android developers (docs, tokens and designs) and with the design systems team, and the pattern contribution was accepted into the system.\n\nStatus:\n\n- In development on iOS and Android\n- Pattern proposal accepted into the design system\n- Analytics being built to show how often, when and where people open disclosures (no findings yet)\n\nWhat I’ll measure once it’s live (plans, not results):\n\n- Comparison engagement: do people swipe past the first card, and which view do they pick?\n- Advice enrollment starts from this screen\n- Whether feedback still says the tiers are hard to compare\n- Component reuse by other teams, and less repeat work for developers and QA"
+reflection: "A screen called “compare” only compares if the layout lets you hold two things side by side, one swipe or one row apart. Keeping every row in the same place did more than adding detail, and required disclosures didn’t have to be in the way. The visible problem was the screen; the hidden one was rebuilt components and retests, so the best mobile fix turned out to be a systems fix.\n\nWhat’s next: the pattern layer. The design system stopped at atoms, molecules and organisms. The next case study is about the layer of reusable patterns I defined on top, now accepted into the system."
+metrics:
+  - value: "4"
+    label: "Advice tiers in one comparison"
+    confirmed: true
+  - value: "12"
+    label: "Rows, same order on every tier"
+    confirmed: true
+visuals:
+  challenge:
+    src: "vanguard/before.png"
+    alt: "Long stacked comparison tables on phones, recreated from public information with branding removed"
+    caption: "The before: long tables stacked on top of each other. Comparing meant scrolling and remembering. Screens recreated from public information, with branding removed."
+    maxCssPx: 960
+  solution:
+    src: "vanguard/table.png"
+    alt: "Native table comparison of advice tiers, recreated from public information with branding removed"
+    caption: "Switch to a table and scan them all. Same rows, same order. Screens recreated from public information, with branding removed."
+    maxCssPx: 400
+    phone: true
+  research:
+    src: "vanguard/cards.png"
+    alt: "A single advice-tier card in the native comparison, recreated from public information with branding removed"
+    caption: "Swipe through one tier at a time. Screens recreated from public information, with branding removed."
+    maxCssPx: 400
+    phone: true
+  decisions:
+    src: "vanguard/row-anatomy.png"
+    alt: "Anatomy of a comparison row used in both card and table views, branding removed"
+    caption: "One row, built once, used in both views. The order is the comparison. Screens recreated from public information, with branding removed."
+    maxCssPx: 900
+  outcome:
+    src: "vanguard/handoff.png"
+    alt: "Handoff spec for a shared iOS and Android comparison, branding removed"
+    caption: "One set of tokens and one spec, shared by both platforms. Screens recreated from public information, with branding removed."
+    maxCssPx: 900
+video:
+  src: "/video/vanguard/hero-recording.mp4"
+  poster: "vanguard/hero-poster.png"
+  caption: "Swipe through the four tier cards, then tap Table. Screens recreated from public information, with branding removed."
+  fallbackAlt: "Poster frame of the native advice comparison cards, branding removed"
+  section: header
+---
+
+{/* TODO(Luis): Confirm workflow step names: Explore → Advice → Compare (Cards ⇄ Table) → Disclosure sheet. */}
+{/* TODO(Luis): Design pass on the after screens (polish, closeness, cards vs table, framing). */}
+{/* TODO(Luis): Hero recording finger dot; handoff-sheet spec lines; 3-phone strip pick. */}
+{/* TODO(Luis): Password-protected version with real screens stays off this public repo. */}

@@ -1,0 +1,48 @@
+---
+import "@hooman-loop/konstrukt/css";
+import "@hooman-loop/konstrukt/base.css";
+import "../styles/site.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Lead Product Designer / design engineer. Portfolio of Luis Cielak." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-mode="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap nav">
+        <a class="nav-home" href="/">Luis Cielak</a>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="/#work">Work</a>
+          <a href="/about">About</a>
+          <a href="/resume">Resume</a>
+          <a href="/writing">Writing</a>
+        </nav>
+      </div>
+    </header>
+    <main id="content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          Lead Product Designer · design engineer · Philadelphia.
+          <a href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

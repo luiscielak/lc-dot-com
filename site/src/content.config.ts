@@ -39,6 +39,11 @@ const work = defineCollection({
     coverMaxCssPx: z.number().positive(),
     order: z.number(),
     draft: z.boolean().default(false),
+    /** Homepage index row — Paper “Five that mattered” / The Issue. */
+    indexTitle: z.string().optional(),
+    indexKicker: z.string().optional(),
+    indexClaim: z.string().optional(),
+    indexYear: z.string().optional(),
     recreatedNote: z.string().optional(),
     researchHeading: z.enum(["Research & Insights", "Why it mattered"]).default("Research & Insights"),
     tldr: z.string().optional(),

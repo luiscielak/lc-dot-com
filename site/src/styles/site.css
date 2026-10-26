@@ -260,6 +260,52 @@ a:hover {
   margin: 0 0 1rem;
 }
 
+.cs-mdx > h2 {
+  font: var(--type-heading);
+  letter-spacing: var(--type-heading-tracking);
+  margin: 2rem 0 1rem;
+  padding-top: 2rem;
+  border-top: var(--stroke-hairline) solid var(--border);
+}
+
+.cs-mdx > h2:first-of-type {
+  margin-top: 0;
+}
+
+.cs-mdx > h3 {
+  font: var(--type-label);
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.cs-mdx > p,
+.cs-mdx > ul,
+.cs-mdx > ol {
+  max-width: 42rem;
+}
+
+.cs-mdx > ul,
+.cs-mdx > ol {
+  padding-left: 1.2rem;
+}
+
+.cs-mdx > p + p {
+  margin-top: 1rem;
+}
+
+.cs-mdx > ul + p,
+.cs-mdx > ol + p,
+.cs-mdx > p + ul,
+.cs-mdx > p + ol {
+  margin-top: 1rem;
+}
+
+.cs-mdx > .figure,
+.cs-mdx > .perm-matrix {
+  margin-top: 1.25rem;
+}
+
 .prose p,
 .prose li {
   max-width: 42rem;

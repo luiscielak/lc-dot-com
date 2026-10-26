@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
 import Figure from "./Figure.astro";
 import WorkVideo from "./WorkVideo.astro";
 import { renderProse } from "../lib/prose";
@@ -13,9 +14,21 @@ const { entry, next } = Astro.props;
 const d = entry.data;
 const confirmed = d.metrics.filter((m) => m.confirmed).slice(0, 3);
 const v = d.visuals;
+const { Content } = await render(entry);
+const hasMdxBody = visibleMdxBody(entry.body);
 
 function html(s?: string) {
   return s ? renderProse(s) : "";
+}
+
+/** True when the MDX body has rendered content, not only comments or imports. */
+function visibleMdxBody(body: string | undefined): boolean {
+  if (!body) return false;
+  return body
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, "")
+    .replace(/import\s+[\s\S]+?from\s+["'][^"']+["'];?/g, "")
+    .trim()
+    .length > 0;
 }
 ---
 
@@ -108,6 +121,14 @@ function html(s?: string) {
         }
         {v.tldr ? <Figure {...v.tldr} /> : null}
       </section>
+    ) : null
+  }
+
+  {
+    hasMdxBody ? (
+      <div class="cs-mdx wrap">
+        <Content />
+      </div>
     ) : null
   }
 

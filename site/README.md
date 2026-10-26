@@ -21,4 +21,4 @@ Preview is local only. Do not deploy, change DNS, or attach Cloudflare Pages fro
 
 ## Content
 
-Case studies: `src/content/work/*.mdx`. StraatClaw and Vanguard are `draft: true` (still built, labeled Draft). Empty template sections are omitted. Metrics render only when `confirmed: true`.
+Case studies: `src/content/work/*.mdx`. StraatClaw and Vanguard are `draft: true` (still built, labeled Draft). Empty template sections are omitted. When the MDX body has real content (not only `{/* TODO */}` comments), the template renders it via `Content`. Metrics render only when `confirmed: true`.

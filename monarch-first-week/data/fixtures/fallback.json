@@ -1,0 +1,245 @@
+{
+  "source": "pre-written",
+  "model": "prototype-fallback",
+  "generatedAt": "2026-10-29T00:00:00Z",
+  "note": "Used when Workers AI is off, timed out, rate-limited, or running in local mock AI mode.",
+  "groups": [
+    {
+      "id": "g-fresh-basket",
+      "merchantLabel": "Fresh Basket",
+      "suggestedCategory": "Groceries",
+      "confidence": "likely",
+      "why": "Same grocery merchant, mixed ticket sizes, usually weekends and Wednesday restocks.",
+      "ruleDraft": {
+        "whenContains": "fresh basket",
+        "setCategory": "Groceries"
+      },
+      "kind": "merchant",
+      "transactionIds": [
+        "txn-046",
+        "txn-045",
+        "txn-044",
+        "txn-043",
+        "txn-042",
+        "txn-041",
+        "txn-040",
+        "txn-039",
+        "txn-038",
+        "txn-037",
+        "txn-053",
+        "txn-052",
+        "txn-051",
+        "txn-050",
+        "txn-049",
+        "txn-048",
+        "txn-047",
+        "txn-058",
+        "txn-057",
+        "txn-056",
+        "txn-055",
+        "txn-054"
+      ]
+    },
+    {
+      "id": "g-daily-grind",
+      "merchantLabel": "Daily Grind",
+      "suggestedCategory": "Restaurants & coffee",
+      "confidence": "likely",
+      "why": "Same merchant, mostly weekdays, coffee-sized amounts. Raw strings are messy but they collapse to one place.",
+      "ruleDraft": {
+        "whenContains": "daily grind",
+        "setCategory": "Restaurants & coffee"
+      },
+      "kind": "merchant",
+      "exampleSent": {
+        "description": "SQ *DAILYGRIND0423",
+        "amount": -5.8,
+        "date": "2026-10-20",
+        "weekday": "Tuesday",
+        "application": "First Week · Quick Sort",
+        "accountKind": "Credit card"
+      },
+      "transactionIds": [
+        "txn-014",
+        "txn-013",
+        "txn-012",
+        "txn-011",
+        "txn-010",
+        "txn-009",
+        "txn-008",
+        "txn-007",
+        "txn-006",
+        "txn-005",
+        "txn-004",
+        "txn-003",
+        "txn-002",
+        "txn-001"
+      ]
+    },
+    {
+      "id": "g-fuel-stop",
+      "merchantLabel": "Fuel Stop",
+      "suggestedCategory": "Auto & transport",
+      "confidence": "likely",
+      "why": "Same station, one pending charge still sitting next to its posted twin.",
+      "ruleDraft": {
+        "whenContains": "fuel stop",
+        "setCategory": "Auto & transport"
+      },
+      "kind": "merchant",
+      "transactionIds": [
+        "txn-071",
+        "txn-072",
+        "txn-059",
+        "txn-060",
+        "txn-061",
+        "txn-062",
+        "txn-063",
+        "txn-064",
+        "txn-065",
+        "txn-066",
+        "txn-067",
+        "txn-068",
+        "txn-069",
+        "txn-070"
+      ]
+    },
+    {
+      "id": "g-oak-pine",
+      "merchantLabel": "Oak & Pine",
+      "suggestedCategory": "Restaurants & coffee",
+      "confidence": "unsure",
+      "why": "Sit-down tickets, evenings. Could be dinner or a bar tab. A leftover “pine” shopping rule also matches.",
+      "ruleDraft": {
+        "whenContains": "oak & pine",
+        "setCategory": "Restaurants & coffee"
+      },
+      "kind": "merchant",
+      "transactionIds": [
+        "txn-152",
+        "txn-135",
+        "txn-125",
+        "txn-183",
+        "txn-108",
+        "txn-148",
+        "txn-192",
+        "txn-174",
+        "txn-182",
+        "txn-150",
+        "txn-109",
+        "txn-138",
+        "txn-155"
+      ]
+    },
+    {
+      "id": "g-brightbox",
+      "merchantLabel": "Brightbox Streaming",
+      "suggestedCategory": "Entertainment",
+      "confidence": "likely",
+      "why": "Same $14.99 on the same day each month.",
+      "ruleDraft": {
+        "whenContains": "brightbox",
+        "setCategory": "Entertainment"
+      },
+      "kind": "merchant",
+      "transactionIds": [
+        "txn-102",
+        "txn-101",
+        "txn-100"
+      ]
+    },
+    {
+      "id": "g-transit",
+      "merchantLabel": "Northline Transit",
+      "suggestedCategory": "Auto & transport",
+      "confidence": "likely",
+      "why": "Small tap-to-ride amounts on weekdays.",
+      "ruleDraft": {
+        "whenContains": "northline",
+        "setCategory": "Auto & transport"
+      },
+      "kind": "merchant",
+      "transactionIds": [
+        "txn-142",
+        "txn-111",
+        "txn-156",
+        "txn-154",
+        "txn-170",
+        "txn-181",
+        "txn-128",
+        "txn-207",
+        "txn-112",
+        "txn-168",
+        "txn-204"
+      ]
+    },
+    {
+      "id": "g-harbor-autopay",
+      "merchantLabel": "Harbor Card Autopay",
+      "suggestedCategory": "Transfer",
+      "confidence": "likely",
+      "why": "Same amount, same day, between two of your accounts. Counting it twice doubles spending.",
+      "ruleDraft": {
+        "whenContains": "harbor card autopay",
+        "setCategory": "Transfer"
+      },
+      "kind": "transfer",
+      "pair": {
+        "from": "Northfield Bank · Checking",
+        "to": "Harbor Card",
+        "amount": 1240,
+        "date": "2026-10-03"
+      },
+      "transactionIds": [
+        "txn-077",
+        "txn-075",
+        "txn-073"
+      ]
+    },
+    {
+      "id": "g-ridge-transfer",
+      "merchantLabel": "Transfer to Ridge",
+      "suggestedCategory": "Transfer",
+      "confidence": "likely",
+      "why": "Money moving to your own joint checking, not a purchase.",
+      "ruleDraft": {
+        "whenContains": "transfer to ridge",
+        "setCategory": "Transfer"
+      },
+      "kind": "transfer",
+      "transactionIds": [
+        "txn-083",
+        "txn-081",
+        "txn-079"
+      ]
+    },
+    {
+      "id": "g-pharmacy",
+      "merchantLabel": "Willow Pharmacy",
+      "suggestedCategory": "Health",
+      "confidence": "likely",
+      "why": "Same pharmacy, prescription-sized tickets.",
+      "ruleDraft": {
+        "whenContains": "willow pharmacy",
+        "setCategory": "Health"
+      },
+      "kind": "merchant",
+      "transactionIds": [
+        "txn-151",
+        "txn-185",
+        "txn-146",
+        "txn-189",
+        "txn-203",
+        "txn-205",
+        "txn-141",
+        "txn-200",
+        "txn-179",
+        "txn-173",
+        "txn-127",
+        "txn-122",
+        "txn-161",
+        "txn-157"
+      ]
+    }
+  ]
+}

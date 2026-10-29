@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
 
 	<!-- Icons -->
-	<link rel="shortcut icon" href="{{ site.favicon | relative_url }}">
+	{% include favicon.html %}
 
 	{% if site.data.settings.advanced_settings.custom_styles %}
 	<!-- Custom Styles -->

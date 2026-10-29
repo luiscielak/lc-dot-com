@@ -36,15 +36,27 @@
     z-index: 10;
 
     &__link {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--text-color);
+      display: flex;
+      align-items: center;
       text-decoration: none;
-      letter-spacing: -0.5px;
-      transition: color 0.3s ease;
-      
+      transition: opacity 0.3s ease;
+
       &:hover {
-        color: var(--accent-color);
+        opacity: 0.7;
+      }
+    }
+
+    &__img {
+      display: block;
+      height: 32px;
+      width: auto;
+
+      @media screen and (max-width: 480px) {
+        height: 24px;
+      }
+
+      &--paper {
+        display: none;
       }
     }
   }
@@ -86,6 +98,16 @@
         }
       }
     }
+  }
+}
+
+[data-theme="dark"] {
+  .header__logo__img--ink {
+    display: none;
+  }
+
+  .header__logo__img--paper {
+    display: block;
   }
 }
 

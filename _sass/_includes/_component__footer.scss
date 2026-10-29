@@ -17,6 +17,18 @@
 		justify-self: center;
 		opacity: 0.6;
 		max-width: 220px;
+
+		&__link {
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+		}
+
+		&__img {
+			display: block;
+			height: 28px;
+			width: auto;
+		}
 	}
 
 	.footer__title {

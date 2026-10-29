@@ -316,6 +316,14 @@ $baseurl: '{{ site.baseurl }}';
       transform: scale(1);
     }
   }
+
+  .header__logo__img--ink {
+    display: none;
+  }
+
+  .header__logo__img--paper {
+    display: block;
+  }
 }
 
 .header__menu__item {

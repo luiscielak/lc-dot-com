@@ -1,14 +1,14 @@
 basic_settings:
   site_title: Luis Cielak
-  favicon_image: /images/logos/logo-lc-favicon.svg
+  favicon_image: /favicon.svg
 
 header_settings:
-  logo_image: /images/logos/logo-lc.svg
-  logo_width: 320
+  logo_image: /images/logos/luis-cielak-horizontal-black.svg
+  logo_width: 164
 
 footer_settings:
-  logo_image: /images/logos/logo-lc-alt.svg
-  logo_width: 120
+  logo_image: /images/logos/luis-cielak-horizontal-white.svg
+  logo_width: 164
   tagline: Lead Product Designer
 
 hero_settings:

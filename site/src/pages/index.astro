@@ -1,0 +1,94 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+
+function pad(n: number) {
+  return String(n).padStart(2, "0");
+}
+---
+
+<Base title="Luis Cielak — Lead Product Designer">
+  <section class="masthead">
+    <div class="wrap">
+      <p class="masthead-kicker">The whole practice, in three words</p>
+      <h1>Clarity above all.</h1>
+      <p class="masthead-lede">
+        I’m Luis Cielak, a product design lead. For a decade I’ve turned complex,
+        operational problems — logistics, certification, fintech, data — into
+        products people actually rely on in the field.
+      </p>
+      <p class="masthead-actions">
+        <a href="#work">View work</a>
+        <a href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+      </p>
+    </div>
+  </section>
+
+  <p class="wrap clients">
+    <span>PMI</span>
+    <span>Elsevier</span>
+    <span>Vanguard</span>
+    <span>JPMorgan Chase</span>
+    <span>USA.gov</span>
+    <span>Celgene</span>
+    <span>Westat</span>
+    {/* TODO(Luis): Vanguard wordmark on the live logo strip is an open decision. Named in the Vanguard case study as contract work; not using the SVG wordmark here. */}
+  </p>
+
+  <section class="wrap" id="work">
+    <h2 class="section-title">Five that mattered.</h2>
+    <ol class="work-index">
+      {
+        studies.map((s, i) => (
+          <li>
+            <a href={`/work/${s.id}`}>
+              <span class="wi-num">{pad(i + 1)}</span>
+              <span class="wi-body">
+                <span class="wi-kicker">{s.data.indexKicker ?? s.data.company}</span>
+                <span class="wi-title">{s.data.indexTitle ?? s.data.title}</span>
+                <span class="wi-claim">{s.data.indexClaim ?? s.data.subtitle}</span>
+              </span>
+              <span class="wi-meta">
+                {s.data.draft ? <span class="badge">Draft</span> : null}
+                {s.data.indexYear ? <span>{s.data.indexYear}</span> : null}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="wrap off-clock">
+    <h2 class="section-title">Off the clock, still shipping.</h2>
+    <div class="off-clock-grid">
+      <div>
+        <h3>The Hooman Loop</h3>
+        <p>A practice and community around design systems and how AI changes the way we make software.</p>
+      </div>
+      <div>
+        <h3>Cursor Philly</h3>
+        <p>A Philadelphia meetup for designers, builders, and operators.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap home-about" id="about">
+    <h2 class="section-title">About</h2>
+    <div class="prose">
+      <p>
+        Luis Cielak is a product design lead. He partners with teams to turn
+        complex, operational problems into clear, usable software — across SaaS,
+        fintech, and data-heavy platforms.
+      </p>
+      <p>
+        Currently at PMI. Previously Elsevier, Vanguard, and Near-Miss Management.
+      </p>
+      <p>
+        <a href="/about">More about Luis</a>
+      </p>
+    </div>
+  </section>
+</Base>

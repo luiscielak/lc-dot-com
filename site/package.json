@@ -1,0 +1,21 @@
+{
+  "name": "luiscielak-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm install --prefix node_modules/@hooman-loop/konstrukt && npm run build --prefix node_modules/@hooman-loop/konstrukt",
+    "dev": "astro dev",
+    "check": "astro check && node scripts/check-image-resolution.mjs",
+    "build": "astro build && node scripts/check-image-resolution.mjs",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.3.6",
+    "@hooman-loop/konstrukt": "github:the-hooman-loop/konstrukt#v2.0.0",
+    "astro": "^5.14.5",
+    "sharp": "^0.34.4",
+    "typescript": "^5.9.3"
+  }
+}

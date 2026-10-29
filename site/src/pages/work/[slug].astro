@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import CaseStudy from "../../components/CaseStudy.astro";
+
+export async function getStaticPaths() {
+  const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+  return studies.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, next: studies[(i + 1) % studies.length] },
+  }));
+}
+
+const { entry, next } = Astro.props;
+---
+
+<Base title={`${entry.data.title} — Luis Cielak`} description={entry.data.subtitle}>
+  <CaseStudy entry={entry} next={next} />
+</Base>

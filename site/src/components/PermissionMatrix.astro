@@ -1,0 +1,227 @@
+---
+/**
+ * Interactive L0–L5 permission ladder for the StraatClaw case study.
+ * CSS :has() + radio inputs — no client JS, works in the static build.
+ */
+interface Level {
+  id: string;
+  name: string;
+  action: string;
+  example: string;
+}
+
+interface Props {
+  /** Radio group name so more than one matrix can share a page. */
+  name?: string;
+}
+
+const group = Astro.props.name ?? "permission-level";
+
+const levels: Level[] = [
+  {
+    id: "l0",
+    name: "Observe",
+    action: "Read only",
+    example: "Read notes and sources",
+  },
+  {
+    id: "l1",
+    name: "Draft",
+    action: "Write something for my review",
+    example: "A brief, a draft reply",
+  },
+  {
+    id: "l2",
+    name: "Internal write",
+    action: "Change internal notes and task lists",
+    example: "Save a signal note, move a task",
+  },
+  {
+    id: "l3",
+    name: "Reversible",
+    action: "Run operations that can be undone",
+    example: "Run a local script",
+  },
+  {
+    id: "l4",
+    name: "External, with approval",
+    action: "Act outside the system, only after I say yes",
+    example: "Send an email, publish a post, submit a form",
+  },
+  {
+    id: "l5",
+    name: "Manual only",
+    action: "Never done by an agent",
+    example: "Payments, contracts, destructive deletes, credential changes",
+  },
+];
+---
+
+<div class="perm-matrix">
+  <p class="perm-kicker">Click a level to see what the agent can do</p>
+  <div class="perm-tabs" role="radiogroup" aria-label="Permission levels">
+    {
+      levels.map((level, i) => (
+        <label class="perm-tab">
+          <input
+            type="radio"
+            name={group}
+            value={level.id}
+            checked={i === 4}
+          />
+          <span class="perm-code">{`L${i}`}</span>
+          <span class="perm-name">{level.name}</span>
+        </label>
+      ))
+    }
+  </div>
+  {
+    levels.map((level, i) => (
+      <div class="perm-detail" data-level={level.id}>
+        <p class="perm-detail-level">
+          {`L${i}`}
+          <span aria-hidden="true"> · </span>
+          {level.name}
+        </p>
+        <p class="perm-detail-action">{level.action}</p>
+        <p class="perm-detail-example">
+          <span class="perm-example-label">Example</span>
+          {level.example}
+        </p>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .perm-matrix {
+    max-width: 42rem;
+    margin: 1.25rem 0;
+    border: var(--stroke-rule) solid var(--border);
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+  }
+
+  .perm-kicker {
+    font: var(--type-label);
+    letter-spacing: var(--type-label-tracking);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 0.75rem;
+  }
+
+  .perm-tabs {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0;
+    border: var(--stroke-hairline) solid var(--border);
+  }
+
+  .perm-tab {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    padding: 0.55rem 0.45rem;
+    cursor: pointer;
+    border-right: var(--stroke-hairline) solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .perm-tab:last-child {
+    border-right: 0;
+  }
+
+  .perm-tab input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .perm-code {
+    font: var(--type-label);
+    letter-spacing: var(--type-label-tracking);
+    text-transform: uppercase;
+  }
+
+  .perm-name {
+    font: var(--type-meta);
+    letter-spacing: var(--type-meta-tracking);
+    color: var(--text-muted);
+  }
+
+  .perm-tab:has(input:checked) {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .perm-tab:has(input:checked) .perm-name {
+    color: var(--bg);
+  }
+
+  .perm-tab:focus-within {
+    outline: var(--stroke-rule) solid var(--focus);
+    outline-offset: 2px;
+    z-index: 1;
+  }
+
+  .perm-detail {
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: var(--stroke-hairline) solid var(--border);
+  }
+
+  .perm-matrix:has(input[value="l0"]:checked) .perm-detail[data-level="l0"],
+  .perm-matrix:has(input[value="l1"]:checked) .perm-detail[data-level="l1"],
+  .perm-matrix:has(input[value="l2"]:checked) .perm-detail[data-level="l2"],
+  .perm-matrix:has(input[value="l3"]:checked) .perm-detail[data-level="l3"],
+  .perm-matrix:has(input[value="l4"]:checked) .perm-detail[data-level="l4"],
+  .perm-matrix:has(input[value="l5"]:checked) .perm-detail[data-level="l5"] {
+    display: block;
+  }
+
+  .perm-detail-level {
+    font: var(--type-heading);
+    letter-spacing: var(--type-heading-tracking);
+    margin: 0 0 0.35rem;
+  }
+
+  .perm-detail-action {
+    margin: 0 0 0.75rem;
+    max-width: 36rem;
+  }
+
+  .perm-detail-example {
+    margin: 0;
+    font: var(--type-meta);
+    letter-spacing: var(--type-meta-tracking);
+    max-width: 36rem;
+  }
+
+  .perm-example-label {
+    display: block;
+    font: var(--type-label);
+    letter-spacing: var(--type-label-tracking);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  @media (max-width: 40rem) {
+    .perm-name {
+      display: none;
+    }
+
+    .perm-tab {
+      align-items: center;
+      padding: 0.55rem 0.2rem;
+    }
+  }
+</style>

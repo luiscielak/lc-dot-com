@@ -1,0 +1,128 @@
+---
+title: "StraatClaw: Designing When an Agent Should Stop and Ask"
+subtitle: "How I designed a small team of AI agents I trust to act for me: clear roles, a six-level permission matrix, and approval gates in the chat apps I already use."
+company: "Personal project"
+role: "Designer and operator: roles, permissions, handoffs, conversation surfaces, memory rules"
+years: ""
+status: "In daily use. Not a shipped company product."
+tags: ["Agents", "Permissions"]
+platforms: "Telegram, Slack, Obsidian, Linear, Cursor"
+tools: "Hermes Agent (open source, Nous Research)"
+order: 4
+draft: true
+indexTitle: "StraatClaw"
+indexKicker: "AI field tool — In development"
+indexClaim: "An agent-assisted tool for field operators, built around a single trusted workflow."
+cover: "straatclaw/telegram.png"
+coverAlt: "Scout’s morning brief arriving in Telegram through StraatBot, on a phone"
+coverMaxCssPx: 400
+researchHeading: "Why it mattered"
+tldr: "A personal operating layer of named agents, with a permission matrix and approval gates in Telegram and Slack. I did not build Hermes — that is Nous Research’s open-source framework. StraatClaw is the product design on top: roles, limits, and when something has to stop and ask."
+metrics: []
+visuals:
+  header:
+    src: "straatclaw/telegram.png"
+    alt: "Scout’s morning brief arriving in Telegram through StraatBot, on a phone"
+    caption: "Every morning, Scout sends a short brief through StraatBot. It only says something when there’s something worth saying."
+    maxCssPx: 400
+    phone: true
+---
+
+import Figure from "../../components/Figure.astro";
+import PermissionMatrix from "../../components/PermissionMatrix.astro";
+
+{/* TODO(Luis): Title preference among the three options. */}
+{/* TODO(Luis): Confirm start date (draft said May 2026 to present). CMS currently says Ongoing. */}
+{/* TODO(Luis): Role wording — designer and operator vs any code you wrote. */}
+{/* TODO(Luis): Re-check Telegram hero line that may hint at a workshop even when redacted. */}
+
+## Overview
+
+Most AI tools are a clever assistant in a box. You ask, copy the answer somewhere else, and start over next time. I wanted something different: agents that hold context for weeks, do small jobs on a schedule, and know exactly what they’re allowed to do without asking me.
+
+StraatClaw is the result. It’s a small team of named agents I designed and run every day on top of Hermes Agent. I didn’t build Hermes. It’s Nous Research’s open-source framework, and I use it as the plumbing. What I designed is everything people actually experience: who does what, what each agent may do alone, when it has to stop and ask, and how that ask shows up on my phone.
+
+The core question turned out to be a product design question, not a model question: when will someone let an agent act for them?
+
+{/* TODO(Luis): Whether to restore the from-scratch v1 story. */}
+
+## Challenge
+
+Four rules I would not give up:
+
+- **Predictable.** I should know what each agent will and won’t do before it acts.
+- **Interruptible.** Anything with consequences outside my own notes should wait for me.
+- **Easy to approve.** The ask should come to me where I already am, and be quick to answer.
+- **Inspectable.** I should be able to read what an agent “knows” and fix it.
+
+## Why it mattered
+
+There was no formal research study. This section is why the design exists.
+
+When one agent can read everything, write anywhere, and act on my behalf, I can’t predict it — so I can’t trust it. Teams hit the same wall when they bring agents into real work: a traveler handing off a trip, a team letting an agent touch shared tickets, a developer letting an agent change infrastructure.
+
+The brief I set: predictable, interruptible, easy to approve, inspectable.
+
+## Solution
+
+Instead of one giant agent, I designed a small organization. Every agent gets a short profile: what it does, what it’s not responsible for, what it reads, what it writes, and when it hands off to me.
+
+- StraatBot, the orchestrator and chief-of-staff layer. It captures, triages, routes work, tracks open loops, and escalates to me.
+- Scout, research. Morning briefs, signals, watchlists, and a weekly synthesis.
+- Finley, finance. Cash flow, budget tracking, and the numbers behind decisions. Finley works from a private data inbox only it reads; other agents get a status or a flag, never raw figures.
+- Helpers by role for household operations, food and groceries, and travel planning.
+- A product design squad that runs a staged flow: PRD, lo-fi wireframes, mid-fi specs, a design kit, then a runnable prototype, based on my public Cursor rules.
+
+Hermes exposes capabilities; permissions are granted to named agents that run on Hermes.
+
+{/* TODO(Luis): Confirm full roster. Sterling is omitted from the public list pending your call (prefer Finley; Sterling still being defined). Confirm LoopBot and Mercado. */}
+{/* TODO(Luis): Confirm travel-planning helper vs StraatBot for trip-email work. */}
+{/* TODO(Luis): Confirm Finley’s private inbox / no raw figures / no investment advice. */}
+{/* TODO(Luis): Bug-workflow screenshot or a 4-step diagram; roster diagram. */}
+
+## Design Decisions
+
+The most useful thing I wrote wasn’t a prompt. It was a permission matrix: six levels that spell out what an agent can do alone and what it has to bring back.
+
+<PermissionMatrix />
+
+Every agent has a default level. Scout can write reports but never contacts anyone. StraatBot can open a bug issue and hand off a fix, but it can’t publish. One rule sits above all of it: human judgment gates external action.
+
+Approvals arrive in chat, not in a dashboard. Telegram is for quick captures, status, approvals, and the morning brief. Slack is for real work, one thread per task.
+
+The approval prompt (Allow Once / Allow Session / Always Allow / Deny) comes from Hermes Agent’s built-in command approval. The design work is the levels and rules that decide when it fires and where it reaches me.
+
+<Figure
+  src="straatclaw/slack-approval.png"
+  alt="A command approval in a Slack thread: the exact command, why it needs a yes, and Allow Once, Allow Session, Always Allow, or Deny"
+  caption="The approval moment is the product. The agent shows exactly what it wants to run and why; nothing happens until I answer. The prompt itself is Hermes Agent’s built-in command approval."
+  maxCssPx={400}
+  phone={true}
+/>
+
+{/* TODO(Luis): Confirm approval caption (Hermes prompt vs your levels) and the 60s → 300s timeout anecdote; withheld until confirmed. */}
+
+## Outcome
+
+StraatClaw is in daily personal use. It is not a shipped company product, and this page claims no usage metrics.
+
+What’s next: StraatClaw Deploys is planned as a way to put a prototype online without handing an agent the keys to everything — a grant broker on the Mac mini, scoped expiring access, and approvals through a separate Telegram bot. That build is in progress; this section will be updated once it exists.
+
+{/* TODO(Luis): Any usage numbers you want public (jobs, briefs, bugs closed). None claimed. */}
+{/* TODO(Luis): StraatClaw Deploys: show this section before the build exists, or hold it? */}
+
+## Reflection
+
+I’m not trying to remove anyone’s judgment, including my own. I’m trying to give it better context and a little more leverage. The idea fits in one line: I don’t want one giant agent. I want a small organization of bounded agents.
+
+What I learned about trust:
+
+- Trust comes from limits, not intelligence.
+- The approval moment is the product.
+- Silence has to mean no.
+- Honest output builds more trust than impressive output.
+- Memory needs an owner and a home.
+
+{/* TODO(Luis): Confirm sharing the September memory-audit story. */}
+{/* TODO(Luis): Two synthesized learnings (“stakes are legible”, “reversibility”) — keep, reword, or cut; currently omitted. */}
+{/* TODO(Luis): Talk link for “Agents, Life OS, and Ollin” at Cursor Philly. */}

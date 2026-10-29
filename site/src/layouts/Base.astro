@@ -6,43 +6,74 @@ import "../styles/site.css";
 interface Props {
   title: string;
   description?: string;
+  /** Inverted nameplate landing. Replaces the light site chrome. */
+  nameplate?: boolean;
+  /** Résumé artboard. Page supplies its own header and footer. */
+  resume?: boolean;
 }
 
-const { title, description = "Lead Product Designer / design engineer. Portfolio of Luis Cielak." } = Astro.props;
+const {
+  title,
+  description = "Lead Product Designer / design engineer. Portfolio of Luis Cielak.",
+  nameplate = false,
+  resume = false,
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-mode="light">
+<html
+  lang="en"
+  data-mode="light"
+  data-page={nameplate ? "nameplate" : resume ? "resume" : undefined}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.svg" />
+    {
+      (nameplate || resume) && (
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap"
+        />
+      )
+    }
   </head>
   <body>
     <a class="skip" href="#content">Skip to content</a>
-    <header class="site-header">
-      <div class="wrap nav">
-        <a class="nav-home" href="/">Luis Cielak</a>
-        <nav class="nav-links" aria-label="Primary">
-          <a href="/#work">Work</a>
-          <a href="/about">About</a>
-          <a href="/resume">Resume</a>
-          <a href="/writing">Writing</a>
-        </nav>
-      </div>
-    </header>
+    {
+      nameplate || resume ? (
+        <slot name="banner" />
+      ) : (
+        <header class="site-header">
+          <div class="wrap nav">
+            <a class="nav-home" href="/">Luis Cielak</a>
+            <nav class="nav-links" aria-label="Primary">
+              <a href="/#work">Work</a>
+              <a href="/about">About</a>
+              <a href="/resume">Résumé</a>
+              <a href="mailto:luis@luiscielak.com">Contact</a>
+            </nav>
+          </div>
+        </header>
+      )
+    }
     <main id="content">
       <slot />
     </main>
-    <footer class="site-footer">
-      <div class="wrap">
-        <p>
-          Lead Product Designer · design engineer · Philadelphia.
-          <a href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
-        </p>
-      </div>
-    </footer>
+    {
+      !nameplate && !resume && (
+        <footer class="site-footer">
+          <div class="wrap">
+            <p>
+              Lead Product Designer · design engineer · Philadelphia.
+              <a href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+            </p>
+          </div>
+        </footer>
+      )
+    }
   </body>
 </html>

@@ -30,6 +30,9 @@ function yamlNumber(block, key) {
   return m ? Number(m[1]) : undefined;
 }
 
+/** Max CSS px the centered phone renders at in PhoneStage. Keep in sync with the component. */
+const PHONE_MAX = 320;
+
 function visualBlocks(block) {
   const visuals = [];
   const cover = yamlString(block, "cover");
@@ -38,6 +41,14 @@ function visualBlocks(block) {
   const poster = block.match(/\n  poster:\\s*"([^"]+)"/);
   if (poster) {
     visuals.push({ src: poster[1], maxCssPx: 400, field: "video.poster" });
+  }
+  const phones = block.split(/\nphones:\n/)[1];
+  if (phones) {
+    const rest = phones.split(/\n[a-z]+:/)[0];
+    const items = [...rest.matchAll(/\n  - [\s\S]*?src:\s*"([^"]+)"/g)];
+    items.forEach((m, i) => {
+      visuals.push({ src: m[1], maxCssPx: PHONE_MAX, field: `phones[${i}]` });
+    });
   }
   const vis = block.split(/\nvisuals:\n/)[1];
   if (!vis) return visuals;

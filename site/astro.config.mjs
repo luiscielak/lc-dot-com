@@ -43,5 +43,9 @@ export default defineConfig({
       status: 301,
       destination: "/work/making-compare-actually-compare",
     },
+    "/writing": {
+      status: 301,
+      destination: "/",
+    },
   },
 });

@@ -21,6 +21,13 @@ const challenge = z.object({
   body: z.string(),
 });
 
+const phone = z.object({
+  label: z.string(),
+  src: z.string(),
+  alt: z.string(),
+  caption: z.string(),
+});
+
 const work = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/work" }),
   schema: z.object({
@@ -39,6 +46,8 @@ const work = defineCollection({
     coverMaxCssPx: z.number().positive(),
     order: z.number(),
     draft: z.boolean().default(false),
+    presentation: z.enum(["product"]).optional(),
+    phones: z.array(phone).optional(),
     recreatedNote: z.string().optional(),
     researchHeading: z.enum(["Research & Insights", "Why it mattered"]).default("Research & Insights"),
     tldr: z.string(),

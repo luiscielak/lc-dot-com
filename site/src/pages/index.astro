@@ -1,81 +1,121 @@
 ---
 import { getCollection } from "astro:content";
-import { Picture } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import { workImage } from "../lib/images";
 
 const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+
+/** Poster copy from Paper, Landing 3 — Bold (Inverted Nameplate). */
+const plate = [
+  {
+    id: "field-dispatch",
+    index: "01",
+    domain: "Logistics",
+    title: "MSS Specialty Services",
+    blurb: "Workflow platform for specialty moving ops.",
+  },
+  {
+    id: "pmi-disciplined-agile",
+    index: "02",
+    domain: "Certification",
+    title: "PMI Disciplined Agile",
+    blurb: "Mobile-first PWA for agile coaches.",
+  },
+  {
+    id: "straatclaw",
+    index: "03",
+    domain: "AI field tool",
+    title: "StraatClaw",
+    blurb: "Agent-assisted tool for field operators.",
+  },
+];
+
+const featured = plate.flatMap((item) => {
+  const study = studies.find((s) => s.id === item.id);
+  if (!study) return [];
+  return [{ ...item, draft: study.data.draft }];
+});
+
+const moreCount = studies.length - featured.length;
 ---
 
-<Base title="Luis Cielak — Lead Product Designer">
-  <div class="wrap hero">
-    <h1>Turning complexity into clarity.</h1>
-    <p class="lede">
-      I’m Luis. I design web and mobile products for B2B, B2C, and SaaS teams —
-      currently building at the intersection of product design, AI workflows, and
-      community. Founder of The Hooman Loop. Organizer of Cursor Philly, where
-      designers, builders, and operators explore how AI changes the way we create
-      software.
+<Base
+  nameplate
+  title="Luis Cielak — Clarity above all."
+  description="I’m Luis Cielak, a lead product designer in Philadelphia. For fifteen years I’ve designed high-stakes products — risk, finance, certification, logistics — so people can see what a system is doing and decide what to do next."
+>
+  <header class="plate-bar" slot="banner">
+    <a class="plate-name" href="/">Luis Cielak</a>
+    <p class="plate-status">
+      <span>Product design lead</span>
     </p>
-    <p class="lede">Lead Product Designer · design engineer.</p>
-    <p class="clients">
-      <span>PMI</span>
-      <span>JPMorgan Chase</span>
-      <span>USA.gov</span>
-      <span>Celgene</span>
-      <span>Westat</span>
-      <span>Elsevier</span>
-      {/* TODO(Luis): Vanguard wordmark on the live logo strip is an open decision. Named in the Vanguard case study as contract work; not using the SVG wordmark here. */}
-    </p>
-  </div>
+    <nav class="plate-nav" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="/about">About</a>
+      <a href="/resume">Résumé</a>
+      <a href="mailto:luis@luiscielak.com">Contact</a>
+    </nav>
+  </header>
 
-  <section class="wrap" id="work">
-    <h2 class="section-title">Work</h2>
-    <div class="work-grid">
+  <div class="nameplate">
+    <section class="plate-hero" aria-labelledby="plate-title">
+      <p class="plate-kicker">Fifteen years of operational products</p>
+      <h1 id="plate-title">Clarity<br />above all.</h1>
+    </section>
+
+    <div class="plate-intro">
+      <p class="plate-bio">
+        I’m Luis Cielak, a lead product designer in Philadelphia. For fifteen years I’ve designed high-stakes products — risk, finance, certification, logistics — so people can see what a system is doing and decide what to do next.
+      </p>
+      <div class="plate-actions">
+        <a class="plate-btn" href="#work">View work →</a>
+        <a class="plate-btn plate-btn-ghost" href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+      </div>
+    </div>
+
+    <ul class="plate-strip">
       {
-        studies.map((s, i) => {
-          const img = workImage(s.data.cover);
-          const cap = Math.min(s.data.coverMaxCssPx, Math.floor(img.width / 1.5));
-          return (
-            <a
-              class:list={["work-card", i === 0 && "featured"]}
-              href={`/work/${s.id}`}
-            >
-              <Picture
-                src={img}
-                alt={s.data.coverAlt}
-                formats={["avif", "webp"]}
-                widths={[640, 960, 1280, 1600, 1920].filter((w) => w <= img.width)}
-                sizes={i === 0 ? `(min-width: 48rem) min(100vw - 2rem, ${cap}px), min(100vw - 2rem, ${cap}px)` : `min(100vw - 2rem, ${cap}px)`}
-              />
-              <div class="meta">
-                {s.data.draft ? <span class="badge">Draft</span> : null}
-                {s.data.company ? <span class="badge">{s.data.company}</span> : null}
-                <h2>{s.data.title}</h2>
-                <p>{s.data.subtitle}</p>
-              </div>
+        featured.map((item) => (
+          <li>
+            <a href={`/work/${item.id}`}>
+              <span class="plate-kicker-row">
+                <span class="plate-index">
+                  {item.index} / {item.domain}
+                </span>
+                {item.draft ? <span class="plate-draft">Draft</span> : null}
+              </span>
+              <span class="plate-study">{item.title}</span>
+              <span class="plate-blurb">{item.blurb}</span>
             </a>
-          );
-        })
+          </li>
+        ))
       }
-    </div>
-  </section>
+      <li>
+        <a class="plate-more" href="#work">
+          <span class="plate-more-count">+ {moreCount} more</span>
+          <span class="plate-all">All work →</span>
+        </a>
+      </li>
+    </ul>
 
-  <section class="wrap">
-    <h2 class="section-title">What I do</h2>
-    <div class="prose">
-      <p>
-        I help product teams bring clarity to complex systems—whether that means
-        improving usability, visualizing data, or scaling design infrastructure.
-        My work spans product strategy, research, interface design, and data
-        storytelling—all rooted in systems thinking and business impact.
-      </p>
-      <p>
-        User experience, user research, interface design, and data visualization:
-        seamless, human-centered products; practical interfaces; interviews,
-        testing, and journey mapping; dashboards and visual systems that support
-        faster decisions.
-      </p>
-    </div>
-  </section>
+    <section class="plate-catalog" id="work" aria-labelledby="all-work">
+      <h2 id="all-work">All work</h2>
+      <ol>
+        {
+          studies.map((study, i) => (
+            <li>
+              <a href={`/work/${study.id}`}>
+                <span class="plate-index">
+                  {String(i + 1).padStart(2, "0")}
+                  {study.data.company ? ` / ${study.data.company}` : ""}
+                </span>
+                <span class="plate-study">{study.data.title}</span>
+                <span class="plate-blurb">{study.data.subtitle}</span>
+                {study.data.draft ? <span class="plate-draft">Draft</span> : null}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </div>
 </Base>

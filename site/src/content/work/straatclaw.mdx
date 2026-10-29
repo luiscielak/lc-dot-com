@@ -10,6 +10,7 @@ platforms: "Telegram, Slack, Obsidian, Linear, Cursor"
 tools: "Hermes Agent (open source, Nous Research)"
 order: 4
 draft: true
+presentation: "product"
 cover: "straatclaw/telegram.png"
 coverAlt: "Scout’s morning brief arriving in Telegram through StraatBot, on a phone"
 coverMaxCssPx: 400
@@ -31,13 +32,16 @@ decisions: "The most useful thing I wrote wasn’t a prompt. It was a permission
 outcome: "StraatClaw is in daily personal use. It is not a shipped company product, and this page claims no usage metrics.\n\nWhat’s next: StraatClaw Deploys is planned as a way to put a prototype online without handing an agent the keys to everything — a grant broker on the Mac mini, scoped expiring access, and approvals through a separate Telegram bot. That build is in progress; this section will be updated once it exists."
 reflection: "I’m not trying to remove anyone’s judgment, including my own. I’m trying to give it better context and a little more leverage. The idea fits in one line: I don’t want one giant agent. I want a small organization of bounded agents.\n\nWhat I learned about trust:\n\n- Trust comes from limits, not intelligence.\n- The approval moment is the product.\n- Silence has to mean no.\n- Honest output builds more trust than impressive output.\n- Memory needs an owner and a home."
 metrics: []
-visuals:
-  header:
+phones:
+  - label: "Morning brief"
     src: "straatclaw/telegram.png"
     alt: "Scout’s morning brief arriving in Telegram through StraatBot, on a phone"
     caption: "Every morning, Scout sends a short brief through StraatBot. It only says something when there’s something worth saying."
-    maxCssPx: 400
-    phone: true
+  - label: "Approval"
+    src: "straatclaw/slack-approval.png"
+    alt: "A command approval in a Slack thread: the exact command, why it needs a yes, and Allow Once, Allow Session, Always Allow, or Deny"
+    caption: "The approval moment is the product. The agent shows exactly what it wants to run and why; nothing happens until I answer."
+visuals:
   decisions:
     src: "straatclaw/slack-approval.png"
     alt: "A command approval in a Slack thread: the exact command, why it needs a yes, and Allow Once, Allow Session, Always Allow, or Deny"

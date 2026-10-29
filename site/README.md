@@ -1,24 +1,42 @@
 # luiscielak.com (Astro)
 
-New portfolio app. Lives in `site/` so the existing Jekyll tree at the repo root stays untouched and this branch can rebase onto Luis’s local reorg later.
-
-## Stack
-
-- Astro + MDX + TypeScript
-- [Konstrukt](https://github.com/the-hooman-loop/konstrukt) **v2.0.0** (git tag; this repo does not fork or patch Konstrukt)
-- Sharp for responsive images (`<Picture>` AVIF/WebP)
+The live site for [luiscielak.com](https://luiscielak.com). See the [root README](../README.md) for what the portfolio is about; this file is the technical reference.
 
 ## Commands
 
+All commands run from this `site/` directory:
+
 ```bash
-cd site
-npm install
-npm run dev
-npm run build   # includes the 1.5× image-resolution check
+npm install      # also builds Konstrukt via postinstall
+npm run dev      # local dev server
+npm run check    # astro check + image-resolution check
+npm run build    # production build + image-resolution check
+npm run preview  # serve the built site locally
 ```
 
-Preview is local only. Do not deploy, change DNS, or attach Cloudflare Pages from this branch.
+`build` and `check` both run `scripts/check-image-resolution.mjs`, which fails if a case-study image is under 1.5x its declared CSS max width.
 
-## Content
+## Stack
 
-Case studies: `src/content/work/*.mdx`. StraatClaw and Vanguard are `draft: true` (still built, labeled Draft). Empty template sections are omitted. Metrics render only when `confirmed: true`.
+- Astro 5, MDX, TypeScript
+- Sharp for responsive images
+- [Konstrukt](https://github.com/the-hooman-loop/konstrukt) v2.0.0 (pinned git tag; this repo does not fork or patch it). The `postinstall` script builds it after install.
+
+## Routes
+
+`/`, `/about`, `/resume`, `/work/[slug]`, and a 404. Old case-study URLs and `/writing` are 301-redirected; see `redirects` in [`astro.config.mjs`](astro.config.mjs).
+
+## Case studies
+
+Case studies are MDX in [`src/content/work/`](src/content/work/); the frontmatter schema lives in [`src/content.config.ts`](src/content.config.ts).
+
+- Empty sections are omitted from the rendered page.
+- Metrics render only when `confirmed: true`.
+- Drafts (`draft: true`) are still built and labeled Draft.
+
+Published: Field Dispatch, PMI Disciplined Agile, PMI Partner Platform.
+Draft: StraatClaw, Making "Compare" Actually Compare.
+
+## Hosting
+
+There is no deploy pipeline in this repo (no GitHub Actions, Vercel, or Cloudflare config). Preview is local via `npm run preview`.

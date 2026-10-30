@@ -6,28 +6,30 @@ import Base from "../layouts/Base.astro";
 
 const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
 
-/** Poster copy from Paper, Landing 3 — Bold (Inverted Nameplate). */
+/**
+ * Featured proof: the two strongest published cases, in the order the hero
+ * promises. Only cases with a real page are featured — no "case study soon"
+ * placeholders in the first position a hiring manager reads.
+ */
 const plate = [
   {
-    id: "field-dispatch",
+    id: "pmi-partner-platform",
     index: "01",
+    domain: "Certification",
+    title: "PMI Partner Platform",
+    blurb: "Self-service platform that replaced manual B2B workflows.",
+    // TODO(Luis): revenue result omitted until one figure is confirmed. The résumé
+    // says $3.75M first-year revenue / +30% conversion; the old live page said $3.1M;
+    // the case frontmatter keeps disputed dollars out of the metric row. Pick one,
+    // then add `result: "..."` here to render a result line on this card.
+  },
+  {
+    id: "field-dispatch",
+    index: "02",
     domain: "Logistics",
     title: "MSS Specialty Services",
     blurb: "Workflow platform for specialty moving ops.",
-  },
-  {
-    id: "pmi-disciplined-agile",
-    index: "02",
-    domain: "Certification",
-    title: "PMI Disciplined Agile",
-    blurb: "Mobile-first PWA for agile coaches.",
-  },
-  {
-    id: "straatclaw",
-    index: "03",
-    domain: "AI field tool",
-    title: "StraatClaw",
-    blurb: "Agent-assisted tool for field operators.",
+    result: "47% faster dispatch",
   },
 ];
 
@@ -37,7 +39,10 @@ const featured = plate.flatMap((item) => {
   return [{ ...item, draft: study.data.draft }];
 });
 
-const moreCount = studies.length - featured.length;
+const featuredIds = new Set(plate.map((item) => item.id));
+
+/** Everything else, numbered continuously after the featured strip. */
+const moreWork = studies.filter((study) => !featuredIds.has(study.id));
 
 /** Logo lockup after the work catalog. Width and height are the rendered pixel size. */
 const clients = [
@@ -51,6 +56,7 @@ const clients = [
   { name: "Celgene", src: "/logos/clients/celgene.png", width: 41, height: 36 },
   { name: "Westat", src: "/logos/clients/westat.png", width: 76, height: 20 },
 ];
+
 /**
  * Testimonials — LinkedIn recommendations. `quote` is a verbatim pull-quote
  * from each recommendation (kept short so the cards stay compact); the full
@@ -184,7 +190,7 @@ const practice = [
       </div>
     </div>
 
-    <ul class="plate-strip">
+    <ul class="plate-strip" id="work">
       {
         featured.map((item) => (
           <li>
@@ -197,6 +203,7 @@ const practice = [
               </span>
               <span class="plate-study">{item.title}</span>
               <span class="plate-blurb">{item.blurb}</span>
+              {item.result ? <span class="plate-result">{item.result}</span> : null}
               <svg
                 class="plate-card-arrow"
                 width="14"
@@ -211,12 +218,6 @@ const practice = [
           </li>
         ))
       }
-      <li>
-        <a class="plate-more" href="#work">
-          <span class="plate-more-count">+ {moreCount} more</span>
-          <span class="plate-all">Recent work <span class="plate-all-arrow" aria-hidden="true">→</span></span>
-        </a>
-      </li>
     </ul>
 
     <section class="plate-clients" aria-labelledby="clients-label">
@@ -247,15 +248,15 @@ const practice = [
       </div>
     </section>
 
-    <section class="plate-catalog" id="work" aria-labelledby="recent-work">
-      <h2 id="recent-work">Recent work</h2>
+    <section class="plate-catalog" aria-labelledby="more-work">
+      <h2 id="more-work">More work</h2>
       <ol>
         {
-          studies.map((study, i) => (
+          moreWork.map((study, i) => (
             <li>
               <a href={`/work/${study.id}`}>
                 <span class="plate-index">
-                  {String(i + 1).padStart(2, "0")}
+                  {String(featured.length + i + 1).padStart(2, "0")}
                   {study.data.company ? ` / ${study.data.company}` : ""}
                 </span>
                 <span class="plate-study">{study.data.title}</span>

@@ -840,25 +840,12 @@ html[data-page="nameplate"] a:focus-visible {
 
 .plate-strip {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 220px;
+  grid-template-columns: 1fr 1fr;
   margin: 0;
   padding: 0;
   list-style: none;
   border-top: 1px solid var(--np-rule);
-}
-
-@media (max-width: 1180px) {
-  .plate-strip {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .plate-strip > li:nth-child(even) {
-    border-right: 0;
-  }
-
-  .plate-strip > li:nth-child(-n + 2) {
-    border-bottom: 1px solid var(--np-rule);
-  }
+  scroll-margin-top: 24px;
 }
 
 .plate-strip > li {
@@ -934,16 +921,6 @@ html[data-page="nameplate"] a:focus-visible {
   color: var(--np-body);
 }
 
-.plate-all-arrow {
-  display: inline-block;
-  transition: transform var(--np-dur-2) var(--np-ease);
-}
-
-.plate-more:hover .plate-all-arrow,
-.plate-more:focus-visible .plate-all-arrow {
-  transform: translateX(4px);
-}
-
 /* Focus by subtraction: dim the siblings of the focused card. Keyboard
    focus works on any input; hover dimming only where hover is real. */
 .plate-strip:has(a:focus-visible) a:not(:focus-visible) {
@@ -962,18 +939,24 @@ html[data-page="nameplate"] a:focus-visible {
   gap: 8px;
 }
 
-.plate-index,
-.plate-more-count,
-.plate-all {
+.plate-index {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.1em;
   line-height: 16px;
   text-transform: uppercase;
+  color: var(--np-teal);
 }
 
-.plate-index {
+/* Result line: one confirmed metric per card, mono and tracked like the index. */
+.plate-result {
+  margin-top: 2px;
   color: var(--np-teal);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  text-transform: uppercase;
 }
 
 .plate-study {
@@ -1004,23 +987,8 @@ html[data-page="nameplate"] a:focus-visible {
   text-transform: uppercase;
 }
 
-.plate-more {
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.plate-more-count {
-  color: var(--np-faint);
-}
-
-.plate-all {
-  color: var(--np-paper);
-  letter-spacing: 0.08em;
-}
-
 .plate-catalog {
-  scroll-margin-top: 24px;
-  padding: 40px 64px 80px;
+  padding: 40px 64px 8px;
   border-top: 1px solid var(--np-rule);
 }
 
@@ -1350,9 +1318,7 @@ html[data-page="nameplate"] a:focus-visible {
   html[data-page="nameplate"] .plate-btn:hover .plate-btn-arrow,
   html[data-page="nameplate"] .plate-catalog a:hover .plate-study,
   html[data-page="nameplate"] .plate-catalog a:focus-visible .plate-study,
-  html[data-page="nameplate"] .plate-card-arrow,
-  html[data-page="nameplate"] .plate-more:hover .plate-all-arrow,
-  html[data-page="nameplate"] .plate-more:focus-visible .plate-all-arrow {
+  html[data-page="nameplate"] .plate-card-arrow {
     transform: none;
   }
 

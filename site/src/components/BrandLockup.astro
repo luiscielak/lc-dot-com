@@ -1,0 +1,17 @@
+---
+interface Props {
+  /** Ink lockup on light chrome. Paper lockup on the inverted nameplate. */
+  tone?: "ink" | "paper";
+  class?: string;
+}
+
+const { tone = "ink", class: className } = Astro.props;
+const src =
+  tone === "paper"
+    ? "/logos/luis-cielak-horizontal-white.svg"
+    : "/logos/luis-cielak-horizontal-black.svg";
+---
+
+<a class:list={["brand-lockup", className]} href="/" aria-label="Luis Cielak">
+  <img src={src} alt="" width="164" height="36" decoding="async" />
+</a>

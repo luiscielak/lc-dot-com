@@ -47,5 +47,9 @@ export default defineConfig({
       status: 301,
       destination: "/",
     },
+    "/about": {
+      status: 301,
+      destination: "/#about",
+    },
   },
 });

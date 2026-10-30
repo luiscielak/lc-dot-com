@@ -890,26 +890,43 @@ html[data-page="nameplate"] a:focus-visible {
   }
 }
 
-@media (max-width: 960px) {
-  .plate-bar,
-  .plate-intro,
-  .plate-catalog {
-    padding-inline: 20px;
-  }
-
+/* Mid widths: keep the header on one row, just tighten the inset and the
+   column gap so the tracked uppercase line has room before it has to break. */
+@media (max-width: 1040px) and (min-width: 721px) {
   .plate-bar {
-    grid-template-columns: 1fr;
-    justify-items: start;
+    padding-inline: 32px;
+    column-gap: 20px;
+  }
+}
+
+/* Narrow: break to two rows, not three. Lockup and role share the top row;
+   the nav drops to its own full-width row underneath. */
+@media (max-width: 720px) {
+  .plate-bar {
+    grid-template-columns: 1fr auto;
+    padding-inline: 20px;
     padding-block: 20px;
-    gap: 14px;
+    gap: 14px 20px;
   }
 
-  .plate-status,
+  .plate-status {
+    justify-self: end;
+  }
+
   .plate-nav {
+    grid-column: 1 / -1;
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 10px 20px;
     white-space: normal;
+  }
+}
+
+@media (max-width: 960px) {
+  .plate-intro,
+  .plate-catalog,
+  .plate-contact {
+    padding-inline: 20px;
   }
 
   .plate-hero {
@@ -1460,6 +1477,7 @@ html[data-page="resume"] a:hover {
 /* About — intro and practice, on the nameplate ground. */
 .about {
   color: var(--np-paper);
+  border-top: 1px solid var(--np-rule);
 }
 
 .about-intro {
@@ -1491,7 +1509,7 @@ html[data-page="resume"] a:hover {
   flex-shrink: 0;
 }
 
-.about h1 {
+.about h2 {
   margin: 28px 0 0;
   color: var(--np-paper);
   font-family: var(--font-display);
@@ -1597,7 +1615,7 @@ html[data-page="resume"] a:hover {
   color: var(--np-paper);
 }
 
-.about-practice h2 {
+.about-practice h3 {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1619,6 +1637,27 @@ html[data-page="resume"] a:hover {
   line-height: 23px;
 }
 
+/* Contact — closing band of social links and email. */
+.plate-contact {
+  padding: 40px 64px 80px;
+  border-top: 1px solid var(--np-rule);
+}
+
+.plate-contact h2 {
+  margin: 0 0 20px;
+  color: var(--np-teal);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.plate-contact .about-contact {
+  margin-top: 0;
+}
+
 @media (max-width: 1200px) {
   .about-intro,
   .about-practice {
@@ -1636,7 +1675,7 @@ html[data-page="resume"] a:hover {
     aspect-ratio: 350 / 280;
   }
 
-  .about h1 {
+  .about h2 {
     font-size: clamp(32px, 8vw, 56px);
     line-height: 1.08;
   }

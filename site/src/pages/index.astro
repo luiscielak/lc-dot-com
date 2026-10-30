@@ -39,6 +39,19 @@ const featured = plate.flatMap((item) => {
 
 const moreCount = studies.length - featured.length;
 
+/** Logo lockup after the work catalog. Width and height are the rendered pixel size. */
+const clients = [
+  { name: "Vanguard", src: "/logos/clients/vanguard.png", width: 105, height: 22 },
+  { name: "JPMorgan Chase", src: "/logos/clients/jpmc.png", width: 231, height: 15 },
+  { name: "PMI", src: "/logos/clients/pmi.svg", width: 131, height: 40 },
+  { name: "FM", src: "/logos/clients/fm.png", width: 48, height: 24, quiet: true },
+  { name: "Elsevier", src: "/logos/clients/elsevier.png", width: 37, height: 40 },
+  { name: "Ford", src: "/logos/clients/ford.png", width: 78, height: 28 },
+  { name: "USA.gov", src: "/logos/clients/usagov.png", width: 41, height: 36 },
+  { name: "Celgene", src: "/logos/clients/celgene.png", width: 41, height: 36 },
+  { name: "Westat", src: "/logos/clients/westat.png", width: 76, height: 20 },
+];
+
 /** Practice lines from the About section. */
 const practice = [
   {
@@ -138,6 +151,34 @@ const practice = [
       </li>
     </ul>
 
+    <section class="plate-clients" aria-labelledby="clients-label">
+      <p id="clients-label">Selected clients &amp; employers</p>
+      <div class="plate-client-marquee">
+        <div class="plate-client-track">
+          {
+            [false, true].map((clone) => (
+              <ul class="plate-client-group" aria-hidden={clone ? "true" : undefined}>
+                {
+                  clients.map((client) => (
+                    <li>
+                      <img
+                        class:list={{ "is-quiet": "quiet" in client && client.quiet }}
+                        src={client.src}
+                        alt={clone ? "" : client.name}
+                        width={client.width}
+                        height={client.height}
+                        draggable="false"
+                      />
+                    </li>
+                  ))
+                }
+              </ul>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
     <section class="plate-catalog" id="work" aria-labelledby="recent-work">
       <h2 id="recent-work">Recent work</h2>
       <ol>
@@ -229,7 +270,9 @@ const practice = [
 </Base>
 
 <script>
+  import { mountClientMarquee } from "../scripts/client-marquee";
   import { mountSignalField } from "../scripts/signal-field";
 
   mountSignalField();
+  mountClientMarquee();
 </script>

@@ -746,6 +746,85 @@ html[data-page="nameplate"] a:focus-visible {
   border-color: color-mix(in srgb, var(--np-teal) 82%, var(--np-ink));
 }
 
+/* Client marks between the featured strip and the work catalog.
+   One drifting row. The track holds two identical groups; client-marquee.ts
+   scrolls it and, on a wide screen, repeats the set until a group is at
+   least as wide as the viewport so the wrap stays seamless. */
+.plate-clients {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 28px 64px 48px;
+  border-top: 1px solid var(--np-rule);
+}
+
+.plate-clients p {
+  margin: 0;
+  color: var(--np-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  line-height: 18px;
+  text-transform: uppercase;
+}
+
+.plate-client-marquee {
+  margin-inline: -64px;
+  overflow-x: auto;
+  scroll-behavior: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 64px,
+    #000 calc(100% - 64px),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 64px,
+    #000 calc(100% - 64px),
+    transparent
+  );
+}
+
+.plate-client-marquee::-webkit-scrollbar {
+  display: none;
+}
+
+.plate-client-track {
+  display: flex;
+  width: max-content;
+}
+
+.plate-client-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 48px;
+  margin: 0;
+  padding: 0 0 0 48px;
+  list-style: none;
+}
+
+.plate-client-group li {
+  flex: 0 0 auto;
+}
+
+.plate-clients img {
+  display: block;
+  opacity: 0.92;
+  user-select: none;
+}
+
+/* Solid marks throw more white than a wordmark at the same opacity. */
+.plate-clients img.is-quiet {
+  opacity: 0.65;
+}
+
 .plate-strip {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 220px;
@@ -1032,6 +1111,31 @@ html[data-page="nameplate"] a:focus-visible {
   html[data-page="nameplate"] .plate-strip a:not(.plate-more)::before {
     transition: none;
   }
+
+  /* No autonomous drift: the marquees hold still. A visitor can still
+     scroll a row or page the quotes with the arrows. Logos wrap. */
+  .plate-client-marquee {
+    margin-inline: 0;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .plate-client-track {
+    display: block;
+  }
+
+  .plate-client-group {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding-left: 0;
+    column-gap: 32px;
+    row-gap: 18px;
+  }
+
+  .plate-client-group[aria-hidden="true"] {
+    display: none;
+  }
 }
 
 /* Mid widths: keep the header on one row, just tighten the inset and the
@@ -1068,9 +1172,28 @@ html[data-page="nameplate"] a:focus-visible {
 
 @media (max-width: 960px) {
   .plate-intro,
+  .plate-clients,
   .plate-catalog,
   .plate-contact {
     padding-inline: 20px;
+  }
+
+  .plate-client-marquee {
+    margin-inline: -20px;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 20px,
+      #000 calc(100% - 20px),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 20px,
+      #000 calc(100% - 20px),
+      transparent
+    );
   }
 
   .plate-hero {
@@ -1086,6 +1209,15 @@ html[data-page="nameplate"] a:focus-visible {
 
   .nameplate h1 {
     font-size: clamp(3.15rem, 16vw, 8rem);
+  }
+}
+
+@media (max-width: 960px) and (prefers-reduced-motion: reduce) {
+  .plate-client-marquee {
+    margin-inline: 0;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 

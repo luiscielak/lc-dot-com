@@ -1,12 +1,14 @@
 ---
-import { getCollection } from "astro:content";
+import { getImage } from "astro:assets";
 import Base from "../../layouts/Base.astro";
 import CaseStudy from "../../components/CaseStudy.astro";
 import ProductStudy from "../../components/ProductStudy.astro";
 import EditorialStudy from "../../components/EditorialStudy.astro";
+import { workImage } from "../../lib/images";
+import { getPublishedWork } from "../../lib/work";
 
 export async function getStaticPaths() {
-  const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+  const studies = await getPublishedWork();
   return studies.map((entry, i) => ({
     params: { slug: entry.id },
     props: { entry, next: studies[(i + 1) % studies.length] },
@@ -15,9 +17,21 @@ export async function getStaticPaths() {
 
 const { entry, next } = Astro.props;
 const presentation = entry.data.presentation;
+const og = await getImage({
+  src: workImage(entry.data.cover),
+  width: 1200,
+  height: 630,
+  fit: "cover",
+  format: "jpg",
+});
 ---
 
-<Base title={`${entry.data.title} — Luis Cielak`} description={entry.data.subtitle}>
+<Base
+  title={`${entry.data.title} — Luis Cielak`}
+  description={entry.data.subtitle}
+  ogImage={og.src}
+  ogType="article"
+>
   {
     presentation === "editorial" ? (
       <EditorialStudy entry={entry} next={next} />

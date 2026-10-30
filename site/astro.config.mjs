@@ -1,10 +1,16 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://luiscielak.com",
   output: "static",
-  integrations: [mdx()],
+  integrations: [
+    mdx(),
+    sitemap({
+      filter: (page) => !page.includes("/motion"),
+    }),
+  ],
   image: {
     service: {
       entrypoint: "astro/assets/services/sharp",

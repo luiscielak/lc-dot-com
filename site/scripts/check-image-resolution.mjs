@@ -50,6 +50,16 @@ function visualBlocks(block) {
       visuals.push({ src: m[1], maxCssPx: PHONE_MAX, field: `phones[${i}]` });
     });
   }
+  const stage = block.split(/\nfeatureStage:\n/)[1];
+  if (stage) {
+    const rest = stage.split(/\n[a-zA-Z][a-zA-Z0-9]*:/)[0];
+    const items = rest.split(/\n    - /).slice(1);
+    items.forEach((chunk, i) => {
+      const src = chunk.match(/src:\s*"([^"]+)"/)?.[1];
+      const maxCssPx = Number(chunk.match(/maxCssPx:\s*([0-9]+)/)?.[1]);
+      if (src && maxCssPx) visuals.push({ src, maxCssPx, field: `featureStage.items[${i}]` });
+    });
+  }
   const vis = block.split(/\nvisuals:\n/)[1];
   if (!vis) return visuals;
   const rest = vis.split(/\n(?:metrics|video|---)/)[0];

@@ -2694,6 +2694,174 @@ html[data-page="resume"] a:hover {
   transition: none;
 }
 
+/* Dark feature stage: one claim, pill chips, one phone. Scoped so other studies stay light. */
+.feature-stage {
+  margin-top: 2rem;
+}
+
+.feature-stage-panel {
+  --fs-bg: var(--ink);
+  --fs-fg: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: var(--fs-bg);
+  color: var(--fs-fg);
+  border-radius: 1.75rem;
+  padding: clamp(1.5rem, 4vw, 3.25rem);
+}
+
+.feature-stage-heading {
+  font: var(--type-display);
+  letter-spacing: var(--type-display-tracking);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.05;
+  text-transform: none;
+  margin: 0;
+  max-width: 12em;
+}
+
+.feature-stage-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.feature-stage-tabs button {
+  appearance: none;
+  font: var(--type-weight-medium) var(--type-size-15)/1 var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
+  color: inherit;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--fs-fg) 40%, transparent);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+}
+
+.feature-stage-tabs button[aria-selected="true"] {
+  background: var(--fs-fg);
+  color: var(--fs-bg);
+  border-color: var(--fs-fg);
+}
+
+.feature-stage-tabs button:hover {
+  border-color: var(--fs-fg);
+}
+
+.feature-stage-tabs button:focus-visible {
+  outline: 2px solid var(--fs-fg);
+  outline-offset: 3px;
+}
+
+.feature-stage-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.feature-stage-phone {
+  margin: 0;
+  width: min(100%, var(--stage-phone));
+}
+
+.feature-stage-phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.feature-stage-phone.is-screen {
+  box-sizing: border-box;
+  padding: 14px;
+  border-radius: 2.4rem;
+  background: color-mix(in srgb, var(--fs-fg) 16%, var(--fs-bg));
+}
+
+.feature-stage-phone.is-screen img {
+  border-radius: 1.7rem;
+}
+
+.feature-stage-title {
+  font: var(--type-weight-medium) var(--type-size-18)/var(--type-leading-snug) var(--font-sans);
+  letter-spacing: 0;
+  margin: 0 0 0.35rem;
+}
+
+.feature-stage-caption p {
+  margin: 0;
+  max-width: 28rem;
+}
+
+.feature-stage-caption p + p {
+  color: color-mix(in srgb, var(--fs-fg) 72%, transparent);
+}
+
+.feature-stage[data-ready] .feature-stage-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--stage-phone));
+  grid-template-rows: auto auto 1fr;
+  column-gap: clamp(1.5rem, 4vw, 4rem);
+  row-gap: 1.25rem;
+  align-items: stretch;
+}
+
+.feature-stage[data-ready] .feature-stage-heading {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+}
+
+.feature-stage[data-ready] .feature-stage-tabs {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+}
+
+.feature-stage[data-ready] .feature-stage-item[data-selected] {
+  display: contents;
+}
+
+.feature-stage[data-ready] .feature-stage-item:not([data-selected]) {
+  display: none;
+}
+
+.feature-stage[data-ready] .feature-stage-phone {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  align-self: center;
+  justify-self: end;
+}
+
+.feature-stage[data-ready] .feature-stage-caption {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: end;
+}
+
+@media (max-width: 800px) {
+  .feature-stage[data-ready] .feature-stage-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feature-stage[data-ready] .feature-stage-item[data-selected] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feature-stage[data-ready] .feature-stage-phone {
+    order: 1;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .feature-stage[data-ready] .feature-stage-caption {
+    order: 2;
+  }
+}
+
 @media (max-width: 960px) {
   .lab {
     padding: 20px;

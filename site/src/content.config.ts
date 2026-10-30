@@ -28,6 +28,18 @@ const phone = z.object({
   caption: z.string(),
 });
 
+const featureStageItem = z.object({
+  label: z.string(),
+  title: z.string(),
+  body: z.string(),
+  src: z.string(),
+  alt: z.string(),
+  /** CSS max width in px this phone is allowed to render at. */
+  maxCssPx: z.number().positive(),
+  /** False when the image is a bare screenshot and the stage should draw the bezel. */
+  framed: z.boolean().optional(),
+});
+
 const work = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/work" }),
   schema: z.object({
@@ -78,6 +90,12 @@ const work = defineCollection({
         caption: z.string(),
         fallbackAlt: z.string(),
         section: z.enum(["header", "tldr", "overview", "challenge", "solution", "research", "decisions", "outcome"]),
+      })
+      .optional(),
+    featureStage: z
+      .object({
+        heading: z.string(),
+        items: z.array(featureStageItem).min(1),
       })
       .optional(),
   }),

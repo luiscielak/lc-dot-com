@@ -1,0 +1,122 @@
+---
+import { Picture } from "astro:assets";
+import { workImage } from "../lib/images";
+
+interface Item {
+  label: string;
+  title: string;
+  body: string;
+  src: string;
+  alt: string;
+  maxCssPx: number;
+  framed?: boolean;
+}
+
+interface Props {
+  heading: string;
+  items: Item[];
+}
+
+const { heading, items } = Astro.props;
+
+const uid = heading
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/(^-|-$)/g, "") || "feature-stage";
+
+const panels = items.map((item) => {
+  const image = workImage(item.src);
+  const cap = Math.min(item.maxCssPx, Math.floor(image.width / 1.5));
+  const widths = [
+    ...new Set([480, 640, 960, 1280, image.width].filter((w) => w <= image.width)),
+  ].sort((a, b) => a - b);
+  return { ...item, image, cap, widths: widths.length ? widths : [image.width] };
+});
+
+const phoneMax = Math.max(...panels.map((p) => p.cap));
+---
+
+<section class="feature-stage" style={`--stage-phone: ${phoneMax}px`} data-feature-stage>
+  <div class="feature-stage-panel">
+    <h3 class="feature-stage-heading" id={`${uid}-heading`}>{heading}</h3>
+    <div class="feature-stage-tabs" role="tablist" aria-labelledby={`${uid}-heading`}>
+      {
+        panels.map((panel, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`${uid}-tab-${i}`}
+            aria-controls={`${uid}-panel-${i}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            {panel.label}
+          </button>
+        ))
+      }
+    </div>
+    {
+      panels.map((panel, i) => (
+        <div
+          class="feature-stage-item"
+          role="tabpanel"
+          id={`${uid}-panel-${i}`}
+          aria-labelledby={`${uid}-tab-${i}`}
+          data-selected={i === 0 ? "" : undefined}
+        >
+          <figure
+            class:list={["feature-stage-phone", panel.framed === false && "is-screen"]}
+          >
+            <Picture
+              src={panel.image}
+              alt={panel.alt}
+              formats={["avif", "webp"]}
+              widths={panel.widths}
+              sizes={`min(100vw - 2rem, ${panel.cap}px)`}
+              loading={i === 0 ? "eager" : "lazy"}
+            />
+          </figure>
+          <div class="feature-stage-caption">
+            <p class="feature-stage-title">{panel.title}</p>
+            <p>{panel.body}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+<script is:inline>
+  document.currentScript.previousElementSibling?.setAttribute("data-ready", "");
+</script>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-feature-stage]").forEach((stage) => {
+    const tabs = Array.from(stage.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panels = Array.from(stage.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    if (tabs.length < 2) return;
+
+    function select(index: number, focus: boolean) {
+      tabs.forEach((tab, i) => {
+        const on = i === index;
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+        tab.tabIndex = on ? 0 : -1;
+        if (on && focus) tab.focus();
+      });
+      panels.forEach((panel, i) => panel.toggleAttribute("data-selected", i === index));
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(i, false));
+      tab.addEventListener("keydown", (event) => {
+        let next: number | null = null;
+        if (event.key === "ArrowRight") next = (i + 1) % tabs.length;
+        else if (event.key === "ArrowLeft") next = (i - 1 + tabs.length) % tabs.length;
+        else if (event.key === "Home") next = 0;
+        else if (event.key === "End") next = tabs.length - 1;
+        if (next === null) return;
+        event.preventDefault();
+        select(next, true);
+      });
+    });
+  });
+</script>

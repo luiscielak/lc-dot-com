@@ -44,18 +44,6 @@ visuals:
     alt: "Long stacked comparison tables on phones, recreated from public information with branding removed"
     caption: "The before: long tables stacked on top of each other. Comparing meant scrolling and remembering. Screens recreated from public information, with branding removed."
     maxCssPx: 960
-  solution:
-    src: "vanguard/table_framed.png"
-    alt: "Native table comparison of advice tiers, recreated from public information with branding removed"
-    caption: "Switch to a table and scan them all. Same rows, same order. Screens recreated from public information, with branding removed."
-    maxCssPx: 400
-    phone: true
-  research:
-    src: "vanguard/cards_framed.png"
-    alt: "A single advice-tier card in the native comparison, recreated from public information with branding removed"
-    caption: "Swipe through one tier at a time. Screens recreated from public information, with branding removed."
-    maxCssPx: 400
-    phone: true
   decisions:
     src: "vanguard/row-anatomy.png"
     alt: "Anatomy of an advice-tier card, with the header, minimum and fee, fixed rows, page dots, view toggle, and disclosure sheet"
@@ -72,6 +60,28 @@ video:
   caption: "Swipe through the four tier cards, then tap Table. Screens recreated from public information, with branding removed."
   fallbackAlt: "Poster frame of the native advice comparison cards, branding removed"
   section: header
+featureStage:
+  heading: "One comparison. Three ways to look at it."
+  items:
+    - label: "Cards"
+      title: "Swipe one tier at a time."
+      body: "Same rows, same order."
+      src: "vanguard/cards_framed.png"
+      alt: "A single advice-tier card in the native comparison, recreated from public information with branding removed"
+      maxCssPx: 400
+    - label: "Table"
+      title: "Scan all four tiers at once."
+      body: "Same rows, same order."
+      src: "vanguard/table_framed.png"
+      alt: "Native table comparison of advice tiers, recreated from public information with branding removed"
+      maxCssPx: 400
+    - label: "Disclosure"
+      title: "The legal text, one tap away."
+      body: "It sits next to the number it explains."
+      src: "vanguard/disclosure.png"
+      alt: "Disclosure sheet for the annual advisory fee, open over the advice comparison. Recreated from public information, with branding removed."
+      maxCssPx: 400
+      framed: false
 ---
 
 {/* TODO(Luis): Confirm workflow step names: Explore → Advice → Compare (Cards ⇄ Table) → Disclosure sheet. */}

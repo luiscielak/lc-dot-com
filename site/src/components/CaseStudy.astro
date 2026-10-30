@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Figure from "./Figure.astro";
+import FeatureStage from "./FeatureStage.astro";
 import WorkVideo from "./WorkVideo.astro";
 import { renderProse } from "../lib/prose";
 
@@ -139,10 +140,15 @@ function html(s?: string) {
   }
 
   {
-    d.solution ? (
+    d.solution || d.featureStage ? (
       <section class="cs-section wrap">
-        <h2>Solution</h2>
-        <div class="prose" set:html={html(d.solution)} />
+        {d.solution ? <h2>Solution</h2> : null}
+        {d.solution ? <div class="prose" set:html={html(d.solution)} /> : null}
+        {
+          d.featureStage ? (
+            <FeatureStage heading={d.featureStage.heading} items={d.featureStage.items} />
+          ) : null
+        }
         {v.solution ? <Figure {...v.solution} /> : null}
       </section>
     ) : null

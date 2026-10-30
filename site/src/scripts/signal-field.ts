@@ -55,8 +55,8 @@ export function defaultFieldParams(small: boolean): FieldParams {
     orderedAlpha: 0.24,
     fadeTop: 12,
     fadeBottom: 62,
-    burstR: small ? 120 : 150,
-    burstKick: 640,
+    burstR: small ? 130 : 168,
+    burstKick: 880,
   };
 }
 
@@ -224,8 +224,8 @@ export function mountSignalField(): void {
         x += Math.cos(ang) * rad;
         y += Math.sin(ang) * rad;
       }
-      const size = dot * (1 + q.flash * 0.85);
-      ctx!.globalAlpha = Math.min(1, params.orderedAlpha + params.lensAlpha * f + q.flash * 0.55);
+      const size = dot * (1 + q.flash * 1.35);
+      ctx!.globalAlpha = Math.min(1, params.orderedAlpha + params.lensAlpha * f + q.flash * 0.8);
       ctx!.fillRect(x - size / 2, y - size / 2, size, size);
     }
     ctx!.globalAlpha = 1;
@@ -284,7 +284,10 @@ export function mountSignalField(): void {
   stage.addEventListener("pointerdown", (e) => {
     if (e.button !== 0) return;
     const target = e.target;
-    if (!(target instanceof Element) || target.closest("a, button, input, textarea, select")) return;
+    if (!(target instanceof Element) || target.closest("a, button, input, textarea, select")) {
+      tapArmed = false;
+      return;
+    }
     tapId = e.pointerId;
     tapX = e.clientX;
     tapY = e.clientY;
@@ -296,13 +299,13 @@ export function mountSignalField(): void {
     if (rm.matches || stopTarget > 0) return;
     const dx = e.clientX - tapX;
     const dy = e.clientY - tapY;
-    if (dx * dx + dy * dy > 36) return;
+    if (dx * dx + dy * dy > 144) return;
     const r = stage!.getBoundingClientRect();
     burst(e.clientX - r.left, e.clientY - r.top);
   }
-  stage.addEventListener("pointerup", releaseTap);
-  stage.addEventListener("pointercancel", () => {
-    tapArmed = false;
+  window.addEventListener("pointerup", releaseTap);
+  window.addEventListener("pointercancel", (e) => {
+    if (e.pointerId === tapId) tapArmed = false;
   });
 
   function burst(x: number, y: number) {
@@ -328,7 +331,7 @@ export function mountSignalField(): void {
         nx = dx / dist;
         ny = dy / dist;
       }
-      const side = (Math.random() - 0.5) * 0.65;
+      const side = (Math.random() - 0.5) * 0.35;
       const pxn = nx - ny * side;
       const pyn = ny + nx * side;
       const mag = Math.hypot(pxn, pyn) || 1;

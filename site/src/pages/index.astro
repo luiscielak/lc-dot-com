@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import portrait from "../assets/portrait.jpg";
+import portrait from "../assets/about-portrait.avif";
 import BrandLockup from "../components/BrandLockup.astro";
 import Base from "../layouts/Base.astro";
 
@@ -44,17 +44,22 @@ const featuredIds = new Set(plate.map((item) => item.id));
 /** Everything else, numbered continuously after the featured strip. */
 const moreWork = studies.filter((study) => !featuredIds.has(study.id));
 
-/** Logo lockup after the work catalog. Width and height are the rendered pixel size. */
+/** Logo row after the work catalog, before the testimonials.
+ *  Width and height are the rendered pixel size, tuned to a similar visual area.
+ *  Medium screens break after four marks (4 / 5). Large screens add a second
+ *  break for the 4 / 3 / 2 taper. */
+const clientRowBreaks = { mid: 4, late: 7 };
+
 const clients = [
-  { name: "Vanguard", src: "/logos/clients/vanguard.png", width: 105, height: 22 },
-  { name: "JPMorgan Chase", src: "/logos/clients/jpmc.png", width: 231, height: 15 },
-  { name: "PMI", src: "/logos/clients/pmi.svg", width: 131, height: 40 },
-  { name: "FM", src: "/logos/clients/fm.png", width: 48, height: 24, quiet: true },
-  { name: "Elsevier", src: "/logos/clients/elsevier.png", width: 37, height: 40 },
-  { name: "Ford", src: "/logos/clients/ford.png", width: 78, height: 28 },
-  { name: "USA.gov", src: "/logos/clients/usagov.png", width: 41, height: 36 },
-  { name: "Celgene", src: "/logos/clients/celgene.png", width: 41, height: 36 },
-  { name: "Westat", src: "/logos/clients/westat.png", width: 76, height: 20 },
+  { name: "Vanguard", src: "/logos/clients/vanguard.png", width: 132, height: 28 },
+  { name: "JPMorgan Chase", src: "/logos/clients/jpmc.png", width: 196, height: 13 },
+  { name: "PMI", src: "/logos/clients/pmi.svg", width: 108, height: 32 },
+  { name: "Ford", src: "/logos/clients/ford.png", width: 100, height: 36 },
+  { name: "Westat", src: "/logos/clients/westat.png", width: 120, height: 32 },
+  { name: "FM", src: "/logos/clients/fm.png", width: 64, height: 32 },
+  { name: "Elsevier", src: "/logos/clients/elsevier.png", width: 40, height: 44 },
+  { name: "USA.gov", src: "/logos/clients/usagov.png", width: 44, height: 40 },
+  { name: "Celgene", src: "/logos/clients/celgene.png", width: 44, height: 40 },
 ];
 
 /**
@@ -74,6 +79,7 @@ const testimonials = [
     quote: "Luis is the kind of designer who makes teams better simply by being part of them.",
     name: "Michael Pacheco",
     role: "Lead UX Designer · PMI",
+    linkedin: "https://www.linkedin.com/in/michael-pacheco-0242b221",
   },
   {
     index: "02",
@@ -81,6 +87,7 @@ const testimonials = [
       "Luis brings sharp insight, expert design skill, and strategic clarity to everything he touches.",
     name: "Keriann Sabatini",
     role: "Principal Product Manager · PMI",
+    linkedin: "https://www.linkedin.com/in/keriannsabatini",
   },
   {
     index: "03",
@@ -88,6 +95,7 @@ const testimonials = [
       "Luis is incredibly talented at getting senior stakeholders on the same page through his masterful UX workshops.",
     name: "James Brown",
     role: "Sr. Experience Design Manager · FM",
+    linkedin: "https://www.linkedin.com/in/james-brown-a9236b5",
   },
   {
     index: "04",
@@ -95,6 +103,7 @@ const testimonials = [
       "A talented UX designer with an excellent ability to facilitate, shape, and collaborate in the early phases of work.",
     name: "El Cruz",
     role: "Senior Manager, Experience Design · FM",
+    linkedin: "https://www.linkedin.com/in/elcruz",
   },
   {
     index: "05",
@@ -102,6 +111,7 @@ const testimonials = [
       "Any team would be lucky to have Luis; he brings not only talent but a mindset that elevates every project he touches.",
     name: "Danielle Trombino",
     role: "Senior Product Owner · FM Global",
+    linkedin: "https://www.linkedin.com/in/danielle-trombino",
   },
   {
     index: "06",
@@ -109,6 +119,7 @@ const testimonials = [
       "His design approach helped lead the B2B platform redesign that drove $3.1M in revenue in the first year and eliminated $650K in losses.",
     name: "Patrick Olivares",
     role: "Executive Product Leader · PMI",
+    linkedin: "https://www.linkedin.com/in/patrickolivares",
   },
   {
     index: "07",
@@ -116,6 +127,7 @@ const testimonials = [
       "Luis is a talented UI/UX expert who brings clarity and innovation to every project and works well with product and engineering teams.",
     name: "Ankur Pariyani",
     role: "Co-Founder & CIO · Near-Miss Management",
+    linkedin: "https://www.linkedin.com/in/ankurpariyani",
   },
   {
     index: "08",
@@ -123,30 +135,7 @@ const testimonials = [
       "He has a way of seeing the best in people, creating a space where everyone feels heard and valued.",
     name: "Shauna Mensah",
     role: "Operations Manager · PMI",
-  },
-];
-
-/** Practice lines from the About section. */
-const practice = [
-  {
-    title: "User Experience",
-    body: "The path through a complicated product, so the next step is obvious when it matters.",
-    icon: `<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="7" cy="8" r="2.1" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="23" cy="15" r="2.1" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="23" r="2.1" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 9.4c4.2.4 7 3.2 7 5.6h4.6M16 15c0 3.4-2.6 6.2-5.2 6.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
-  },
-  {
-    title: "User Research",
-    body: "Time with the people doing the job, used to change the plan — not to decorate it.",
-    icon: `<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="10" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 22.5v-1.2c0-2.6 2.9-4.6 6.5-4.6s6.5 2 6.5 4.6v1.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
-  },
-  {
-    title: "Interface Design",
-    body: "Structure, rhythm, and a system so a dense product stays calm as it grows.",
-    icon: `<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="5" y="6" width="9" height="7" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="16" y="6" width="9" height="7" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="5" y="16" width="20" height="8" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`,
-  },
-  {
-    title: "Data Visualization",
-    body: "The few signals someone needs in order to decide, not every number the system can show.",
-    icon: `<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M6 23V17M12 23V11M18 23V14M24 23V8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+    linkedin: "https://www.linkedin.com/in/shauna-mensah",
   },
 ];
 ---
@@ -220,34 +209,6 @@ const practice = [
       }
     </ul>
 
-    <section class="plate-clients" aria-labelledby="clients-label">
-      <p id="clients-label">Selected clients &amp; employers</p>
-      <div class="plate-client-marquee">
-        <div class="plate-client-track">
-          {
-            [false, true].map((clone) => (
-              <ul class="plate-client-group" aria-hidden={clone ? "true" : undefined}>
-                {
-                  clients.map((client) => (
-                    <li>
-                      <img
-                        class:list={{ "is-quiet": "quiet" in client && client.quiet }}
-                        src={client.src}
-                        alt={clone ? "" : client.name}
-                        width={client.width}
-                        height={client.height}
-                        draggable="false"
-                      />
-                    </li>
-                  ))
-                }
-              </ul>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
     <section class="plate-catalog" aria-labelledby="more-work">
       <h2 id="more-work">More work</h2>
       <ol>
@@ -267,6 +228,31 @@ const practice = [
           ))
         }
       </ol>
+    </section>
+
+    <section class="plate-clients" aria-labelledby="clients-label">
+      <p id="clients-label">Selected clients &amp; employers</p>
+      <ul class="plate-client-group">
+        {
+          clients.map((client, i) => (
+            <>
+              <li>
+                <img
+                  src={client.src}
+                  alt={client.name}
+                  width={client.width}
+                  height={client.height}
+                  draggable="false"
+                />
+              </li>
+              {i + 1 === clientRowBreaks.mid ? <li class="plate-client-break" aria-hidden="true" /> : null}
+              {i + 1 === clientRowBreaks.late ? (
+                <li class="plate-client-break plate-client-break-late" aria-hidden="true" />
+              ) : null}
+            </>
+          ))
+        }
+      </ul>
     </section>
 
     {
@@ -301,9 +287,15 @@ const practice = [
                             <span class="pqc-name">{item.name.split(" ")[0]}</span>
                             <span class="pqc-role">{item.role.split(" · ")[0]}</span>
                           </span>
-                          {/* LinkedIn slot — becomes a real link once profiles are confirmed. */}
-                          <span class="pqc-link" aria-hidden="true">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
+                          <a
+                            class="pqc-link"
+                            href={item.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${item.name} on LinkedIn`}
+                            tabindex={clone ? -1 : undefined}
+                          >
+                            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
                               <path
                                 d="M5 9.5V19M5 5.5h.01M10 19V9.5M10 13.2c0-2.1 1.6-3.7 3.7-3.7 2 0 3.3 1.2 3.3 3.6V19"
                                 fill="none"
@@ -313,7 +305,7 @@ const practice = [
                                 stroke-linejoin="round"
                               />
                             </svg>
-                          </span>
+                          </a>
                         </footer>
                       </blockquote>
                     </li>
@@ -350,10 +342,6 @@ const practice = [
     <section class="about" id="about" aria-labelledby="about-title">
       <div class="about-intro">
         <div class="about-copy">
-          <p class="about-kicker">
-            <span class="about-dot" aria-hidden="true"></span>
-            Product design for complex systems
-          </p>
           <h2 id="about-title">
             I help product teams<br />
             bring clarity to tools<br />
@@ -363,7 +351,6 @@ const practice = [
           <p class="about-closer">
             Rooted in research. Guided by systems. Delivered with care.
           </p>
-          <p class="about-fact">Philadelphia, originally from Mexico City.</p>
         </div>
         <img
           class="about-portrait"
@@ -373,55 +360,14 @@ const practice = [
           alt="Portrait of Luis Cielak"
         />
       </div>
-
-      <div class="about-practice" aria-label="Practice">
-        {
-          practice.map((item) => (
-            <article>
-              <h3>
-                <span class="about-icon" set:html={item.icon} />
-                {item.title}
-              </h3>
-              <p>{item.body}</p>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="plate-contact" id="contact" aria-labelledby="contact-title">
-      <h2 id="contact-title">Contact</h2>
-      <div class="about-contact">
-        <div class="about-socials">
-          <a href="https://www.linkedin.com/in/cielak" aria-label="LinkedIn">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 9.5V19M5 5.5h.01M10 19V9.5M10 13.2c0-2.1 1.6-3.7 3.7-3.7 2 0 3.3 1.2 3.3 3.6V19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </a>
-          <a href="https://github.com/luiscielak" aria-label="GitHub">
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.66-.18 1.36-.27 2.06-.27.7 0 1.4.09 2.06.27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z" fill="currentColor"></path>
-            </svg>
-          </a>
-          <a href="mailto:luis@luiscielak.com" aria-label="Email">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3.5" y="5.5" width="17" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"></rect>
-              <path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </a>
-        </div>
-        <a class="about-email" href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
-      </div>
     </section>
   </div>
 </Base>
 
 <script>
-  import { mountClientMarquee } from "../scripts/client-marquee";
   import { mountSignalField } from "../scripts/signal-field";
   import { mountTestimonialMarquee } from "../scripts/testimonial-marquee";
 
   mountSignalField();
-  mountClientMarquee();
   mountTestimonialMarquee();
 </script>

@@ -173,6 +173,11 @@ a:hover {
   outline-offset: 3px;
 }
 
+/* On the nameplate page the ink about block closes straight onto the footer. */
+html[data-page="nameplate"] .site-footer {
+  margin-top: 0;
+}
+
 @media (max-width: 720px) {
   .site-footer {
     gap: 2.5rem;
@@ -759,10 +764,9 @@ html[data-page="nameplate"] a:focus-visible {
   border-color: color-mix(in srgb, var(--np-teal) 82%, var(--np-ink));
 }
 
-/* Client marks between the featured strip and the work catalog.
-   One drifting row. The track holds two identical groups; client-marquee.ts
-   scrolls it and, on a wide screen, repeats the set until a group is at
-   least as wide as the viewport so the wrap stays seamless. */
+/* Client marks after the work catalog, before the testimonials.
+   Mobile: a still, centered logo wall. Medium: two centered rows (4 / 5).
+   Large: a centered 4 / 3 / 2 taper. Each line centers on its own. */
 .plate-clients {
   display: flex;
   flex-direction: column;
@@ -782,60 +786,79 @@ html[data-page="nameplate"] a:focus-visible {
   text-transform: uppercase;
 }
 
-.plate-client-marquee {
-  margin-inline: -64px;
-  overflow-x: auto;
-  scroll-behavior: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 64px,
-    #000 calc(100% - 64px),
-    transparent
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 64px,
-    #000 calc(100% - 64px),
-    transparent
-  );
-}
-
-.plate-client-marquee::-webkit-scrollbar {
-  display: none;
-}
-
-.plate-client-track {
-  display: flex;
-  width: max-content;
-}
-
 .plate-client-group {
   display: flex;
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: 48px;
+  column-gap: 48px;
+  row-gap: 28px;
   margin: 0;
-  padding: 0 0 0 48px;
+  padding: 0;
   list-style: none;
 }
 
 .plate-client-group li {
+  display: flex;
   flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
 }
 
 .plate-clients img {
   display: block;
-  opacity: 0.92;
+  max-width: 100%;
+  height: auto;
+  opacity: 0.72;
   user-select: none;
 }
 
-/* Solid marks throw more white than a wordmark at the same opacity. */
-.plate-clients img.is-quiet {
-  opacity: 0.65;
+.plate-client-group .plate-client-break {
+  display: none;
+  min-height: 0;
+}
+
+/* Medium: one break, so the marks stay on two lines (4 / 5). The gap shrinks
+   before the four-wide line can wrap onto a third row. */
+@media (min-width: 721px) {
+  .plate-client-group {
+    column-gap: clamp(28px, 4vw, 64px);
+    row-gap: 0;
+  }
+
+  .plate-client-group .plate-client-break {
+    display: block;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 28px;
+    min-height: 0;
+  }
+
+  .plate-client-group .plate-client-break-late {
+    display: none;
+  }
+}
+
+/* Large: both breaks, the 4 / 3 / 2 taper. */
+@media (min-width: 1200px) {
+  .plate-client-group {
+    column-gap: 72px;
+  }
+
+  .plate-client-group .plate-client-break-late {
+    display: block;
+    height: 32px;
+  }
+}
+
+/* A tighter gap on a phone so the smaller marks share a line.
+   The tuned image sizes stay as they are. */
+@media (max-width: 720px) {
+  .plate-client-group {
+    column-gap: 32px;
+    row-gap: 20px;
+  }
 }
 
 .plate-strip {
@@ -1292,6 +1315,21 @@ html[data-page="nameplate"] a:focus-visible {
   margin-left: auto;
   border: 1px solid var(--np-rule);
   color: var(--np-muted);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.pqc-link:hover {
+  color: var(--np-paper);
+  border-color: var(--np-paper);
+}
+
+.pqc-link:focus-visible {
+  color: var(--np-paper);
+  border-color: var(--np-paper);
+  outline: 2px solid var(--np-paper);
+  outline-offset: 2px;
 }
 
 @media (hover: hover) {
@@ -1329,31 +1367,6 @@ html[data-page="nameplate"] a:focus-visible {
   html[data-page="nameplate"] .plate-nav a::after,
   html[data-page="nameplate"] .plate-strip a:not(.plate-more)::before {
     transition: none;
-  }
-
-  /* No autonomous drift: the marquees hold still. A visitor can still
-     scroll a row or page the quotes with the arrows. Logos wrap. */
-  .plate-client-marquee {
-    margin-inline: 0;
-    overflow: visible;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .plate-client-track {
-    display: block;
-  }
-
-  .plate-client-group {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    padding-left: 0;
-    column-gap: 32px;
-    row-gap: 18px;
-  }
-
-  .plate-client-group[aria-hidden="true"] {
-    display: none;
   }
 }
 
@@ -1393,27 +1406,8 @@ html[data-page="nameplate"] a:focus-visible {
   .plate-intro,
   .plate-clients,
   .plate-catalog,
-  .plate-quotes,
-  .plate-contact {
+  .plate-quotes {
     padding-inline: 20px;
-  }
-
-  .plate-client-marquee {
-    margin-inline: -20px;
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent,
-      #000 20px,
-      #000 calc(100% - 20px),
-      transparent
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      #000 20px,
-      #000 calc(100% - 20px),
-      transparent
-    );
   }
 
   .plate-hero {
@@ -1453,15 +1447,6 @@ html[data-page="nameplate"] a:focus-visible {
   .plate-quotes--cards .plate-quote-group {
     padding-left: 12px;
     gap: 12px;
-  }
-}
-
-@media (max-width: 960px) and (prefers-reduced-motion: reduce) {
-  .plate-client-marquee {
-    margin-inline: 0;
-    overflow: visible;
-    -webkit-mask-image: none;
-    mask-image: none;
   }
 }
 
@@ -1994,7 +1979,9 @@ html[data-page="resume"] a:hover {
   }
 }
 
-/* About — intro and practice, on the nameplate ground. */
+/* About — closing statement and portrait, on the nameplate ground.
+   Headline starts below the photo and scales to the column.
+   They stay side by side until the column can no longer hold the headline. */
 .about {
   color: var(--np-paper);
   border-top: 1px solid var(--np-rule);
@@ -2002,103 +1989,40 @@ html[data-page="resume"] a:hover {
 
 .about-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 560px);
-  gap: 64px;
+  grid-template-columns: minmax(30rem, 1.15fr) minmax(16rem, 520px);
   align-items: start;
+  gap: 72px;
   width: min(100%, 1440px);
   margin-inline: auto;
-  padding: 48px 64px 0;
+  padding: 48px 64px 96px;
+  box-sizing: border-box;
 }
 
-.about-kicker {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 36px 0 0;
-  color: var(--np-paper);
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 22px;
-}
-
-.about-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--np-paper);
-  flex-shrink: 0;
+.about-copy {
+  min-width: 0;
+  padding-top: 48px;
 }
 
 .about h2 {
-  margin: 28px 0 0;
+  margin: 0;
   color: var(--np-paper);
   font-family: var(--font-display);
-  font-size: 56px;
+  font-size: 44px;
   font-weight: 500;
   letter-spacing: -0.02em;
-  line-height: 60px;
+  line-height: 1.25;
   text-transform: none;
 }
 
 .about-closer {
-  max-width: 480px;
-  margin: 28px 0 0;
+  max-width: 28rem;
+  margin: 40px 0 0;
   color: var(--np-paper);
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  line-height: 32px;
-}
-
-.about-fact {
-  margin: 16px 0 0;
-  color: var(--np-muted);
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 23px;
-}
-
-.about-contact {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 40px;
-}
-
-.about-socials {
-  display: flex;
-  gap: 10px;
-}
-
-.about-socials a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid #ffffff38;
-  border-radius: 20px;
-  color: var(--np-paper);
-  text-decoration: none;
-}
-
-.about-socials a:hover {
-  border-color: var(--np-teal);
-  color: var(--np-teal);
-}
-
-.about-email {
-  color: var(--np-paper);
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-  text-decoration: none;
-}
-
-.about-email:hover {
-  color: var(--np-teal);
+  line-height: 1.45;
 }
 
 .about-portrait {
@@ -2106,108 +2030,39 @@ html[data-page="resume"] a:hover {
   width: 100%;
   height: auto;
   aspect-ratio: 560 / 620;
+  justify-self: end;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: center;
   border-radius: 17px;
 }
 
-.about-practice {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  width: min(100%, 1440px);
-  margin-inline: auto;
-  padding: 72px 64px 96px;
-}
-
-.about-practice article {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 30px;
-  border-radius: 20px;
-  background: color-mix(in srgb, var(--np-paper) 6%, transparent);
-}
-
-.about-icon {
-  display: flex;
-  flex-shrink: 0;
-  color: var(--np-paper);
-}
-
-.about-practice h3 {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0;
-  color: var(--np-paper);
-  font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 32px;
-  text-transform: none;
-}
-
-.about-practice p {
-  margin: 0;
-  color: #ffffffa6;
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 23px;
-}
-
-/* Contact — closing band of social links and email. */
-.plate-contact {
-  padding: 40px 64px 80px;
-  border-top: 1px solid var(--np-rule);
-}
-
-.plate-contact h2 {
-  margin: 0 0 20px;
-  color: var(--np-teal);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  line-height: 16px;
-  text-transform: uppercase;
-}
-
-.plate-contact .about-contact {
-  margin-top: 0;
-}
-
-@media (max-width: 1200px) {
-  .about-intro,
-  .about-practice {
-    padding-inline: 20px;
+@media (max-width: 1280px) {
+  .about-intro {
+    gap: 64px;
+    padding-inline: 48px;
   }
+}
 
+@media (max-width: 900px) {
   .about-intro {
     grid-template-columns: 1fr;
     gap: 32px;
-    padding-top: 28px;
+    padding: 28px 20px 48px;
+  }
+
+  .about-copy {
+    padding-top: 0;
   }
 
   .about-portrait {
     order: -1;
-    aspect-ratio: 350 / 280;
+    width: min(100%, 560px);
+    justify-self: start;
   }
 
   .about h2 {
-    font-size: clamp(32px, 8vw, 56px);
-    line-height: 1.08;
-  }
-
-  .about-kicker {
-    margin-top: 0;
-  }
-
-  .about-practice {
-    grid-template-columns: 1fr;
-    padding-top: 48px;
-    padding-bottom: 64px;
+    font-size: clamp(32px, 8vw, 44px);
+    line-height: 1.2;
   }
 }
 

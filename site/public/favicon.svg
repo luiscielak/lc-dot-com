@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#111"/>
-  <text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#f4efe6">LC</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>.t{fill:#0A0A0A}.m{fill:#FFFFFF}.hi{display:none}@media (min-resolution: 1.5dppx){.lo{display:none}.hi{display:inline}}@media (prefers-color-scheme: dark){.t{fill:#FFFFFF}.m{fill:#0A0A0A}}</style><rect class="t" width="32" height="32"/><path class="m lo" d="M6 -2L10 -2L10 22L24 22L24 26L9 26A3 3 0 0 1 6 23ZM26 4L26 8L18 8L18 14L24 14L24 18L17 18A3 3 0 0 1 14 15L14 7A3 3 0 0 1 17 4Z"/><path class="m hi" d="M5 -1L9 -1L9 22A1 1 0 0 0 10 23L24.5 23L25 26.5L8 27A3 3 0 0 1 5 24ZM26.5 5L27 8.5L17 9A1 1 0 0 0 16 10L16 14A1 1 0 0 0 17 15L24.5 15L25 18.5L15 19A3 3 0 0 1 12 16L12 8A3 3 0 0 1 15 5Z"/></svg>

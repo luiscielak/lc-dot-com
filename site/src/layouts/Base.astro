@@ -37,16 +37,12 @@ const {
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0A0A0A" />
-    {
-      (nameplate || resume) && (
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap"
-        />
-      )
-    }
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap"
+    />
   </head>
-  <body>
+  <body id="top">
     <a class="skip" href="#content">Skip to content</a>
     {
       nameplate || resume ? (
@@ -69,12 +65,41 @@ const {
       <slot />
     </main>
     {
-      !nameplate && !resume && (
+      !resume && (
         <footer class="site-footer">
-          <div class="wrap">
-            <p>
-              Lead Product Designer · design engineer · Philadelphia.
-              <a href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+          <div class="foot-links">
+            <nav class="foot-col" aria-labelledby="foot-index">
+              <p class="foot-label" id="foot-index">Index</p>
+              <ul class="foot-items">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#work">Work</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/resume">Résumé</a></li>
+              </ul>
+            </nav>
+            <nav class="foot-col" aria-labelledby="foot-contact">
+              <p class="foot-label" id="foot-contact">Contact</p>
+              <ul class="foot-items">
+                <li><a href="https://www.linkedin.com/in/cielak">LinkedIn</a></li>
+                <li><a href="https://github.com/luiscielak">GitHub</a></li>
+                <li>
+                  <a class="foot-email" href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="foot-name">
+            <a class="foot-mark" href="/" aria-label="Luis Cielak">
+              <svg viewBox="6 -2 20 28" aria-hidden="true" focusable="false">
+                <path
+                  d="M6 -2L10 -2L10 22L24 22L24 26L9 26A3 3 0 0 1 6 23ZM26 4L26 8L18 8L18 14L24 14L24 18L17 18A3 3 0 0 1 14 15L14 7A3 3 0 0 1 17 4Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+            <p class="foot-baseline">
+              <a class="foot-top" href="#top">Back to top</a>
+              <span class="foot-meta">© 2026 · Philadelphia · CDMX</span>
             </p>
           </div>
         </footer>

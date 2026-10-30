@@ -43,18 +43,162 @@ a:hover {
   margin-inline: auto;
 }
 
-.site-header,
-.site-footer {
+.site-header {
   border-bottom: var(--stroke-rule) solid var(--border);
   padding-block: 1rem;
 }
 
+/* Footer — follows the Paper artboard. Scoped paper palette so it reads the same
+   on the ink homepage and any future data-mode="dark". */
 .site-footer {
-  border-bottom: 0;
-  border-top: var(--stroke-hairline) solid var(--border);
-  margin-top: 4rem;
-  font: var(--type-meta);
-  letter-spacing: var(--type-meta-tracking);
+  --foot-bg: #f6f4ee;
+  --foot-ink: #17150f;
+  --foot-muted: #726c5e;
+  --foot-rule: #ded9cc;
+  --foot-accent: #067f8a;
+  --foot-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+  --foot-body: "Inter", system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4rem;
+  margin-top: 6rem;
+  padding: 64px 72px 40px;
+  background: var(--foot-bg);
+  color: var(--foot-ink);
+  border-top: 1px solid var(--foot-rule);
+  text-align: left;
+}
+
+.foot-links {
+  display: flex;
+  gap: 120px;
+}
+
+.foot-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.foot-label {
+  margin: 0;
+  font-family: var(--foot-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: var(--foot-muted);
+}
+
+.foot-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foot-items a {
+  font-family: var(--foot-body);
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--foot-ink);
+  text-decoration: none;
+}
+
+.foot-items a:hover {
+  color: var(--foot-accent);
+}
+
+.foot-email {
+  color: var(--foot-accent) !important;
+}
+
+.foot-name {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.foot-mark {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
+  color: var(--foot-ink);
+}
+
+.foot-mark svg {
+  display: block;
+  width: 280px;
+  height: 392px;
+}
+
+.foot-mark:hover {
+  color: var(--foot-accent);
+}
+
+.foot-baseline {
+  display: flex;
+  align-items: baseline;
+  gap: 40px;
+  margin: 0;
+  padding-bottom: 20px;
+  font-family: var(--foot-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.foot-top {
+  color: var(--foot-ink);
+  text-decoration: none;
+}
+
+.foot-top:hover {
+  color: var(--foot-accent);
+}
+
+.foot-meta {
+  color: var(--foot-muted);
+}
+
+.site-footer a:focus-visible {
+  outline: 2px solid var(--foot-accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .site-footer {
+    gap: 2.5rem;
+    padding: 32px 24px 20px;
+  }
+
+  .foot-links {
+    gap: 40px;
+  }
+
+  .foot-name {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .foot-mark svg {
+    width: 148px;
+    height: 208px;
+  }
+
+  .foot-baseline {
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 0;
+  }
 }
 
 .nav {

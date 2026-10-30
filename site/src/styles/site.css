@@ -1073,6 +1073,246 @@ html[data-page="nameplate"] a:focus-visible {
   transform: translateX(4px);
 }
 
+.plate-quotes {
+  padding: 40px 64px 80px;
+  border-top: 1px solid var(--np-rule);
+}
+
+.plate-quotes h2 {
+  margin: 0 0 8px;
+  color: var(--np-teal);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.plate-quotes ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plate-quotes li {
+  border-top: 1px solid var(--np-rule);
+}
+
+.plate-quotes blockquote {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 28px 0 32px;
+}
+
+.plate-quote-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.plate-quote-text {
+  max-width: 48rem;
+  margin: 0;
+  color: var(--np-paper);
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 36px;
+}
+
+.plate-quotes footer {
+  margin: 0;
+}
+
+.plate-quote-cite {
+  color: var(--np-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+/* Card layout — a single-row marquee of bordered quote cells, inspired by
+   the Save.design testimonials section. Shares the nameplate palette. The
+   track holds two identical groups; testimonial-marquee.ts drives the drift
+   and the prev/next arrows off one position. Without JS this stays a plain
+   horizontal scroller. */
+.plate-quotes-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.plate-quote-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.plate-quote-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--np-rule);
+  background: transparent;
+  color: var(--np-muted);
+  cursor: pointer;
+  transition:
+    border-color var(--np-motion),
+    color var(--np-motion),
+    background-color var(--np-motion);
+}
+
+.plate-quote-arrow:hover,
+.plate-quote-arrow:focus-visible {
+  border-color: var(--np-teal);
+  color: var(--np-paper);
+}
+
+.plate-quotes--cards .plate-quote-marquee {
+  margin: 16px -64px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 64px,
+    #000 calc(100% - 64px),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 64px,
+    #000 calc(100% - 64px),
+    transparent
+  );
+}
+
+.plate-quotes--cards .plate-quote-marquee::-webkit-scrollbar {
+  display: none;
+}
+
+.plate-quotes--cards .plate-quote-track {
+  display: flex;
+  width: max-content;
+}
+
+.plate-quotes--cards .plate-quote-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 16px;
+  margin: 0;
+  padding: 0 0 0 16px;
+  list-style: none;
+}
+
+.plate-quotes--cards li {
+  flex: 0 0 min(400px, 78vw);
+  border-top: 0;
+}
+
+.plate-quotes--cards blockquote {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  margin: 0;
+  padding: 28px;
+  border: 1px solid var(--np-rule);
+  background: color-mix(in srgb, var(--np-paper) 3%, transparent);
+}
+
+.pqc-mark {
+  position: absolute;
+  top: 8px;
+  right: 24px;
+  color: var(--np-rule);
+  font-family: var(--font-display);
+  font-size: 72px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.plate-quotes--cards .plate-quote-text {
+  flex: 1;
+  max-width: none;
+  font-size: 18px;
+  line-height: 27px;
+  color: var(--np-body);
+}
+
+.pqc-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--np-rule);
+}
+
+.pqc-avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--np-rule);
+  color: var(--np-paper);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.pqc-id {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pqc-name {
+  color: var(--np-paper);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 20px;
+}
+
+.pqc-role {
+  color: var(--np-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.pqc-link {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  border: 1px solid var(--np-rule);
+  color: var(--np-muted);
+}
+
 @media (hover: hover) {
   .plate-catalog ol:hover a,
   .plate-catalog ol:focus-within a {
@@ -1174,6 +1414,7 @@ html[data-page="nameplate"] a:focus-visible {
   .plate-intro,
   .plate-clients,
   .plate-catalog,
+  .plate-quotes,
   .plate-contact {
     padding-inline: 20px;
   }
@@ -1209,6 +1450,30 @@ html[data-page="nameplate"] a:focus-visible {
 
   .nameplate h1 {
     font-size: clamp(3.15rem, 16vw, 8rem);
+  }
+
+  /* Marquee bleeds to the narrower inset and fades over a shorter edge. */
+  .plate-quotes--cards .plate-quote-marquee {
+    margin-inline: -20px;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 20px,
+      #000 calc(100% - 20px),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 20px,
+      #000 calc(100% - 20px),
+      transparent
+    );
+  }
+
+  .plate-quotes--cards .plate-quote-group {
+    padding-left: 12px;
+    gap: 12px;
   }
 }
 

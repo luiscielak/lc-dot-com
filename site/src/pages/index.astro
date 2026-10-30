@@ -51,6 +51,74 @@ const clients = [
   { name: "Celgene", src: "/logos/clients/celgene.png", width: 41, height: 36 },
   { name: "Westat", src: "/logos/clients/westat.png", width: 76, height: 20 },
 ];
+/**
+ * Testimonials — LinkedIn recommendations. `quote` is a verbatim pull-quote
+ * from each recommendation (kept short so the cards stay compact); the full
+ * text lives on LinkedIn.
+ *
+ * Two layouts live here: "list" (stacked rows) and "cards" (bordered card
+ * carousel, inspired by the Save.design testimonials section). Flip
+ * `testimonialsLayout` to switch.
+ */
+const testimonialsLayout: "cards" | "list" = "cards";
+
+const testimonials = [
+  {
+    index: "01",
+    quote: "Luis is the kind of designer who makes teams better simply by being part of them.",
+    name: "Michael Pacheco",
+    role: "Lead UX Designer · PMI",
+  },
+  {
+    index: "02",
+    quote:
+      "Luis brings sharp insight, expert design skill, and strategic clarity to everything he touches.",
+    name: "Keriann Sabatini",
+    role: "Principal Product Manager · PMI",
+  },
+  {
+    index: "03",
+    quote:
+      "Luis is incredibly talented at getting senior stakeholders on the same page through his masterful UX workshops.",
+    name: "James Brown",
+    role: "Sr. Experience Design Manager · FM",
+  },
+  {
+    index: "04",
+    quote:
+      "A talented UX designer with an excellent ability to facilitate, shape, and collaborate in the early phases of work.",
+    name: "El Cruz",
+    role: "Senior Manager, Experience Design · FM",
+  },
+  {
+    index: "05",
+    quote:
+      "Any team would be lucky to have Luis; he brings not only talent but a mindset that elevates every project he touches.",
+    name: "Danielle Trombino",
+    role: "Senior Product Owner · FM Global",
+  },
+  {
+    index: "06",
+    quote:
+      "His design approach helped lead the B2B platform redesign that drove $3.1M in revenue in the first year and eliminated $650K in losses.",
+    name: "Patrick Olivares",
+    role: "Executive Product Leader · PMI",
+  },
+  {
+    index: "07",
+    quote:
+      "Luis is a talented UI/UX expert who brings clarity and innovation to every project and works well with product and engineering teams.",
+    name: "Ankur Pariyani",
+    role: "Co-Founder & CIO · Near-Miss Management",
+  },
+  {
+    index: "08",
+    quote:
+      "He has a way of seeing the best in people, creating a space where everyone feels heard and valued.",
+    name: "Shauna Mensah",
+    role: "Operations Manager · PMI",
+  },
+];
 
 /** Practice lines from the About section. */
 const practice = [
@@ -200,6 +268,84 @@ const practice = [
       </ol>
     </section>
 
+    {
+      testimonialsLayout === "cards" ? (
+        <section class="plate-quotes plate-quotes--cards" aria-labelledby="testimonials">
+          <div class="plate-quotes-head">
+            <h2 id="testimonials">Testimonials</h2>
+            <div class="plate-quote-nav">
+              <button type="button" class="plate-quote-arrow" data-marquee="prev" aria-label="Previous testimonial">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M15 5 8 12l7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <button type="button" class="plate-quote-arrow" data-marquee="next" aria-label="Next testimonial">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="plate-quote-marquee">
+            <div class="plate-quote-track">
+              {[false, true].map((clone) => (
+                <ul class="plate-quote-group" aria-hidden={clone ? "true" : undefined}>
+                  {testimonials.map((item) => (
+                    <li>
+                      <blockquote>
+                        <span class="pqc-mark" aria-hidden="true">”</span>
+                        <p class="plate-quote-text">{item.quote}</p>
+                        <footer class="pqc-foot">
+                          <span class="pqc-id">
+                            <span class="pqc-name">{item.name.split(" ")[0]}</span>
+                            <span class="pqc-role">{item.role.split(" · ")[0]}</span>
+                          </span>
+                          {/* LinkedIn slot — becomes a real link once profiles are confirmed. */}
+                          <span class="pqc-link" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                              <path
+                                d="M5 9.5V19M5 5.5h.01M10 19V9.5M10 13.2c0-2.1 1.6-3.7 3.7-3.7 2 0 3.3 1.2 3.3 3.6V19"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </span>
+                        </footer>
+                      </blockquote>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section class="plate-quotes" aria-labelledby="testimonials">
+          <h2 id="testimonials">Testimonials</h2>
+          <ul>
+            {testimonials.map((item) => (
+              <li>
+                <blockquote>
+                  <span class="plate-quote-meta">
+                    <span class="plate-index">{item.index}</span>
+                  </span>
+                  <p class="plate-quote-text">{item.quote}</p>
+                  <footer>
+                    <cite class="plate-quote-cite">
+                      {item.name} · {item.role}
+                    </cite>
+                  </footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
     <section class="about" id="about" aria-labelledby="about-title">
       <div class="about-intro">
         <div class="about-copy">
@@ -272,7 +418,9 @@ const practice = [
 <script>
   import { mountClientMarquee } from "../scripts/client-marquee";
   import { mountSignalField } from "../scripts/signal-field";
+  import { mountTestimonialMarquee } from "../scripts/testimonial-marquee";
 
   mountSignalField();
   mountClientMarquee();
+  mountTestimonialMarquee();
 </script>

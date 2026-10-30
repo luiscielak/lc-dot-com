@@ -458,6 +458,17 @@ html[data-page="nameplate"] .site-footer {
   max-width: var(--phone-max);
 }
 
+.figure.phone.is-screen picture {
+  box-sizing: border-box;
+  padding: 14px;
+  border-radius: 2.4rem;
+  background: color-mix(in srgb, var(--ink) 12%, var(--bg));
+}
+
+.figure.phone.is-screen picture img {
+  border-radius: 1.7rem;
+}
+
 .figure img,
 .figure picture,
 .figure video {

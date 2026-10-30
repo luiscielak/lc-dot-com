@@ -60,16 +60,32 @@ a:hover {
 .nav {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.nav-home {
-  font: var(--type-label);
-  letter-spacing: var(--type-label-tracking);
-  text-transform: uppercase;
+.brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
   text-decoration: none;
+}
+
+.brand-lockup img {
+  display: block;
+  height: 32px;
+  width: auto;
+}
+
+.brand-lockup:hover {
+  opacity: 0.72;
+}
+
+@media (max-width: 480px) {
+  .brand-lockup img {
+    height: 24px;
+  }
 }
 
 .nav-links {
@@ -343,9 +359,16 @@ html[data-page="nameplate"] {
   --np-draft: #ffffff99;
   --np-draft-rule: #ffffff40;
   --np-faint: #ffffff73;
+  /* Motion: one curve, three durations (color/opacity, position, draws). */
+  --np-ease: cubic-bezier(0.2, 0, 0, 1);
+  --np-dur-1: 160ms;
+  --np-dur-2: 280ms;
+  --np-dur-3: 400ms;
+  --np-motion: var(--np-dur-1) var(--np-ease);
   background: var(--np-ink);
   color: var(--np-paper);
   color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 html[data-page="nameplate"] body {
@@ -405,13 +428,42 @@ html[data-page="nameplate"] a:focus-visible {
 }
 
 .plate-nav a {
+  position: relative;
   color: var(--np-nav);
   text-decoration: none;
+  transition: color var(--np-motion);
+}
+
+.plate-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--np-teal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--np-dur-3) var(--np-ease);
+}
+
+.plate-nav a:hover,
+.plate-nav a:focus-visible {
+  color: var(--np-paper);
+}
+
+.plate-nav a:hover::after,
+.plate-nav a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .plate-nav a:last-child,
 .plate-nav a[aria-current="page"] {
   color: var(--np-paper);
+}
+
+.plate-nav a[aria-current="page"]::after {
+  display: none;
 }
 
 .about-bar .plate-nav a:last-child {
@@ -420,6 +472,39 @@ html[data-page="nameplate"] a:focus-visible {
 
 .about-bar .plate-nav a[aria-current="page"] {
   color: var(--np-paper);
+}
+
+.plate-stage {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Signal field — ambient dot grid behind the headline. Faded out before
+   the bio by the mask so body copy stays readable. */
+.plate-field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+}
+
+.plate-period {
+  display: inline-block;
+  position: relative;
+  transition: color var(--np-dur-1) var(--np-ease);
+}
+
+/* Enlarge the hover target around the dot itself. */
+.plate-period::after {
+  content: "";
+  position: absolute;
+  inset: 45% -0.18em -0.08em -0.08em;
+}
+
+.plate-stage.is-full-stop .plate-period {
+  color: var(--np-teal);
 }
 
 .plate-hero {
@@ -484,6 +569,15 @@ html[data-page="nameplate"] a:focus-visible {
   line-height: 16px;
   text-decoration: none;
   text-transform: uppercase;
+  transition:
+    background-color var(--np-motion),
+    border-color var(--np-motion),
+    color var(--np-motion);
+}
+
+.plate-btn-arrow {
+  display: inline-block;
+  transition: transform var(--np-dur-2) var(--np-ease);
 }
 
 .plate-btn-ghost {
@@ -497,6 +591,15 @@ html[data-page="nameplate"] a:focus-visible {
   background: var(--np-teal);
   border-color: var(--np-teal);
   color: var(--np-ink);
+}
+
+.plate-btn:hover .plate-btn-arrow {
+  transform: translateX(4px);
+}
+
+.plate-btn:active {
+  background: color-mix(in srgb, var(--np-teal) 82%, var(--np-ink));
+  border-color: color-mix(in srgb, var(--np-teal) 82%, var(--np-ink));
 }
 
 .plate-strip {
@@ -532,6 +635,7 @@ html[data-page="nameplate"] a:focus-visible {
 }
 
 .plate-strip a {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -539,10 +643,81 @@ html[data-page="nameplate"] a:focus-visible {
   padding: 32px 32px 40px;
   color: inherit;
   text-decoration: none;
+  transition:
+    background-color var(--np-motion),
+    opacity var(--np-motion);
 }
 
 .plate-strip a:hover {
   background: color-mix(in srgb, var(--np-paper) 6%, transparent);
+}
+
+/* Accent rule that draws left to right on hover / focus (cards only). */
+.plate-strip a:not(.plate-more)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--np-teal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--np-dur-3) var(--np-ease);
+}
+
+.plate-card-arrow {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  color: var(--np-teal);
+  opacity: 0;
+  transform: translate(-6px, 6px);
+  transition:
+    opacity var(--np-dur-1) var(--np-ease),
+    transform var(--np-dur-2) var(--np-ease);
+}
+
+.plate-strip a .plate-blurb {
+  transition: color var(--np-dur-1) var(--np-ease);
+}
+
+.plate-strip a:hover:not(.plate-more)::before,
+.plate-strip a:focus-visible:not(.plate-more)::before {
+  transform: scaleX(1);
+}
+
+.plate-strip a:hover .plate-card-arrow,
+.plate-strip a:focus-visible .plate-card-arrow {
+  opacity: 1;
+  transform: none;
+}
+
+.plate-strip a:hover .plate-blurb,
+.plate-strip a:focus-visible .plate-blurb {
+  color: var(--np-body);
+}
+
+.plate-all-arrow {
+  display: inline-block;
+  transition: transform var(--np-dur-2) var(--np-ease);
+}
+
+.plate-more:hover .plate-all-arrow,
+.plate-more:focus-visible .plate-all-arrow {
+  transform: translateX(4px);
+}
+
+/* Focus by subtraction: dim the siblings of the focused card. Keyboard
+   focus works on any input; hover dimming only where hover is real. */
+.plate-strip:has(a:focus-visible) a:not(:focus-visible) {
+  opacity: 0.5;
+}
+
+@media (hover: hover) {
+  .plate-strip:has(a:hover) a:not(:hover) {
+    opacity: 0.5;
+  }
 }
 
 .plate-kicker-row {
@@ -645,6 +820,7 @@ html[data-page="nameplate"] a:focus-visible {
   padding: 28px 0 32px;
   color: inherit;
   text-decoration: none;
+  transition: opacity var(--np-motion);
 }
 
 .plate-catalog .plate-index {
@@ -653,6 +829,9 @@ html[data-page="nameplate"] a:focus-visible {
 
 .plate-catalog .plate-study {
   grid-area: title;
+  transition:
+    color var(--np-dur-1) var(--np-ease),
+    transform var(--np-dur-2) var(--np-ease);
 }
 
 .plate-catalog .plate-blurb {
@@ -665,8 +844,50 @@ html[data-page="nameplate"] a:focus-visible {
   justify-self: end;
 }
 
-.plate-catalog a:hover .plate-study {
+.plate-catalog a:hover .plate-study,
+.plate-catalog a:focus-visible .plate-study {
   color: var(--np-teal);
+  transform: translateX(4px);
+}
+
+@media (hover: hover) {
+  .plate-catalog ol:hover a,
+  .plate-catalog ol:focus-within a {
+    opacity: 0.5;
+  }
+
+  .plate-catalog ol a:hover,
+  .plate-catalog ol a:focus-visible {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-page="nameplate"] {
+    scroll-behavior: auto;
+  }
+
+  html[data-page="nameplate"] .plate-catalog .plate-study {
+    transition-property: color;
+  }
+
+  html[data-page="nameplate"] .plate-btn:hover .plate-btn-arrow,
+  html[data-page="nameplate"] .plate-catalog a:hover .plate-study,
+  html[data-page="nameplate"] .plate-catalog a:focus-visible .plate-study,
+  html[data-page="nameplate"] .plate-card-arrow,
+  html[data-page="nameplate"] .plate-more:hover .plate-all-arrow,
+  html[data-page="nameplate"] .plate-more:focus-visible .plate-all-arrow {
+    transform: none;
+  }
+
+  html[data-page="nameplate"] .plate-card-arrow {
+    transition-property: opacity;
+  }
+
+  html[data-page="nameplate"] .plate-nav a::after,
+  html[data-page="nameplate"] .plate-strip a:not(.plate-more)::before {
+    transition: none;
+  }
 }
 
 @media (max-width: 960px) {
@@ -1745,3 +1966,191 @@ html[data-page="resume"] a:hover {
     pointer-events: none;
   }
 }
+
+/* Motion lab — prototype page that showcases the homepage micro-interactions. */
+.lab {
+  padding: 64px;
+}
+
+.lab-hero {
+  max-width: 720px;
+  padding-bottom: 56px;
+}
+
+.lab h1 {
+  margin: 0 0 24px;
+  color: var(--np-paper);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.lab-intro {
+  margin: 0;
+  color: var(--np-body);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.lab-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+  margin-top: 32px;
+}
+
+.lab-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 1px solid var(--np-ghost);
+  background: transparent;
+  color: var(--np-paper);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color var(--np-motion),
+    background-color var(--np-motion),
+    color var(--np-motion);
+}
+
+.lab-toggle:hover {
+  border-color: var(--np-teal);
+}
+
+.lab-toggle[aria-pressed="true"] {
+  border-color: var(--np-teal);
+  background: var(--np-teal);
+  color: var(--np-ink);
+}
+
+.lab-toggle .reduce-state {
+  font-weight: 500;
+}
+
+.lab-toggle:focus-visible {
+  outline: 2px solid var(--np-teal);
+  outline-offset: 3px;
+}
+
+.lab-token {
+  margin: 0;
+  color: var(--np-faint);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  line-height: 16px;
+}
+
+.lab-specimens {
+  display: grid;
+  gap: 0;
+}
+
+.lab-specimen {
+  display: grid;
+  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+  gap: 24px 64px;
+  padding: 48px 0;
+  border-top: 1px solid var(--np-rule);
+}
+
+.lab-specimen-head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lab-specimen-desc {
+  margin: 0;
+  color: var(--np-muted);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 23px;
+}
+
+.lab-stage {
+  min-width: 0;
+  align-self: start;
+  padding: 8px;
+  border: 1px solid var(--np-rule);
+  background: color-mix(in srgb, var(--np-paper) 3%, transparent);
+}
+
+.lab-specimen-meta {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 16px 0 0;
+  color: var(--np-faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 14px;
+  text-transform: uppercase;
+}
+
+/* Strip the full-bleed chrome so the production components sit inside a stage. */
+.lab-catalog {
+  padding: 0 24px;
+  border-top: 0;
+}
+
+.lab-strip {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 0;
+}
+
+.lab-actions {
+  padding: 24px;
+}
+
+.lab-nav {
+  justify-content: flex-start;
+  padding: 24px;
+}
+
+/* Class-based mirror of the reduced-motion rules so the toggle works live. */
+.lab[data-reduce="on"] .plate-catalog .plate-study {
+  transition-property: color;
+}
+
+.lab[data-reduce="on"] .plate-catalog a:hover .plate-study,
+.lab[data-reduce="on"] .plate-catalog a:focus-visible .plate-study,
+.lab[data-reduce="on"] .plate-btn:hover .plate-btn-arrow {
+  transform: none;
+}
+
+.lab[data-reduce="on"] .plate-nav a::after {
+  transition: none;
+}
+
+@media (max-width: 960px) {
+  .lab {
+    padding: 20px;
+  }
+
+  .lab-specimen {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .lab-specimen-meta {
+    grid-column: 1;
+  }
+
+  .lab-strip {
+    grid-template-columns: 1fr;
+  }
+}
+

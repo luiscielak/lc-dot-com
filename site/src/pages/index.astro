@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import BrandLockup from "../components/BrandLockup.astro";
 import Base from "../layouts/Base.astro";
 
 const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
@@ -44,7 +45,7 @@ const moreCount = studies.length - featured.length;
   description="I’m Luis Cielak, a lead product designer in Philadelphia. For fifteen years I’ve designed high-stakes products — risk, finance, certification, logistics — so people can see what a system is doing and decide what to do next."
 >
   <header class="plate-bar" slot="banner">
-    <a class="plate-name" href="/">Luis Cielak</a>
+    <BrandLockup tone="paper" class="plate-name" />
     <p class="plate-status">
       <span>Product design lead</span>
     </p>
@@ -57,18 +58,22 @@ const moreCount = studies.length - featured.length;
   </header>
 
   <div class="nameplate">
-    <section class="plate-hero" aria-labelledby="plate-title">
-      <p class="plate-kicker">Fifteen years of operational products</p>
-      <h1 id="plate-title">Clarity<br />above all.</h1>
-    </section>
+    <div class="plate-stage">
+      <canvas class="plate-field" aria-hidden="true"></canvas>
 
-    <div class="plate-intro">
-      <p class="plate-bio">
-        I’m Luis Cielak, a lead product designer in Philadelphia. For fifteen years I’ve designed high-stakes products — risk, finance, certification, logistics — so people can see what a system is doing and decide what to do next.
-      </p>
-      <div class="plate-actions">
-        <a class="plate-btn" href="#work">View work →</a>
-        <a class="plate-btn plate-btn-ghost" href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+      <section class="plate-hero" aria-labelledby="plate-title">
+        <p class="plate-kicker">Fifteen years of operational products</p>
+        <h1 id="plate-title">Clarity<br />above all<span class="plate-period">.</span></h1>
+      </section>
+
+      <div class="plate-intro">
+        <p class="plate-bio">
+          I’m Luis Cielak, a lead product designer in Philadelphia. For fifteen years I’ve designed high-stakes products — risk, finance, certification, logistics — so people can see what a system is doing and decide what to do next.
+        </p>
+        <div class="plate-actions">
+          <a class="plate-btn" href="#work">View work <span class="plate-btn-arrow" aria-hidden="true">→</span></a>
+          <a class="plate-btn plate-btn-ghost" href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+        </div>
       </div>
     </div>
 
@@ -85,6 +90,16 @@ const moreCount = studies.length - featured.length;
               </span>
               <span class="plate-study">{item.title}</span>
               <span class="plate-blurb">{item.blurb}</span>
+              <svg
+                class="plate-card-arrow"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M3 11 11 3M4.5 3H11v6.5" stroke="currentColor" stroke-width="1.25" />
+              </svg>
             </a>
           </li>
         ))
@@ -92,13 +107,13 @@ const moreCount = studies.length - featured.length;
       <li>
         <a class="plate-more" href="#work">
           <span class="plate-more-count">+ {moreCount} more</span>
-          <span class="plate-all">All work →</span>
+          <span class="plate-all">Recent work <span class="plate-all-arrow" aria-hidden="true">→</span></span>
         </a>
       </li>
     </ul>
 
-    <section class="plate-catalog" id="work" aria-labelledby="all-work">
-      <h2 id="all-work">All work</h2>
+    <section class="plate-catalog" id="work" aria-labelledby="recent-work">
+      <h2 id="recent-work">Recent work</h2>
       <ol>
         {
           studies.map((study, i) => (
@@ -119,3 +134,9 @@ const moreCount = studies.length - featured.length;
     </section>
   </div>
 </Base>
+
+<script>
+  import { mountSignalField } from "../scripts/signal-field";
+
+  mountSignalField();
+</script>

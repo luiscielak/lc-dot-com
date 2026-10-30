@@ -2,6 +2,7 @@
 import "@hooman-loop/konstrukt/css";
 import "@hooman-loop/konstrukt/base.css";
 import "../styles/site.css";
+import BrandLockup from "../components/BrandLockup.astro";
 
 interface Props {
   title: string;
@@ -31,7 +32,11 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0A0A0A" />
     {
       (nameplate || resume) && (
         <link
@@ -49,7 +54,7 @@ const {
       ) : (
         <header class="site-header">
           <div class="wrap nav">
-            <a class="nav-home" href="/">Luis Cielak</a>
+            <BrandLockup class="nav-home" />
             <nav class="nav-links" aria-label="Primary">
               <a href="/#work">Work</a>
               <a href="/about">About</a>

@@ -1,0 +1,229 @@
+---
+import BrandLockup from "../components/BrandLockup.astro";
+import Base from "../layouts/Base.astro";
+
+/** Each specimen reuses the production classes so the demo is the real thing. */
+const specimens = [
+  {
+    index: "01",
+    name: "Catalog rows",
+    trigger: "Hover / keyboard focus",
+    desc: "The row you point at stays full contrast; its siblings step back. The title turns teal and shifts 4px so the active item reads as the one place to go next.",
+    props: "opacity, color, transform",
+  },
+  {
+    index: "02",
+    name: "Featured strip",
+    trigger: "Hover / keyboard focus",
+    desc: "Same sibling logic across the grid, plus the existing 6% paper wash on the active cell. No column resizing, so the layout never jumps.",
+    props: "opacity, background-color",
+  },
+  {
+    index: "03",
+    name: "Buttons",
+    trigger: "Hover / press",
+    desc: "The teal fill eases in instead of snapping. The arrow nudges 4px to point the way out, and the press darkens so the tap registers.",
+    props: "background-color, border-color, transform",
+  },
+  {
+    index: "04",
+    name: "Nav underline",
+    trigger: "Hover / keyboard focus",
+    desc: "A teal underline draws from the left with a scaled transform. The current page stays solid with no line.",
+    props: "transform (scaleX), color",
+  },
+];
+---
+
+<Base
+  nameplate
+  title="Motion lab — Luis Cielak"
+  description="A small prototype of the homepage micro-interactions: sibling-dim rows, eased controls, and the reduced-motion path, side by side."
+>
+  <header class="plate-bar about-bar" slot="banner">
+    <BrandLockup tone="paper" class="plate-name" />
+    <p class="plate-status">
+      <span>Motion lab</span>
+    </p>
+    <nav class="plate-nav" aria-label="Primary">
+      <a href="/#work">Work</a>
+      <a href="/about">About</a>
+      <a href="/resume">Résumé</a>
+      <a href="mailto:luis@luiscielak.com">Contact</a>
+    </nav>
+  </header>
+
+  <div class="lab" id="lab" data-reduce="off">
+    <section class="lab-hero" aria-labelledby="lab-title">
+      <p class="plate-kicker">Motion / micro-interactions</p>
+      <h1 id="lab-title">Motion lab</h1>
+      <p class="lab-intro">
+        The homepage answers the pointer rather than performing on load. Each
+        specimen below is the production component, not a mockup — hover, tab
+        through, and press. Flip the switch to feel the reduced-motion path:
+        movement drops, but color and state still say where you are.
+      </p>
+      <div class="lab-controls">
+        <button
+          id="reduce-toggle"
+          class="lab-toggle"
+          type="button"
+          aria-pressed="false"
+        >
+          Reduce motion <span class="reduce-state">Off</span>
+        </button>
+        <p class="lab-token">
+          160ms &middot; cubic-bezier(0.2, 0, 0, 1)
+        </p>
+      </div>
+    </section>
+
+    <section class="lab-specimens" aria-label="Specimens">
+      {
+        specimens.map((spec) => (
+          <article class="lab-specimen">
+            <div class="lab-specimen-head">
+              <p class="plate-index">
+                {spec.index} / {spec.name}
+              </p>
+              <p class="lab-specimen-desc">{spec.desc}</p>
+            </div>
+
+            <div class="lab-stage">
+              {spec.index === "01" && (
+                <div class="plate-catalog lab-catalog">
+                  <ol>
+                    <li>
+                      <a href="/work/making-compare-actually-compare">
+                        <span class="plate-index">01 / Vanguard (contract)</span>
+                        <span class="plate-study">
+                          Making “Compare” Actually Compare
+                        </span>
+                        <span class="plate-blurb">
+                          One native design for comparing advice tiers on iOS and
+                          Android.
+                        </span>
+                        <span class="plate-draft">Draft</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/work/field-dispatch">
+                        <span class="plate-index">02 / MSS Specialty Services</span>
+                        <span class="plate-study">
+                          Redefining Field Dispatch
+                        </span>
+                        <span class="plate-blurb">
+                          A mobile-first dispatch system that replaced paper
+                          workflows.
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/work/pmi-disciplined-agile">
+                        <span class="plate-index">03 / PMI</span>
+                        <span class="plate-study">
+                          Streamlining Certification
+                        </span>
+                        <span class="plate-blurb">
+                          A global certification platform, simplified for
+                          completion.
+                        </span>
+                      </a>
+                    </li>
+                  </ol>
+                </div>
+              )}
+
+              {spec.index === "02" && (
+                <ul class="plate-strip lab-strip">
+                  <li>
+                    <a href="/work/field-dispatch">
+                      <span class="plate-kicker-row">
+                        <span class="plate-index">01 / Logistics</span>
+                      </span>
+                      <span class="plate-study">MSS Specialty Services</span>
+                      <span class="plate-blurb">
+                        Workflow platform for specialty moving ops.
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/work/pmi-disciplined-agile">
+                      <span class="plate-kicker-row">
+                        <span class="plate-index">02 / Certification</span>
+                      </span>
+                      <span class="plate-study">PMI Disciplined Agile</span>
+                      <span class="plate-blurb">
+                        Mobile-first PWA for agile coaches.
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/work/straatclaw">
+                      <span class="plate-kicker-row">
+                        <span class="plate-index">03 / AI field tool</span>
+                        <span class="plate-draft">Draft</span>
+                      </span>
+                      <span class="plate-study">StraatClaw</span>
+                      <span class="plate-blurb">
+                        Agent-assisted tool for field operators.
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              )}
+
+              {spec.index === "03" && (
+                <div class="plate-actions lab-actions">
+                  <a class="plate-btn" href="#">
+                    View work{" "}
+                    <span class="plate-btn-arrow" aria-hidden="true">
+                      →
+                    </span>
+                  </a>
+                  <a class="plate-btn plate-btn-ghost" href="#">
+                    luis@luiscielak.com
+                  </a>
+                </div>
+              )}
+
+              {spec.index === "04" && (
+                <nav class="plate-nav lab-nav" aria-label="Specimen">
+                  <a href="#">Work</a>
+                  <a href="#">About</a>
+                  <a href="#">Résumé</a>
+                  <a href="#" aria-current="page">
+                    Contact
+                  </a>
+                </nav>
+              )}
+            </div>
+
+            <p class="lab-specimen-meta">
+              <span>{spec.trigger}</span>
+              <span>{spec.props}</span>
+            </p>
+          </article>
+        ))
+      }
+    </section>
+  </div>
+
+  <script is:inline>
+    const lab = document.getElementById("lab");
+    const btn = document.getElementById("reduce-toggle");
+    if (lab && btn) {
+      const state = btn.querySelector(".reduce-state");
+      const prefers = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const set = (on) => {
+        lab.dataset.reduce = on ? "on" : "off";
+        btn.setAttribute("aria-pressed", String(on));
+        if (state) state.textContent = on ? "On" : "Off";
+      };
+      set(prefers);
+      btn.addEventListener("click", () => set(lab.dataset.reduce !== "on"));
+    }
+  </script>
+</Base>

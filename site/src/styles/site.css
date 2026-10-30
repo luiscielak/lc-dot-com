@@ -2747,3 +2747,387 @@ html[data-page="resume"] a:hover {
   }
 }
 
+/* Editorial case study — follows the Paper "Case 03" artboard. Scoped palette
+   so it reads as warm paper against the ink homepage, the same way the footer
+   scopes its own tokens. No hex escapes this block. */
+.editorial-study {
+  --es-bg: #f6f4ee;
+  --es-surface: #ffffff;
+  --es-ink: #17150f;
+  --es-muted: #726c5e;
+  --es-faint: #a8a090;
+  --es-rule: #ded9cc;
+  --es-accent: #067f8a;
+  --es-on-accent: #ffffff;
+  --es-display: "Space Grotesk", system-ui, sans-serif;
+  --es-body: "Inter", system-ui, sans-serif;
+  --es-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+  --es-gap: clamp(3rem, 7vw, 5.5rem);
+  background: var(--es-bg);
+  color: var(--es-ink);
+  font-family: var(--es-body);
+  padding-bottom: var(--es-gap);
+}
+
+.editorial-study .wrap {
+  width: min(100% - 2rem, 75rem);
+}
+
+/* Hero */
+.es-hero {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) 0;
+}
+
+.es-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--es-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--es-accent);
+  margin: 0 0 1.25rem;
+}
+
+.es-badge {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--es-muted);
+  border: 1px solid var(--es-rule);
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+}
+
+.es-hero h1 {
+  font-family: var(--es-display);
+  font-weight: 600;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem;
+  max-width: 16ch;
+}
+
+.es-lede {
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--es-muted);
+  max-width: 44rem;
+  margin: 0;
+}
+
+.es-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin: 2.5rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--es-ink);
+}
+
+.es-meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.es-meta dt {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--es-faint);
+}
+
+.es-meta dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--es-ink);
+  max-width: 22ch;
+}
+
+/* Split sections — main column plus a mono side note */
+.es-split {
+  display: grid;
+  grid-template-columns: minmax(0, 640px) minmax(0, 260px);
+  gap: clamp(2rem, 6vw, 5rem);
+  padding-block: var(--es-gap);
+  border-top: 1px solid var(--es-rule);
+  margin-top: var(--es-gap);
+}
+
+.es-split:first-of-type {
+  border-top: 0;
+  margin-top: 0;
+}
+
+.es-eyebrow {
+  font-family: var(--es-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--es-accent);
+  margin: 0 0 1.25rem;
+}
+
+.es-main h2 {
+  font-family: var(--es-display);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3vw, 2.125rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0 0 1.25rem;
+  max-width: 22ch;
+}
+
+.es-body {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--es-muted);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.es-note {
+  align-self: start;
+}
+
+.es-note-label {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--es-faint);
+  margin: 0 0 0.75rem;
+}
+
+.es-note p:last-child {
+  font-style: italic;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--es-muted);
+  margin: 0;
+}
+
+/* Quotes */
+.es-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.es-quote {
+  margin: 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--es-accent);
+}
+
+.es-quote p {
+  font-family: var(--es-display);
+  font-weight: 500;
+  font-size: clamp(1.1875rem, 2vw, 1.5rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.75rem;
+}
+
+.es-quote cite {
+  font-family: var(--es-mono);
+  font-style: normal;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--es-faint);
+}
+
+/* Figure — step diagram on a surface panel */
+.es-figure {
+  margin-top: var(--es-gap);
+}
+
+.es-figure-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  background: var(--es-surface);
+  border: 1px solid var(--es-rule);
+  border-bottom: 0;
+  padding: 1.5rem 1.75rem 0;
+}
+
+.es-figure-title {
+  font-family: var(--es-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.es-figure-caption {
+  font-family: var(--es-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--es-faint);
+  margin: 0;
+}
+
+.es-steps {
+  list-style: none;
+  margin: 0;
+  padding: 1.75rem;
+  background: var(--es-surface);
+  border: 1px solid var(--es-rule);
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+.es-step {
+  flex: 1 1 0;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem;
+  border: 1px solid var(--es-rule);
+}
+
+.es-step:last-of-type {
+  background: var(--es-accent);
+  border-color: var(--es-accent);
+  color: var(--es-on-accent);
+}
+
+.es-step-index {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--es-faint);
+}
+
+.es-step:last-of-type .es-step-index {
+  color: color-mix(in srgb, var(--es-on-accent) 70%, transparent);
+}
+
+.es-step-label {
+  font-family: var(--es-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--es-accent);
+}
+
+.es-step:last-of-type .es-step-label {
+  color: var(--es-on-accent);
+}
+
+.es-step-title {
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  color: var(--es-ink);
+}
+
+.es-step:last-of-type .es-step-title {
+  color: var(--es-on-accent);
+}
+
+.es-step-arrow {
+  flex: 0 0 auto;
+  align-self: center;
+  color: var(--es-faint);
+  font-size: 1.25rem;
+}
+
+/* Close — three cells */
+.es-close-grid {
+  margin-top: var(--es-gap);
+  padding-top: 2rem;
+  border-top: 1px solid var(--es-ink);
+}
+
+.es-cells {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem 2.5rem;
+}
+
+.es-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.es-cell-value {
+  font-family: var(--es-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.es-cell-label {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--es-muted);
+  max-width: 34ch;
+}
+
+/* Next */
+.es-next {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: var(--es-gap);
+  padding-top: 2rem;
+  border-top: 1px solid var(--es-rule);
+}
+
+.es-next span {
+  font-family: var(--es-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--es-faint);
+}
+
+.es-next a {
+  font-family: var(--es-display);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  letter-spacing: -0.015em;
+  color: var(--es-ink);
+}
+
+.es-next a:hover {
+  color: var(--es-accent);
+}
+
+@media (max-width: 760px) {
+  .es-split {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .es-note {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--es-rule);
+  }
+
+  .es-cells {
+    grid-template-columns: 1fr;
+  }
+
+  .es-step-arrow {
+    display: none;
+  }
+}
+

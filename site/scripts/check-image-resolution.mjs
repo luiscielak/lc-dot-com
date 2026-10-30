@@ -61,8 +61,8 @@ function visualBlocks(block) {
     });
   }
   const vis = block.split(/\nvisuals:\n/)[1];
-  if (!vis) return visuals;
-  const rest = vis.split(/\n(?:metrics|video|---)/)[0];
+  if (vis) {
+  const rest = vis.split(/\n(?:metrics|video|gallery|clips|---)/)[0];
   const chunks = rest.split(/\n  [a-z]+:\n/).slice(1);
   const names = [...rest.matchAll(/\n  ([a-z]+):\n/g)].map((x) => x[1]);
   names.forEach((name, i) => {
@@ -72,7 +72,45 @@ function visualBlocks(block) {
     const maxCssPx = Number(chunk.match(/maxCssPx:\s*([0-9]+)/)?.[1]);
     if (src && maxCssPx) visuals.push({ src, maxCssPx, field: `visuals.${name}` });
   });
+  }
+  for (const key of ["gallery", "clips"]) {
+    const section = topSection(block, key);
+    if (!section) continue;
+    const items = [...section.matchAll(/src:\s*"([^"]+)"|poster:\s*"([^"]+)"|maxCssPx:\s*([0-9]+)/g)];
+    let src;
+    let poster;
+    let maxCssPx;
+    let i = 0;
+    const flush = () => {
+      if (src && maxCssPx && !src.startsWith("/video/") && !src.endsWith(".mp4")) {
+        visuals.push({ src, maxCssPx, field: `${key}[${i}]` });
+      }
+      if (poster && maxCssPx) visuals.push({ src: poster, maxCssPx, field: `${key}[${i}].poster` });
+      i += 1;
+      src = poster = maxCssPx = undefined;
+    };
+    for (const m of items) {
+      if (m[1]) {
+        if (src || poster || maxCssPx) flush();
+        src = m[1];
+      } else if (m[2]) {
+        poster = m[2];
+      } else if (m[3]) {
+        maxCssPx = Number(m[3]);
+        flush();
+      }
+    }
+  }
   return visuals;
+}
+
+function topSection(block, key) {
+  const re = new RegExp(`(?:^|\\n)${key}:\\n`);
+  const m = re.exec(block);
+  if (!m) return "";
+  const rest = block.slice(m.index + m[0].length);
+  const end = rest.search(/\n(?![ \\t])[a-zA-Z]/);
+  return end === -1 ? rest : rest.slice(0, end);
 }
 
 const failures = [];

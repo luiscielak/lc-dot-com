@@ -1,0 +1,126 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"work">;
+  next?: CollectionEntry<"work">;
+}
+
+const { entry, next } = Astro.props;
+const d = entry.data;
+const e = d.editorial!;
+
+// Meta row: only the fields the entry provides, same source as the other cases.
+const meta = [
+  d.role ? { dt: "Role", dd: d.role } : null,
+  d.years ? { dt: "When", dd: d.years } : null,
+  d.platforms ? { dt: "Surfaces", dd: d.platforms } : null,
+  d.status ? { dt: "Status", dd: d.status } : null,
+].filter((m): m is { dt: string; dd: string } => m !== null);
+---
+
+<article class="editorial-study">
+  <header class="es-hero wrap">
+    <p class="es-kicker">
+      {d.draft ? <span class="es-badge">Draft</span> : null}
+      {e.kicker}
+    </p>
+    <h1>{d.title}</h1>
+    <p class="es-lede">{d.subtitle}</p>
+    {
+      meta.length ? (
+        <dl class="es-meta">
+          {meta.map((m) => (
+            <div>
+              <dt>{m.dt}</dt>
+              <dd>{m.dd}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null
+    }
+  </header>
+
+  <section class="es-split wrap">
+    <div class="es-main">
+      <p class="es-eyebrow">{e.problem.heading}</p>
+      <h2>{e.problem.headline}</h2>
+      <p class="es-body">{e.problem.body}</p>
+    </div>
+    <aside class="es-note">
+      <p class="es-note-label">Note</p>
+      <p>{e.problem.note}</p>
+    </aside>
+  </section>
+
+  <section class="es-split wrap">
+    <div class="es-main">
+      <p class="es-eyebrow">{e.field.heading}</p>
+      <div class="es-quotes">
+        {
+          e.field.quotes.map((q) => (
+            <blockquote class="es-quote">
+              <p>{q.text}</p>
+              <cite>{q.cite}</cite>
+            </blockquote>
+          ))
+        }
+      </div>
+    </div>
+    <aside class="es-note">
+      <p class="es-note-label">Note</p>
+      <p>{e.field.note}</p>
+    </aside>
+  </section>
+
+  <section class="es-figure wrap">
+    <div class="es-figure-head">
+      <p class="es-figure-title">{e.figure.title}</p>
+      <p class="es-figure-caption">{e.figure.caption}</p>
+    </div>
+    <ol class="es-steps">
+      {
+        e.figure.steps.map((s, i) => (
+          <>
+            <li class="es-step">
+              <span class="es-step-index">{String(i + 1).padStart(2, "0")}</span>
+              <span class="es-step-label">{s.label}</span>
+              <span class="es-step-title">{s.title}</span>
+            </li>
+            {i < e.figure.steps.length - 1 ? (
+              <li class="es-step-arrow" aria-hidden="true">
+                →
+              </li>
+            ) : null}
+          </>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="es-close-grid wrap">
+    <p class="es-eyebrow">{e.close.heading}</p>
+    <div class="es-cells">
+      {
+        e.close.cells.map((c) => (
+          <div class="es-cell">
+            <span class="es-cell-value">{c.value}</span>
+            <span class="es-cell-label">{c.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    next ? (
+      <nav class="es-next wrap">
+        <span>Next case study</span>
+        <a href={`/work/${next.id}`}>
+          {next.data.draft ? "Draft · " : ""}
+          {next.data.title}
+        </a>
+      </nav>
+    ) : null
+  }
+</article>

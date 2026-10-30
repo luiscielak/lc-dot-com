@@ -8,16 +8,18 @@ interface Props {
   caption: string;
   fallbackAlt: string;
   maxCssPx: number;
+  /** Phone-width frame. Desktop recordings leave this off. */
+  phone?: boolean;
 }
 
-const { src, poster, caption, fallbackAlt, maxCssPx } = Astro.props;
+const { src, poster, caption, fallbackAlt, maxCssPx, phone = true } = Astro.props;
 const posterImage = workImage(poster);
 const cap = Math.min(maxCssPx, Math.floor(posterImage.width / 1.5));
 ---
 
 <figure
-  class="figure phone"
-  style={`--phone-max: ${cap}px`}
+  class:list={["figure", phone && "phone"]}
+  style={phone ? `--phone-max: ${cap}px` : `--figure-max: ${cap}px`}
   data-src={poster}
   data-src-width={posterImage.width}
   data-render-max={cap}

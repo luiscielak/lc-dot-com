@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import CaseStudy from "../../components/CaseStudy.astro";
 import ProductStudy from "../../components/ProductStudy.astro";
+import EditorialStudy from "../../components/EditorialStudy.astro";
 
 export async function getStaticPaths() {
   const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
@@ -13,12 +14,14 @@ export async function getStaticPaths() {
 }
 
 const { entry, next } = Astro.props;
-const product = entry.data.presentation === "product";
+const presentation = entry.data.presentation;
 ---
 
 <Base title={`${entry.data.title} — Luis Cielak`} description={entry.data.subtitle}>
   {
-    product ? (
+    presentation === "editorial" ? (
+      <EditorialStudy entry={entry} next={next} />
+    ) : presentation === "product" ? (
       <ProductStudy entry={entry} next={next} />
     ) : (
       <CaseStudy entry={entry} next={next} />

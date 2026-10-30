@@ -14,6 +14,8 @@ const { entry, next } = Astro.props;
 const d = entry.data;
 const confirmed = d.metrics.filter((m) => m.confirmed).slice(0, 3);
 const v = d.visuals;
+const gallery = d.gallery ?? {};
+const clips = d.clips ?? [];
 
 function html(s?: string) {
   return s ? renderProse(s) : "";
@@ -88,6 +90,12 @@ function html(s?: string) {
         <Figure {...v.header} />
       ) : null
     }
+    {(gallery.header ?? []).map((item) => <Figure {...item} />)}
+    {
+      clips
+        .filter((c) => c.section === "header")
+        .map((c) => <WorkVideo {...c} />)
+    }
   </header>
 
   {
@@ -108,6 +116,8 @@ function html(s?: string) {
           ) : null
         }
         {v.tldr ? <Figure {...v.tldr} /> : null}
+        {(gallery.tldr ?? []).map((item) => <Figure {...item} />)}
+        {clips.filter((c) => c.section === "tldr").map((c) => <WorkVideo {...c} />)}
       </section>
     ) : null
   }
@@ -118,6 +128,8 @@ function html(s?: string) {
         <h2>Overview</h2>
         <div class="prose" set:html={html(d.overview)} />
         {v.overview ? <Figure {...v.overview} /> : null}
+        {(gallery.overview ?? []).map((item) => <Figure {...item} />)}
+        {clips.filter((c) => c.section === "overview").map((c) => <WorkVideo {...c} />)}
       </section>
     ) : null
   }
@@ -135,6 +147,8 @@ function html(s?: string) {
           ))}
         </div>
         {v.challenge ? <Figure {...v.challenge} /> : null}
+        {(gallery.challenge ?? []).map((item) => <Figure {...item} />)}
+        {clips.filter((c) => c.section === "challenge").map((c) => <WorkVideo {...c} />)}
       </section>
     ) : null
   }
@@ -150,6 +164,8 @@ function html(s?: string) {
           ) : null
         }
         {v.solution ? <Figure {...v.solution} /> : null}
+        {(gallery.solution ?? []).map((item) => <Figure {...item} />)}
+        {clips.filter((c) => c.section === "solution").map((c) => <WorkVideo {...c} />)}
       </section>
     ) : null
   }
@@ -160,6 +176,8 @@ function html(s?: string) {
         <h2>{d.researchHeading}</h2>
         <div class="prose" set:html={html(d.research)} />
         {v.research ? <Figure {...v.research} /> : null}
+        {(gallery.research ?? []).map((item) => <Figure {...item} />)}
+        {clips.filter((c) => c.section === "research").map((c) => <WorkVideo {...c} />)}
       </section>
     ) : null
   }
@@ -170,6 +188,8 @@ function html(s?: string) {
         <h2>Design Decisions</h2>
         <div class="prose" set:html={html(d.decisions)} />
         {v.decisions ? <Figure {...v.decisions} /> : null}
+        {(gallery.decisions ?? []).map((item) => <Figure {...item} />)}
+        {clips.filter((c) => c.section === "decisions").map((c) => <WorkVideo {...c} />)}
       </section>
     ) : null
   }
@@ -180,6 +200,8 @@ function html(s?: string) {
         <h2>Outcome</h2>
         <div class="prose" set:html={html(d.outcome)} />
         {v.outcome ? <Figure {...v.outcome} /> : null}
+        {(gallery.outcome ?? []).map((item) => <Figure {...item} />)}
+        {clips.filter((c) => c.section === "outcome").map((c) => <WorkVideo {...c} />)}
       </section>
     ) : null
   }

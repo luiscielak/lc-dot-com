@@ -8,9 +8,10 @@ interface Props {
   caption?: string;
   maxCssPx: number;
   phone?: boolean;
+  framed?: boolean;
 }
 
-const { src, alt, caption, maxCssPx, phone } = Astro.props;
+const { src, alt, caption, maxCssPx, phone, framed } = Astro.props;
 const image = workImage(src);
 const cap = Math.min(maxCssPx, Math.floor(image.width / 1.5));
 const widths = [
@@ -21,7 +22,7 @@ const widths = [
 ---
 
 <figure
-  class:list={["figure", phone && "phone"]}
+  class:list={["figure", phone && "phone", phone && framed === false && "is-screen"]}
   style={`--figure-max: ${cap}px; --phone-max: ${cap}px`}
   data-src={src}
   data-src-width={image.width}

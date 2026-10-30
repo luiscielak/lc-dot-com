@@ -14,6 +14,8 @@ const visual = z.object({
   /** CSS max width in px this image is allowed to render at. */
   maxCssPx: z.number().positive(),
   phone: z.boolean().optional(),
+  /** False when the image is a bare screenshot and the figure should draw the bezel. */
+  framed: z.boolean().optional(),
 });
 
 const challenge = z.object({

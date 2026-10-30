@@ -623,15 +623,28 @@ html[data-page="nameplate"] a:focus-visible {
   isolation: isolate;
 }
 
-/* Signal field — ambient dot grid behind the headline. Faded out before
-   the bio by the mask so body copy stays readable. */
+/* Signal field — ambient dot grid behind the headline. Faded in from the
+   top edge and out before the bio by the mask so the headline reads clean
+   and body copy stays readable. Fade stops are tunable via --field-fade-*. */
 .plate-field {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 var(--field-fade-top, 12%),
+    #000 var(--field-fade-bottom, 62%),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 var(--field-fade-top, 12%),
+    #000 var(--field-fade-bottom, 62%),
+    transparent 100%
+  );
 }
 
 .plate-period {

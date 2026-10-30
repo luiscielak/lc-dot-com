@@ -32,11 +32,15 @@ Case studies are MDX in [`src/content/work/`](src/content/work/); the frontmatte
 
 - Empty sections are omitted from the rendered page.
 - Metrics render only when `confirmed: true`.
-- Drafts (`draft: true`) are still built and labeled Draft.
+- Drafts (`draft: true`) are omitted from production listings, routes, and the sitemap. They still build in `astro dev`, or in any build with `PUBLIC_INCLUDE_DRAFTS=true`.
 
 Published: Field Dispatch, PMI Disciplined Agile, PMI Partner Platform.
-Draft: StraatClaw, Making "Compare" Actually Compare.
+Draft: StraatClaw, Making "Compare" Actually Compare, Your First Week.
 
 ## Hosting
 
-There is no deploy pipeline in this repo (no GitHub Actions, Vercel, or Cloudflare config). Preview is local via `npm run preview`.
+Vercel 301s and staging `noindex` live in [`vercel.json`](vercel.json). `public/_redirects` is the older Cloudflare/Netlify map and is kept as a reference only.
+
+```bash
+PUBLIC_INCLUDE_DRAFTS=true npm run build   # include draft case studies
+```

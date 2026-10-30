@@ -337,6 +337,15 @@ html[data-page="nameplate"] .site-footer {
   font: var(--type-display);
   letter-spacing: var(--type-display-tracking);
   margin: 0 0 0.75rem;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 480px) {
+  .cs-header h1 {
+    font-size: clamp(1.7rem, 8vw, 2.4rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
 }
 
 .cs-kicker {
@@ -469,12 +478,42 @@ html[data-page="nameplate"] .site-footer {
   border-radius: 1.7rem;
 }
 
+.figure-media {
+  position: relative;
+}
+
 .figure img,
 .figure picture,
 .figure video {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.video-toggle {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  margin: 0;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  color: var(--ink);
+  font: var(--type-meta);
+  letter-spacing: var(--type-meta-tracking);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.video-toggle:hover,
+.video-toggle:focus-visible {
+  background: var(--bg);
+}
+
+.video-toggle:focus-visible {
+  outline: 2px solid var(--accent, var(--ink));
+  outline-offset: 2px;
 }
 
 .figure figcaption {
@@ -1402,6 +1441,8 @@ html[data-page="nameplate"] a:focus-visible {
 
   .plate-status {
     justify-self: end;
+    white-space: normal;
+    text-align: right;
   }
 
   .plate-nav {
@@ -1410,6 +1451,17 @@ html[data-page="nameplate"] a:focus-visible {
     justify-content: flex-start;
     gap: 10px 20px;
     white-space: normal;
+  }
+}
+
+@media (max-width: 360px) {
+  .plate-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .plate-status {
+    justify-self: start;
+    text-align: left;
   }
 }
 
@@ -1468,9 +1520,9 @@ html[data-page="resume"] {
   --cv-ink: #17150f;
   --cv-text: #17150f;
   --cv-muted: #726c5e;
-  --cv-faint: #a8a090;
+  --cv-faint: #6e685c;
   --cv-border: #ded9cc;
-  --cv-accent: #067f8a;
+  --cv-accent: #057982;
   background: var(--cv-bg);
   color: var(--cv-text);
 }
@@ -2039,9 +2091,14 @@ html[data-page="resume"] a:hover {
 .about-portrait {
   display: block;
   width: 100%;
+  justify-self: end;
+}
+
+.about-portrait img {
+  display: block;
+  width: 100%;
   height: auto;
   aspect-ratio: 560 / 620;
-  justify-self: end;
   object-fit: cover;
   object-position: center;
   border-radius: 17px;
@@ -2068,12 +2125,14 @@ html[data-page="resume"] a:hover {
   .about-portrait {
     order: -1;
     width: min(100%, 560px);
+    max-width: 100%;
     justify-self: start;
   }
 
   .about h2 {
-    font-size: clamp(32px, 8vw, 44px);
+    font-size: clamp(1.6rem, 7.2vw, 44px);
     line-height: 1.2;
+    overflow-wrap: break-word;
   }
 }
 

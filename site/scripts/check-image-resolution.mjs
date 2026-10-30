@@ -38,9 +38,10 @@ function visualBlocks(block) {
   const cover = yamlString(block, "cover");
   const coverMax = yamlNumber(block, "coverMaxCssPx");
   if (cover && coverMax) visuals.push({ src: cover, maxCssPx: coverMax, field: "cover" });
-  const poster = block.match(/\n  poster:\\s*"([^"]+)"/);
+  const videoSection = topSection(block, "video");
+  const poster = videoSection.match(/poster:\s*"([^"]+)"/)?.[1];
   if (poster) {
-    visuals.push({ src: poster[1], maxCssPx: 400, field: "video.poster" });
+    visuals.push({ src: poster, maxCssPx: 400, field: "video.poster" });
   }
   const phones = block.split(/\nphones:\n/)[1];
   if (phones) {
@@ -60,18 +61,17 @@ function visualBlocks(block) {
       if (src && maxCssPx) visuals.push({ src, maxCssPx, field: `featureStage.items[${i}]` });
     });
   }
-  const vis = block.split(/\nvisuals:\n/)[1];
+  const vis = topSection(block, "visuals");
   if (vis) {
-  const rest = vis.split(/\n(?:metrics|video|gallery|clips|---)/)[0];
-  const chunks = rest.split(/\n  [a-z]+:\n/).slice(1);
-  const names = [...rest.matchAll(/\n  ([a-z]+):\n/g)].map((x) => x[1]);
-  names.forEach((name, i) => {
-    const chunk = chunks[i];
-    if (!chunk) return;
-    const src = chunk.match(/src:\s*"([^"]+)"/)?.[1];
-    const maxCssPx = Number(chunk.match(/maxCssPx:\s*([0-9]+)/)?.[1]);
-    if (src && maxCssPx) visuals.push({ src, maxCssPx, field: `visuals.${name}` });
-  });
+    const names = [...vis.matchAll(/(?:^|\n)  ([a-z]+):\n/g)].map((x) => x[1]);
+    const chunks = vis.split(/(?:^|\n)  [a-z]+:\n/).slice(1);
+    names.forEach((name, i) => {
+      const chunk = chunks[i];
+      if (!chunk) return;
+      const src = chunk.match(/src:\s*"([^"]+)"/)?.[1];
+      const maxCssPx = Number(chunk.match(/maxCssPx:\s*([0-9]+)/)?.[1]);
+      if (src && maxCssPx) visuals.push({ src, maxCssPx, field: `visuals.${name}` });
+    });
   }
   for (const key of ["gallery", "clips"]) {
     const section = topSection(block, key);

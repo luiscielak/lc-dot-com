@@ -1,6 +1,12 @@
 ---
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import BrandLockup from "../components/BrandLockup.astro";
 import Base from "../layouts/Base.astro";
+
+/** TODO(Luis): add the current résumé PDF at public/resume.pdf. The old Dropbox link stays retired. */
+const resumePdfPath = fileURLToPath(new URL("../../public/resume.pdf", import.meta.url));
+const hasResumePdf = existsSync(resumePdfPath);
 
 /** Copy and hierarchy from the Paper résumé artboard. */
 const impact = [
@@ -37,11 +43,13 @@ const roles = [
     place: "Philadelphia, PA",
     org: "Project Management Institute (PMI)",
     scale: "lead",
+    // TODO(Luis): Confirm $3.75M first-year revenue (vs $3.1M + $650K wording). Do not render until sourced.
     summary:
-      "Led UX for a program-level modernization of PMI’s B2B platform, replacing manual and legacy workflows with self-service web experiences — $3.75M in first-year revenue. Owned the Partner Platform zero-to-one (coupon distribution, certification management) and legacy modernization; translated complex requirements into scalable IA and prototypes, increasing conversions 30%. Owned research and mentored designers.",
+      "Led UX for a program-level modernization of PMI’s B2B platform, replacing manual and legacy workflows with self-service web experiences. Owned the Partner Platform zero-to-one (coupon distribution, certification management) and legacy modernization; translated complex requirements into scalable IA and prototypes, increasing conversions 30%. Owned research and mentored designers.",
   },
   {
-    dates: ["2013 — Present", "Ongoing · confirm"],
+    dates: ["2013 — Present"],
+    // TODO(Luis): Confirm whether Near-Miss Management is still ongoing ("2013 — Present").
     datesFaint: true,
     title: "Design Consultant",
     place: "Remote",
@@ -131,8 +139,11 @@ const roles = [
     <header class="cv-sheet cv-hero">
       <div class="cv-kicker-row">
         <p class="cv-kicker">Résumé — 15+ years</p>
-        <!-- No résumé PDF is in the repo. The old Dropbox link stays retired. -->
-        <p class="cv-download">Download PDF ↓</p>
+        {
+          hasResumePdf ? (
+            <a class="cv-download" href="/resume.pdf">Download PDF ↓</a>
+          ) : null
+        }
       </div>
       <h1>
         <span class="cv-title">Lead Product Designer</span>

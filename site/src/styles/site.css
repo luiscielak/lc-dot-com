@@ -114,7 +114,8 @@ a:hover {
 }
 
 .foot-email {
-  color: var(--foot-accent) !important;
+  /* Darker than --foot-accent so 15px type clears 4.5:1 on the paper footer. */
+  color: #05656f !important;
 }
 
 .foot-name {
@@ -394,6 +395,74 @@ html[data-page="nameplate"] .site-footer {
   font: var(--type-heading);
   letter-spacing: var(--type-heading-tracking);
   display: block;
+}
+
+.research-heard {
+  margin-top: 1.5rem;
+}
+
+.research-heard h3 {
+  font: var(--type-label);
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+}
+
+.research-quotes {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.research-quote {
+  height: 100%;
+  margin: 0;
+  border: var(--stroke-hairline) solid var(--border);
+  padding: 1rem;
+}
+
+.research-quote p {
+  margin: 0 0 1rem;
+}
+
+.research-quote footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rq-avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: var(--stroke-hairline) solid var(--border);
+  font: var(--type-label);
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+}
+
+.rq-id {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.rq-name {
+  font: var(--type-label);
+  letter-spacing: var(--type-label-tracking);
+  font-style: normal;
+}
+
+.rq-context {
+  font: var(--type-meta);
+  letter-spacing: var(--type-meta-tracking);
 }
 
 .challenges {
@@ -1611,6 +1680,11 @@ html[data-page="resume"] a:hover {
 
 .cv-download {
   margin: 0;
+  text-decoration: none;
+}
+
+.cv-download:hover {
+  color: var(--cv-accent);
 }
 
 .cv-hero h1 {
@@ -3612,6 +3686,49 @@ html[data-page="resume"] a:hover {
 
   .es-flow-caption {
     max-width: 40ch;
+  }
+}
+
+@media print {
+  html[data-page="resume"] {
+    background: #fff;
+    color: #17150f;
+  }
+
+  html[data-page="resume"] body {
+    background: #fff;
+  }
+
+  html[data-page="resume"] .skip,
+  html[data-page="resume"] .cv-bar,
+  html[data-page="resume"] .cv-download {
+    display: none;
+  }
+
+  html[data-page="resume"] .cv-sheet {
+    width: 100%;
+    padding-inline: 0;
+  }
+
+  html[data-page="resume"] .cv-hero,
+  html[data-page="resume"] .cv-impact,
+  html[data-page="resume"] .cv-work,
+  html[data-page="resume"] .cv-facts,
+  html[data-page="resume"] .cv-foot {
+    padding-block: 12pt;
+  }
+
+  html[data-page="resume"] .cv-lede,
+  html[data-page="resume"] .cv-summary,
+  html[data-page="resume"] .cv-impact p,
+  html[data-page="resume"] .cv-facts p {
+    font-size: 10.5pt;
+    line-height: 1.4;
+  }
+
+  @page {
+    size: letter;
+    margin: 0.7in;
   }
 }
 

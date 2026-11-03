@@ -9,11 +9,17 @@
     "build:prototype": "node scripts/build-first-week-prototype.mjs",
     "check": "astro check && node scripts/check-image-resolution.mjs",
     "build": "npm run build:prototype && astro build && node scripts/check-image-resolution.mjs",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "og-image": "node scripts/render-og-image.mjs",
+    "resume-pdf": "node --experimental-strip-types scripts/render-resume-pdf.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.3.6",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
     "@hooman-loop/konstrukt": "github:the-hooman-loop/konstrukt#v2.0.0",
     "astro": "^5.14.5",
     "sharp": "^0.34.4",

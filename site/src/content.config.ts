@@ -7,6 +7,14 @@ const metric = z.object({
   confirmed: z.boolean(),
 });
 
+/** User-research feedback. Initials avatars are derived from `name`. */
+const researchQuote = z.object({
+  name: z.string(),
+  quote: z.string(),
+  /** Participant context from the live study (not a client-testimonial title). */
+  context: z.string().optional(),
+});
+
 const visual = z.object({
   src: z.string(),
   alt: z.string(),
@@ -225,11 +233,14 @@ const work = defineCollection({
     coverMaxCssPx: z.number().positive(),
     order: z.number(),
     draft: z.boolean().default(false),
+    /** When false, the study is built but omitted from listings and “next” links. */
+    listed: z.boolean().default(true),
     presentation: z.enum(["product", "editorial"]).optional(),
     editorial: editorial.optional(),
     phones: z.array(phone).optional(),
     recreatedNote: z.string().optional(),
     researchHeading: z.enum(["Research & Insights", "Why it mattered"]).default("Research & Insights"),
+    researchQuotes: z.array(researchQuote).optional(),
     tldr: z.string(),
     overview: z.string(),
     challenges: z.array(challenge).default([]),

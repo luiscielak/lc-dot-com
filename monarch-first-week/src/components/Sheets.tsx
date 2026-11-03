@@ -38,7 +38,7 @@ export function Sheets() {
             {sent.description}
           </p>
           <p className="muted" style={{ marginTop: 6 }}>
-            {usd(sent.amount)} · {sent.weekday} · {sent.accountKind}
+            {usd(sent.amount)}
           </p>
           <p className="muted" style={{ marginTop: 10 }}>
             Only the merchant string and amount are sent.

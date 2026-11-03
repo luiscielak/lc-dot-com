@@ -1,0 +1,19 @@
+Prototype embed states — Mobile / Desktop
+
++------------------+  +------------------+  +------------------+
+| [S5 ready]       |  | [S5 loading]     |  | [S5 error]       |
+|                  |  |                  |  |                  |
+|  live Day 0      |  |  Loading the     |  |  The prototype   |
+|  goal + trial    |  |  week…           |  |  didn't load.    |
+|                  |  |                  |  |                  |
+|                  |  |                  |  | [Button: Retry]  |
++------------------+  +------------------+  +------------------+
+[Button: Open full screen] on all three
+
+Ready: Days 0–6 work inside the frame. Insights shows Pre-written when
+       /api/quicksort is absent — labeled source, not an error.
+Loading: until the iframe document loads.
+Error: dev server down, or production file missing. Retry reloads the frame.
+       Full screen is the fallback.
+
+Related FRs: FR-007, FR-005, FR-006

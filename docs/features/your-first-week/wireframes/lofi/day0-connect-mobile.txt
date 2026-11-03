@@ -1,0 +1,26 @@
+Day 0 Connect — Mobile
+
++---------------------------+
+| ←  CONNECTION STATUS  [*] |  [A4]
+| Connect your accounts     |
+| 2 of 3                    |
+| ↑ Up to date              |
+| + Northfield · healthy    |
+| + Harbor · healthy        |
+| + Ridge · needs update    |
+|   [Button: Update]        |  [A5]
+|   [Button: Try another]   |
+| [Button: Continue with 2] |
++---------------------------+
+
+A4: Refresh all is mocked (toast). Not a real sync.
+A5: Update flips Ridge to reauthed (3 of 3). Try another stays mocked.
+   Continue allowed with 2 healthy accounts. FR-012.
+
+Empty/loading: institutions list always present in this prototype (fixture).
+Error: institution still needs update — Continue still enabled with partial set.
+
+Next: hub
+Prev: day0-goal
+
+Related FRs: FR-012

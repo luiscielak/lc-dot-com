@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" data-mode="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your First Week — mid-fi</title>
+    <link rel="stylesheet" href="../../../../../vendor/konstrukt-2.0.0/konstrukt.css" />
+    <link rel="stylesheet" href="../../../../../vendor/konstrukt-2.0.0/base.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: var(--sp-6, 1.5rem);
+        background: var(--bg);
+        color: var(--text);
+        font: var(--type-body);
+      }
+      h1 {
+        font: var(--type-heading);
+      }
+      .frames {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-8, 2rem);
+      }
+      .phone {
+        width: 390px;
+        min-height: 640px;
+        border: var(--stroke-rule) solid var(--border);
+        background: var(--surface);
+        padding: var(--sp-4, 1rem);
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-3, 0.75rem);
+      }
+      .browser {
+        width: min(100%, 960px);
+        border: var(--stroke-rule) solid var(--border);
+        background: var(--surface);
+        padding: var(--sp-6, 1.5rem);
+      }
+      .banner {
+        font: var(--type-badge);
+        border-bottom: var(--stroke-hairline) solid var(--border);
+        padding-bottom: var(--sp-2, 0.5rem);
+      }
+      .kicker {
+        font: var(--type-label);
+      }
+      .hero-num {
+        font: var(--type-display);
+      }
+      .muted {
+        opacity: 0.7;
+      }
+      .stack {
+        display: grid;
+        gap: var(--sp-2, 0.5rem);
+      }
+      .radio,
+      .row,
+      .card {
+        border: var(--stroke-hairline) solid var(--border);
+        padding: var(--sp-3, 0.75rem);
+      }
+      .foot {
+        margin-top: auto;
+        display: grid;
+        gap: var(--sp-2, 0.5rem);
+      }
+      .caption {
+        font: var(--type-meta);
+        margin: 0 0 var(--sp-2, 0.5rem);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Your First Week — mid-fi overview</h1>
+    <p class="muted">Konstrukt tokens. Running prototype may differ until a visual pass.</p>
+
+    <div class="frames">
+      <section>
+        <p class="caption">Phone · Day 0 goal</p>
+        <div class="phone" aria-label="Day 0 goal">
+          <div class="banner">Unofficial concept · not affiliated with Monarch</div>
+          <p class="kicker">Day 0 of 7</p>
+          <h2 style="font: var(--type-heading); margin: 0">What do you want first?</h2>
+          <div class="stack">
+            <div class="radio">See everything</div>
+            <div class="radio">Stop overspending</div>
+            <div class="radio" style="border-color: var(--accent)">Plan with a household member</div>
+          </div>
+          <div class="card">
+            <p class="kicker">Your first week is on us</p>
+            <p class="hero-num">7 days</p>
+            <p>Charge · amount · cancel by 24h before · who bills</p>
+          </div>
+          <div class="foot">
+            <button class="btn-primary" type="button">Continue</button>
+            <button class="portal-quiet-btn" type="button">Skip for now</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <p class="caption">Phone · Needs review</p>
+        <div class="phone" aria-label="Needs review">
+          <div class="banner">Unofficial concept · not affiliated with Monarch</div>
+          <p class="kicker">Day 1 · Quick Sort</p>
+          <h2 style="font: var(--type-heading); margin: 0">Needs review</h2>
+          <p class="hero-num">24</p>
+          <p class="muted">groups · transfers before merchants</p>
+          <div class="stack">
+            <div class="row">Connection status · 1 min</div>
+            <div class="row">Transfers · 2 min</div>
+            <div class="row">Merchants · 6 min</div>
+            <div class="row">Rules · 1 min</div>
+          </div>
+          <div class="foot">
+            <button class="btn-primary" type="button">Start review</button>
+            <button class="portal-quiet-btn" type="button">Edit</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="browser" aria-label="Case page browser frame">
+        <p class="caption">Browser · Case page (Paper exception — structure only)</p>
+        <p class="kicker">Draft · Unofficial concept</p>
+        <h2 style="font: var(--type-heading)">Your First Week</h2>
+        <p>Problem + counts · quotes · competitors · JTBD · experiments · week steps · live phone · how we’d know</p>
+      </section>
+    </div>
+
+    <script src="../../../../../vendor/konstrukt-2.0.0/theme.js"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+day1-insights — Desktop
+
+Phone-only surface. Content matches day1-insights-mobile.txt inside a centered 390×844 frame on the desktop case page or standalone prototype shell.
+
+See: day1-insights-mobile.txt

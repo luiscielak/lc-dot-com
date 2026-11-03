@@ -62,7 +62,7 @@ export const roles: ResumeRole[] = [
     org: "Project Management Institute (PMI)",
     scale: "lead",
     summary:
-      "Led UX for a program-level modernization of PMI’s B2B platform, replacing manual and legacy workflows with self-service web experiences — $3.75M in first-year revenue. Owned the Partner Platform zero-to-one (coupon distribution, certification management) and legacy modernization; translated complex requirements into scalable IA and prototypes, increasing conversions 30%. Owned research and mentored designers.",
+      "Led UX for a program-level modernization of PMI’s B2B platform, replacing manual and legacy workflows with self-service web experiences — $3.1M in revenue in the first year and $650K saved annually from fraud. Owned the Partner Platform zero-to-one (coupon distribution, certification management) and legacy modernization; translated complex requirements into scalable IA and prototypes, increasing conversions 30%. Owned research and mentored designers.",
   },
   {
     dates: ["2013 — Present", "Ongoing"],

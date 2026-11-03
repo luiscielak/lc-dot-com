@@ -12,13 +12,24 @@ interface Props {
 
 const { entry, next } = Astro.props;
 const d = entry.data;
-const confirmed = d.metrics.filter((m) => m.confirmed).slice(0, 3);
+const confirmed = d.metrics.filter((m) => m.confirmed);
+const quotes = d.researchQuotes ?? [];
 const v = d.visuals;
 const gallery = d.gallery ?? {};
 const clips = d.clips ?? [];
 
 function html(s?: string) {
   return s ? renderProse(s) : "";
+}
+
+function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .map((part) => part.replace(/[^A-Za-z]/g, "")[0])
+    .filter(Boolean)
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 }
 ---
 
@@ -171,10 +182,35 @@ function html(s?: string) {
   }
 
   {
-    d.research ? (
+    d.research || quotes.length ? (
       <section class="cs-section wrap">
-        <h2>{d.researchHeading}</h2>
-        <div class="prose" set:html={html(d.research)} />
+        {d.research ? <h2>{d.researchHeading}</h2> : null}
+        {d.research ? <div class="prose" set:html={html(d.research)} /> : null}
+        {
+          quotes.length ? (
+            <div class="research-heard">
+              <h3>What we heard in research</h3>
+              <ul class="research-quotes">
+                {quotes.map((q) => (
+                  <li>
+                    <blockquote class="research-quote">
+                      <p>{q.quote}</p>
+                      <footer>
+                        <span class="rq-avatar" aria-hidden="true">
+                          {initials(q.name)}
+                        </span>
+                        <span class="rq-id">
+                          <cite class="rq-name">{q.name}</cite>
+                          {q.context ? <span class="rq-context">{q.context}</span> : null}
+                        </span>
+                      </footer>
+                    </blockquote>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null
+        }
         {v.research ? <Figure {...v.research} /> : null}
         {(gallery.research ?? []).map((item) => <Figure {...item} />)}
         {clips.filter((c) => c.section === "research").map((c) => <WorkVideo {...c} />)}

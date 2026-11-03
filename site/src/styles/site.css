@@ -397,6 +397,74 @@ html[data-page="nameplate"] .site-footer {
   display: block;
 }
 
+.research-heard {
+  margin-top: 1.5rem;
+}
+
+.research-heard h3 {
+  font: var(--type-label);
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+}
+
+.research-quotes {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.research-quote {
+  height: 100%;
+  margin: 0;
+  border: var(--stroke-hairline) solid var(--border);
+  padding: 1rem;
+}
+
+.research-quote p {
+  margin: 0 0 1rem;
+}
+
+.research-quote footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rq-avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: var(--stroke-hairline) solid var(--border);
+  font: var(--type-label);
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+}
+
+.rq-id {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.rq-name {
+  font: var(--type-label);
+  letter-spacing: var(--type-label-tracking);
+  font-style: normal;
+}
+
+.rq-context {
+  font: var(--type-meta);
+  letter-spacing: var(--type-meta-tracking);
+}
+
 .challenges {
   display: grid;
   gap: 1rem;

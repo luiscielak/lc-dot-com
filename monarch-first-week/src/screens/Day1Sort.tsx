@@ -68,6 +68,11 @@ export function Day1Sort() {
   const isSync = liveGroup.kind === 'sync'
   const isRules = liveGroup.kind === 'rules'
   const lowConfidence = liveGroup.confidence !== 'likely' && !isSync && !isRules
+  const reviewQueue = groups.filter((item) => item.kind === 'merchant' || item.kind === 'transfer')
+  const queueIndex = reviewQueue.findIndex((item) => item.id === liveGroup.id)
+  const nextPeek = queueIndex >= 0 ? reviewQueue[queueIndex + 1] : undefined
+  const queueHint =
+    queueIndex >= 0 ? `${queueIndex + 1} of ${reviewQueue.length} groups` : null
 
   function goNext() {
     if (groupIndex >= groups.length - 1) {
@@ -141,9 +146,7 @@ export function Day1Sort() {
     >
       <BackLink to={protoPath('/day/1')} />
       <div className="head-row">
-        <p className="kicker">
-          Needs review · {groupIndex + 1} of {groups.length}
-        </p>
+        <p className="kicker">Needs review</p>
         {!isSync && !isRules ? (
           <SparkleButton onClick={() => setSheet('ai')} label="Insights" />
         ) : null}
@@ -217,46 +220,57 @@ export function Day1Sort() {
 
       {!isSync && !isRules ? (
         <>
-          <SwipeReview
-            onReviewed={() => onDecide(isTransfer ? 'transfer' : 'accepted')}
-            onSkip={() => onDecide('skipped')}
-          >
-            {isTransfer ? (
-              <>
-                <div className="review-top">
-                  <div>
-                    <p className="review-merchant">{liveGroup.merchantLabel}</p>
+          <div className={nextPeek ? 'review-stack' : undefined}>
+            <SwipeReview
+              onReviewed={() => onDecide(isTransfer ? 'transfer' : 'accepted')}
+              onSkip={() => onDecide('skipped')}
+            >
+              {isTransfer ? (
+                <>
+                  <div className="review-top">
+                    <div>
+                      <p className="review-merchant">{liveGroup.merchantLabel}</p>
+                      <p className="muted">
+                        {count} {count === 1 ? 'transaction' : 'transactions'}
+                      </p>
+                    </div>
+                    <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
+                  </div>
+                  <div className="review-foot">
+                    <CategoryChip category={liveGroup.suggestedCategory} />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="review-merchant">{liveGroup.merchantLabel}</p>
+                  <p className="muted" style={{ margin: '10px 0 8px' }}>
+                    Suggested
+                  </p>
+                  <CategoryChip category={liveGroup.suggestedCategory} />
+                  <div className="review-top" style={{ marginTop: 18 }}>
                     <p className="muted">
                       {count} {count === 1 ? 'transaction' : 'transactions'}
                     </p>
+                    <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
                   </div>
-                  <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
-                </div>
-                <div className="review-foot">
-                  <CategoryChip category={liveGroup.suggestedCategory} />
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="review-merchant">{liveGroup.merchantLabel}</p>
-                <p className="muted" style={{ margin: '10px 0 8px' }}>
+                  {lowConfidence ? (
+                    <div className="review-foot" style={{ marginTop: 12 }}>
+                      <AvatarRow />
+                    </div>
+                  ) : null}
+                </>
+              )}
+            </SwipeReview>
+            {nextPeek ? (
+              <div className="review-stack-back" aria-hidden="true">
+                <p className="review-merchant">{nextPeek.merchantLabel}</p>
+                <p className="muted" style={{ margin: '8px 0 0' }}>
                   Suggested
                 </p>
-                <CategoryChip category={liveGroup.suggestedCategory} />
-                <div className="review-top" style={{ marginTop: 18 }}>
-                  <p className="muted">
-                    {count} {count === 1 ? 'transaction' : 'transactions'}
-                  </p>
-                  <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
-                </div>
-                {lowConfidence ? (
-                  <div className="review-foot" style={{ marginTop: 12 }}>
-                    <AvatarRow />
-                  </div>
-                ) : null}
-              </>
-            )}
-          </SwipeReview>
+              </div>
+            ) : null}
+          </div>
+          {queueHint ? <p className="review-queue-hint">{queueHint}</p> : null}
         </>
       ) : null}
     </Screen>

@@ -1,5 +1,5 @@
 import { sample } from '../lib/fixtures'
-import { neverSent, sentFieldsFor, sourceLabel } from '../lib/ai'
+import { neverSent, sentFieldsFor } from '../lib/ai'
 import { groups } from '../lib/fixtures'
 import { usd } from '../lib/money'
 import { useAppState } from '../state/AppState'
@@ -16,7 +16,6 @@ export function Sheets() {
     setGroupIndex,
     aiEnabled,
     setAiEnabled,
-    aiSource,
     showToast,
   } = useAppState()
   const group = groups[groupIndex] ?? groups[0]
@@ -41,18 +40,16 @@ export function Sheets() {
           <p className="muted" style={{ marginTop: 6 }}>
             {usd(sent.amount)} · {sent.weekday} · {sent.accountKind}
           </p>
+          <p className="muted" style={{ marginTop: 10 }}>
+            Only the merchant string and amount are sent.
+          </p>
         </div>
         <div className="card">
           <p className="kicker">Never sent</p>
           <p className="muted" style={{ marginTop: 8 }}>
             {neverSent.join(' · ')}
           </p>
-          <div style={{ display: 'flex', margin: '12px 0 8px' }}>
-            <span className={`pill ${aiEnabled ? 'pill-info' : ''}`}>
-              {aiEnabled ? sourceLabel(aiSource) : 'AI off'}
-            </span>
-          </div>
-          <div className="toggle">
+          <div className="toggle" style={{ marginTop: 12 }}>
             <span>
               <b>AI suggestions</b>
             </span>

@@ -1113,6 +1113,33 @@ h1,
   margin-top: 12px;
 }
 
+.review-stack {
+  position: relative;
+}
+
+.review-stack .review-card {
+  position: relative;
+  z-index: 1;
+}
+
+.review-stack-back {
+  margin: -10px 16px 0;
+  padding: 22px 16px 14px;
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  opacity: 0.46;
+  pointer-events: none;
+}
+
+.review-queue-hint {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-ink-faint);
+}
+
 .review-top {
   display: flex;
   justify-content: space-between;

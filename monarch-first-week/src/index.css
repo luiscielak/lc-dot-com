@@ -724,6 +724,11 @@ h1,
   z-index: 9;
 }
 
+.capture .banner,
+.capture .proto {
+  display: none;
+}
+
 .proto {
   display: flex;
   flex-wrap: wrap;

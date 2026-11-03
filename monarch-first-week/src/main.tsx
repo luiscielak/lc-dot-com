@@ -7,9 +7,17 @@ import './index.css'
 
 applyTokens()
 
+// Figure-capture mode: `?capture=1` hides prototype-only chrome (jump nav, banner)
+// so the static /case figures show just the product screen.
+if (new URLSearchParams(window.location.search).has('capture')) {
+  document.documentElement.classList.add('capture')
+}
+
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename === '/' ? undefined : basename}>
       <App />
     </BrowserRouter>
   </StrictMode>,

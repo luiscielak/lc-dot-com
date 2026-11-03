@@ -58,21 +58,25 @@ export function BillingPlain({ compact = false }: BillingPlainProps) {
           <span className="muted">{billing.appStore.priceNote}</span>
         ) : null}
       </p>
-      <p className="muted" style={{ margin: '8px 0 10px' }}>
-        {billing.partnerJoinsFree}
-      </p>
-      <div className="toggle">
-        <span>
-          <b>Remind me 2 days before</b>
-        </span>
-        <button
-          type="button"
-          className="switch"
-          data-on={remindBeforeCharge}
-          aria-pressed={remindBeforeCharge}
-          onClick={() => setRemindBeforeCharge(!remindBeforeCharge)}
-        />
-      </div>
+      {compact ? null : (
+        <>
+          <p className="muted" style={{ margin: '8px 0 10px' }}>
+            {billing.partnerJoinsFree}
+          </p>
+          <div className="toggle">
+            <span>
+              <b>Remind me 2 days before</b>
+            </span>
+            <button
+              type="button"
+              className="switch"
+              data-on={remindBeforeCharge}
+              aria-pressed={remindBeforeCharge}
+              onClick={() => setRemindBeforeCharge(!remindBeforeCharge)}
+            />
+          </div>
+        </>
+      )}
     </div>
   )
 }

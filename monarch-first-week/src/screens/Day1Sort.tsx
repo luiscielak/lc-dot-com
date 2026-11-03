@@ -3,11 +3,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
 import { Button } from '../components/ui/button'
 import { PrototypeJump } from '../components/PrototypeJump'
-import { RulePreview } from '../components/RulePreview'
 import { Screen } from '../components/Screen'
 import { SwipeReview } from '../components/SwipeReview'
 import { AccountLine, AvatarRow, CategoryChip, SparkleButton } from '../components/visuals'
-import { household } from '../data/visual'
 import { conflictFlag, householdRules } from '../data/rules'
 import { requestQuickSort } from '../lib/ai'
 import { protoPath } from '../lib/proto'
@@ -24,7 +22,6 @@ export function Day1Sort() {
     setGroupIndex,
     decide,
     undo,
-    lastUndo,
     rulesOn,
     setRuleOn,
     aiEnabled,
@@ -34,8 +31,6 @@ export function Day1Sort() {
     showToast,
     ridgeReauthed,
     setRidgeReauthed,
-    partnerQueue,
-    askPartner,
   } = useAppState()
   const [params] = useSearchParams()
   const group = groups[groupIndex] ?? groups[0]
@@ -66,13 +61,10 @@ export function Day1Sort() {
 
   const count = liveGroup.transactionIds.length
   const span = groupDateSpan(liveGroup)
-  const next = groups[(groupIndex + 1) % groups.length]
   const isTransfer = liveGroup.kind === 'transfer'
   const isSync = liveGroup.kind === 'sync'
   const isRules = liveGroup.kind === 'rules'
   const lowConfidence = liveGroup.confidence !== 'likely' && !isSync && !isRules
-  const asked = partnerQueue.includes(liveGroup.id)
-  const partner = household.members.find((member) => member.shared)
 
   function goNext() {
     if (groupIndex >= groups.length - 1) {
@@ -112,28 +104,21 @@ export function Day1Sort() {
             <Button onClick={() => onDecide('accepted')}>Continue to transfers</Button>
           ) : isRules ? (
             <Button onClick={() => onDecide('accepted')}>Create rule</Button>
+          ) : isTransfer ? (
+            <div className="btn-row">
+              <Button onClick={() => onDecide('transfer')}>It&rsquo;s a transfer</Button>
+              <button className="btn btn-secondary" type="button" onClick={() => onDecide('accepted')}>
+                It&rsquo;s spending
+              </button>
+            </div>
           ) : (
             <div className="btn-row">
-              <Button
-                onClick={() => onDecide(isTransfer ? 'transfer' : 'accepted')}
-              >
-                Mark as reviewed
-              </Button>
+              <Button onClick={() => onDecide('accepted')}>Mark as reviewed</Button>
               <button className="btn btn-secondary" type="button" onClick={() => onDecide('skipped')}>
                 Skip for now
               </button>
             </div>
           )}
-          {lowConfidence ? (
-            <button
-              className="btn btn-secondary"
-              type="button"
-              onClick={() => askPartner(liveGroup.id, liveGroup.merchantLabel)}
-            >
-              Needs review by {partner?.first}
-              {asked ? ' · queued' : ''}
-            </button>
-          ) : null}
           <nav className="footer-links" aria-label="Review extras">
             <button className="linkish" type="button" onClick={sortMyself}>
               Edit
@@ -234,7 +219,9 @@ export function Day1Sort() {
           >
             <div className="review-top">
               <div>
-                <p className="review-merchant">{liveGroup.merchantLabel}</p>
+                {isTransfer ? (
+                  <p className="review-merchant">{liveGroup.merchantLabel}</p>
+                ) : null}
                 <p className="muted">
                   {count} {count === 1 ? 'transaction' : 'transactions'}
                   {span ? ` · ${shortDate(span.first)}–${shortDate(span.last)}` : ''}
@@ -247,48 +234,8 @@ export function Day1Sort() {
               {lowConfidence ? <AvatarRow /> : null}
             </div>
           </SwipeReview>
-          <p className="swipe-hint">Swipe right to review · left to skip</p>
-
-          <div className="card" style={{ marginTop: 12 }}>
-            <div className="toggle">
-              <span>
-                <b>Create rule</b>
-                <span className="muted">
-                  If merchant contains “{liveGroup.ruleDraft.whenContains}”
-                </span>
-              </span>
-              <button
-                type="button"
-                className="switch"
-                data-on={Boolean(rulesOn[liveGroup.id])}
-                aria-pressed={Boolean(rulesOn[liveGroup.id])}
-                onClick={() => setRuleOn(liveGroup.id, !rulesOn[liveGroup.id])}
-              />
-            </div>
-            <p className="muted" style={{ marginTop: 8 }}>
-              Apply {count} changes to existing transactions
-            </p>
-          </div>
-          <RulePreview
-            whenContains={liveGroup.ruleDraft.whenContains}
-            setCategory={liveGroup.ruleDraft.setCategory}
-          />
-          <button className="linkish" type="button" onClick={() => setSheet('split')}>
-            Split transaction
-          </button>
         </>
       ) : null}
-
-      {lastUndo ? (
-        <p className="muted">
-          {lastUndo}.{' '}
-          <button className="linkish" type="button" onClick={() => undo()}>
-            Undo
-          </button>
-        </p>
-      ) : null}
-
-      <p className="muted">Next: {next.merchantLabel}</p>
     </Screen>
   )
 }

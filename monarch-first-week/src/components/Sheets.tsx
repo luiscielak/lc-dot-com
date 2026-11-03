@@ -77,12 +77,10 @@ export function Sheets() {
           </div>
         </div>
         <div className="card">
-          <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
-            {(['live', 'cached', 'pre-written'] as const).map((item) => (
-              <span key={item} className={`pill ${aiEnabled && aiSource === item ? 'pill-info' : ''}`}>
-                {sourceLabel(item)}
-              </span>
-            ))}
+          <div style={{ display: 'flex', marginBottom: 8 }}>
+            <span className={`pill ${aiEnabled ? 'pill-info' : ''}`}>
+              {aiEnabled ? sourceLabel(aiSource) : 'AI off'}
+            </span>
           </div>
           <div className="toggle">
             <span>

@@ -18,25 +18,11 @@ export function cancelByIso(): string {
 }
 
 export function cancelByLabel(): string {
-  return formatWhen(cancelByIso(), {
-    weekday: 'long',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-  })
+  return '24 hours before'
 }
 
 export function chargeDateLabel(): string {
-  return formatWhen(trialEndsAt, {
-    weekday: 'long',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-  })
+  return 'Day 7'
 }
 
 export function trialEndsLabel(): string {

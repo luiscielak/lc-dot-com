@@ -1,14 +1,3 @@
-import {
-  Calendar,
-  CreditCard,
-  DollarSign,
-  FileText,
-  Hash,
-  KeyRound,
-  Smartphone,
-  User,
-  Wallet,
-} from 'lucide-react'
 import { sample } from '../lib/fixtures'
 import { neverSent, sentFieldsFor, sourceLabel } from '../lib/ai'
 import { groups } from '../lib/fixtures'
@@ -17,8 +6,6 @@ import { useAppState } from '../state/AppState'
 import { BottomSheet } from './BottomSheet'
 import { CategoryChip } from './visuals'
 import { Button } from './ui/button'
-
-const neverIcons = [User, Hash, Wallet, KeyRound]
 
 export function Sheets() {
   const {
@@ -34,50 +21,33 @@ export function Sheets() {
   } = useAppState()
   const group = groups[groupIndex] ?? groups[0]
   const sent = sentFieldsFor(group)
-  const sentRows = [
-    { icon: FileText, label: 'Description', value: sent.description },
-    { icon: DollarSign, label: 'Amount', value: usd(sent.amount) },
-    { icon: Calendar, label: 'Date', value: `${sent.date} · ${sent.weekday}` },
-    { icon: Smartphone, label: 'Application', value: sent.application },
-    { icon: CreditCard, label: 'Account', value: sent.accountKind },
-  ]
 
   if (sheet === 'ai') {
     return (
       <BottomSheet title="Insights" onClose={() => setSheet(null)}>
         <div className="card">
-          <p className="kicker">Sent</p>
-          <div className="ai-list">
-            {sentRows.map((row) => (
-              <div className="icon-row" key={row.label}>
-                <span>
-                  <row.icon size={16} strokeWidth={1.75} />
-                  {row.label}
-                </span>
-                <b>{row.value}</b>
-              </div>
-            ))}
-          </div>
+          <p className="review-merchant">{group.merchantLabel}</p>
+          <p className="muted" style={{ margin: '8px 0' }}>
+            Suggested
+          </p>
+          <CategoryChip category={group.suggestedCategory} />
+          {group.why ? <p className="muted" style={{ marginTop: 12 }}>{group.why}</p> : null}
+        </div>
+        <div className="card">
+          <p className="kicker">Looked at</p>
+          <p className="review-merchant" style={{ fontSize: 16, marginTop: 8 }}>
+            {sent.description}
+          </p>
+          <p className="muted" style={{ marginTop: 6 }}>
+            {usd(sent.amount)} · {sent.weekday} · {sent.accountKind}
+          </p>
         </div>
         <div className="card">
           <p className="kicker">Never sent</p>
-          <div className="ai-list">
-            {neverSent.map((item, index) => {
-              const Icon = neverIcons[index] ?? User
-              return (
-                <div className="icon-row" key={item}>
-                  <span>
-                    <Icon size={16} strokeWidth={1.75} />
-                    {item}
-                  </span>
-                  <b>—</b>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-        <div className="card">
-          <div style={{ display: 'flex', marginBottom: 8 }}>
+          <p className="muted" style={{ marginTop: 8 }}>
+            {neverSent.join(' · ')}
+          </p>
+          <div style={{ display: 'flex', margin: '12px 0 8px' }}>
             <span className={`pill ${aiEnabled ? 'pill-info' : ''}`}>
               {aiEnabled ? sourceLabel(aiSource) : 'AI off'}
             </span>
@@ -85,7 +55,6 @@ export function Sheets() {
           <div className="toggle">
             <span>
               <b>AI suggestions</b>
-              <span className="muted">Off keeps accepted work.</span>
             </span>
             <button
               type="button"

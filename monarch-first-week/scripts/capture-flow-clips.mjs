@@ -51,35 +51,32 @@ const flows = [
   {
     id: 'quick-sort',
     poster: 'flow-quicksort.png',
-    path: '/prototype/day/1',
+    path: '/prototype/day/1/sort?group=g-daily-grind',
+    async ready(page) {
+      await page.getByRole('button', { name: /^Accept$/i }).waitFor({ state: 'visible' })
+    },
     async act(page) {
-      await page.waitForTimeout(800)
-      const start = page.getByRole('button', { name: /Start review/i })
-      if (await start.count()) await start.click()
-      await page.waitForTimeout(900)
-      await page.goto(`${BASE}/prototype/day/1/sort?group=g-harbor-autopay`, {
-        waitUntil: 'networkidle',
-      })
-      await page.waitForTimeout(1200)
-      const mark = page.getByRole('button', { name: /Mark as reviewed|It's a transfer/i })
-      if (await mark.count()) {
-        await mark.first().click()
+      await page.waitForTimeout(1400)
+      const change = page.getByRole('button', { name: /^Change$/i })
+      if (await change.count()) {
+        await change.click()
         await page.waitForTimeout(900)
+        const close = page.getByRole('button', { name: /Got it|Close/i })
+        if (await close.count()) await close.click()
+        else await page.keyboard.press('Escape')
+        await page.waitForTimeout(700)
       }
     },
   },
   {
     id: 'insights',
     poster: 'flow-insights.png',
-    path: '/prototype/day/1/sort?sheet=ai',
+    path: '/prototype/day/1/sort?group=g-daily-grind&sheet=ai',
+    async ready(page) {
+      await page.getByRole('dialog', { name: /Insights/i }).waitFor({ state: 'visible' })
+    },
     async act(page) {
-      await page.waitForTimeout(1600)
-      const close = page.getByRole('button', { name: /Close|Done|Got it/i })
-      if (await close.count()) {
-        await page.waitForTimeout(800)
-      } else {
-        await page.waitForTimeout(1200)
-      }
+      await page.waitForTimeout(1800)
     },
   },
   {
@@ -87,12 +84,16 @@ const flows = [
     poster: 'flow-day6.png',
     path: '/prototype/day/6',
     async act(page) {
-      await page.waitForTimeout(700)
-      await page.evaluate(() => window.scrollTo(0, 280))
-      await page.waitForTimeout(1100)
-      await page.evaluate(() => window.scrollTo(0, 520))
-      await page.waitForTimeout(1100)
-      await page.evaluate(() => window.scrollTo(0, 0))
+      await page.waitForTimeout(900)
+      await page.evaluate(() => {
+        const scroller = document.querySelector('.screen-scroll')
+        if (scroller) scroller.scrollTo(0, scroller.scrollHeight)
+      })
+      await page.waitForTimeout(1000)
+      await page.evaluate(() => {
+        const scroller = document.querySelector('.screen-scroll')
+        if (scroller) scroller.scrollTo(0, 0)
+      })
       await page.waitForTimeout(700)
     },
   },
@@ -136,7 +137,9 @@ async function recordFlow(browser, flow) {
   })
   const page = await context.newPage()
   await page.goto(`${BASE}${flow.path}`, { waitUntil: 'networkidle' })
-  await page.waitForTimeout(400)
+  if (flow.ready) await flow.ready(page)
+  else await page.waitForTimeout(400)
+  await page.waitForTimeout(200)
   await page.screenshot({ path: join(OUT_POSTER, flow.poster), type: 'png' })
   await flow.act(page)
   await page.waitForTimeout(400)

@@ -9,8 +9,7 @@ import { AccountLine, AvatarRow, CategoryChip, SparkleButton } from '../componen
 import { conflictFlag, householdRules } from '../data/rules'
 import { requestQuickSort } from '../lib/ai'
 import { protoPath } from '../lib/proto'
-import { groupDateSpan, groupTotal, groups, sample } from '../lib/fixtures'
-import { shortDate } from '../lib/dates'
+import { groupTotal, groups, sample } from '../lib/fixtures'
 import { usd } from '../lib/money'
 import { useAppState } from '../state/AppState'
 import type { SuggestionGroup } from '../types'
@@ -38,11 +37,16 @@ export function Day1Sort() {
 
   useEffect(() => {
     const wanted = params.get('group')
-    if (!wanted) return
-    const idx = groups.findIndex((item) => item.id === wanted)
-    if (idx >= 0) setGroupIndex(idx)
-    if (params.get('sheet') === 'ai') setSheet('ai')
-    if (params.get('sheet') === 'taxonomy') setSheet('taxonomy')
+    const sheet = params.get('sheet')
+    if (wanted) {
+      const idx = groups.findIndex((item) => item.id === wanted)
+      if (idx >= 0) setGroupIndex(idx)
+    } else if (sheet === 'ai') {
+      const grind = groups.findIndex((item) => item.id === 'g-daily-grind')
+      if (grind >= 0) setGroupIndex(grind)
+    }
+    if (sheet === 'ai') setSheet('ai')
+    if (sheet === 'taxonomy') setSheet('taxonomy')
   }, [params, setGroupIndex, setSheet])
 
   useEffect(() => {
@@ -60,7 +64,6 @@ export function Day1Sort() {
   }, [aiEnabled, group, setAiSource])
 
   const count = liveGroup.transactionIds.length
-  const span = groupDateSpan(liveGroup)
   const isTransfer = liveGroup.kind === 'transfer'
   const isSync = liveGroup.kind === 'sync'
   const isRules = liveGroup.kind === 'rules'
@@ -112,21 +115,26 @@ export function Day1Sort() {
               </button>
             </div>
           ) : (
-            <div className="btn-row">
-              <Button onClick={() => onDecide('accepted')}>Mark as reviewed</Button>
+            <div className="btn-row-3">
+              <Button onClick={() => onDecide('accepted')}>Accept</Button>
+              <button className="btn btn-secondary" type="button" onClick={sortMyself}>
+                Change
+              </button>
               <button className="btn btn-secondary" type="button" onClick={() => onDecide('skipped')}>
-                Skip for now
+                Skip
               </button>
             </div>
           )}
-          <nav className="footer-links" aria-label="Review extras">
-            <button className="linkish" type="button" onClick={sortMyself}>
-              Edit
-            </button>
-            <button className="linkish" type="button" onClick={() => undo()}>
-              Undo
-            </button>
-          </nav>
+          {isTransfer || isSync || isRules ? (
+            <nav className="footer-links" aria-label="Review extras">
+              <button className="linkish" type="button" onClick={sortMyself}>
+                Edit
+              </button>
+              <button className="linkish" type="button" onClick={() => undo()}>
+                Undo
+              </button>
+            </nav>
+          ) : null}
           <PrototypeJump />
         </>
       }
@@ -140,15 +148,11 @@ export function Day1Sort() {
           <SparkleButton onClick={() => setSheet('ai')} label="Insights" />
         ) : null}
       </div>
-      <h1>
-        {isSync
-          ? 'Connection status'
-          : isRules
-            ? 'Create rule'
-            : isTransfer
-              ? 'Looks like a transfer'
-              : liveGroup.merchantLabel}
-      </h1>
+      {isSync || isRules || isTransfer ? (
+        <h1>
+          {isSync ? 'Connection status' : isRules ? 'Create rule' : 'Looks like a transfer'}
+        </h1>
+      ) : null}
 
       {isSync ? (
         <>
@@ -217,22 +221,41 @@ export function Day1Sort() {
             onReviewed={() => onDecide(isTransfer ? 'transfer' : 'accepted')}
             onSkip={() => onDecide('skipped')}
           >
-            <div className="review-top">
-              <div>
-                {isTransfer ? (
-                  <p className="review-merchant">{liveGroup.merchantLabel}</p>
-                ) : null}
-                <p className="muted">
-                  {count} {count === 1 ? 'transaction' : 'transactions'}
-                  {span ? ` · ${shortDate(span.first)}–${shortDate(span.last)}` : ''}
+            {isTransfer ? (
+              <>
+                <div className="review-top">
+                  <div>
+                    <p className="review-merchant">{liveGroup.merchantLabel}</p>
+                    <p className="muted">
+                      {count} {count === 1 ? 'transaction' : 'transactions'}
+                    </p>
+                  </div>
+                  <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
+                </div>
+                <div className="review-foot">
+                  <CategoryChip category={liveGroup.suggestedCategory} />
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="review-merchant">{liveGroup.merchantLabel}</p>
+                <p className="muted" style={{ margin: '10px 0 8px' }}>
+                  Suggested
                 </p>
-              </div>
-              <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
-            </div>
-            <div className="review-foot">
-              <CategoryChip category={liveGroup.suggestedCategory} />
-              {lowConfidence ? <AvatarRow /> : null}
-            </div>
+                <CategoryChip category={liveGroup.suggestedCategory} />
+                <div className="review-top" style={{ marginTop: 18 }}>
+                  <p className="muted">
+                    {count} {count === 1 ? 'transaction' : 'transactions'}
+                  </p>
+                  <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
+                </div>
+                {lowConfidence ? (
+                  <div className="review-foot" style={{ marginTop: 12 }}>
+                    <AvatarRow />
+                  </div>
+                ) : null}
+              </>
+            )}
           </SwipeReview>
         </>
       ) : null}

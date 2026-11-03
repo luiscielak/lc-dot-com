@@ -17,10 +17,10 @@ export function BillingPlain({ compact = false }: BillingPlainProps) {
   return (
     <div className="card billing-card">
       <p className="kicker">Your first week is on us</p>
-      {compact ? null : <p className="hero-num">7 days</p>}
+      <p className="hero-num">7 days</p>
       <div className="billing-facts">
         <div>
-          <span className="muted">Charge</span>
+          <span className="muted">Trial ends</span>
           <b>{chargeDateLabel()}</b>
         </div>
         <div>
@@ -28,9 +28,8 @@ export function BillingPlain({ compact = false }: BillingPlainProps) {
           <b className="money">{amount}</b>
         </div>
         <div>
-          <span className="muted">Cancel by</span>
+          <span className="muted">Cancel</span>
           <b>{cancelByLabel()}</b>
-          <span className="muted">24 hours before the charge</span>
         </div>
       </div>
       <div className="btn-row" style={{ margin: '12px 0 10px' }}>

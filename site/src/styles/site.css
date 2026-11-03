@@ -132,10 +132,13 @@ a:hover {
   color: var(--foot-ink);
 }
 
-.foot-mark svg {
+.foot-mark-glyph {
   display: block;
   width: 280px;
-  height: 392px;
+  aspect-ratio: 966 / 1144;
+  background-color: currentColor;
+  -webkit-mask: url("/logos/luis-cielak-mark-black.svg") center / contain no-repeat;
+  mask: url("/logos/luis-cielak-mark-black.svg") center / contain no-repeat;
 }
 
 .foot-mark:hover {
@@ -195,9 +198,8 @@ html[data-page="nameplate"] .site-footer {
     gap: 20px;
   }
 
-  .foot-mark svg {
+  .foot-mark-glyph {
     width: 148px;
-    height: 208px;
   }
 
   .foot-baseline {

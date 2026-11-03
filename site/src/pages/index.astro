@@ -3,8 +3,11 @@ import { getCollection } from "astro:content";
 import portrait from "../assets/about-portrait.avif";
 import BrandLockup from "../components/BrandLockup.astro";
 import Base from "../layouts/Base.astro";
+import { isListedWork } from "../lib/site";
 
-const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+const studies = (await getCollection("work"))
+  .filter((study) => isListedWork(study.id, study.data.listed))
+  .sort((a, b) => a.data.order - b.data.order);
 
 /**
  * Featured proof: the two strongest published cases, in the order the hero

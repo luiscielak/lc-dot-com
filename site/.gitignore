@@ -1,2 +1,6 @@
 .vercel
 .env*
+scripts/.og-default.html
+scripts/.resume-print.html
+scripts/.chrome-og
+scripts/.chrome-pdf

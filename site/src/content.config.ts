@@ -114,6 +114,8 @@ const work = defineCollection({
     coverMaxCssPx: z.number().positive(),
     order: z.number(),
     draft: z.boolean().default(false),
+    /** When false, the study is built but omitted from listings and “next” links. */
+    listed: z.boolean().default(true),
     presentation: z.enum(["product", "editorial"]).optional(),
     editorial: editorial.optional(),
     phones: z.array(phone).optional(),

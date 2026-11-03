@@ -41,6 +41,11 @@
       "statusCode": 301
     },
     {
+      "source": "/case-studies/:path*",
+      "destination": "/work/:path*",
+      "statusCode": 301
+    },
+    {
       "source": "/writing",
       "destination": "/",
       "statusCode": 301

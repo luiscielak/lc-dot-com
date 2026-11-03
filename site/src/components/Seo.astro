@@ -1,0 +1,40 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  /** Site-relative path or absolute URL. */
+  ogImage?: string;
+  ogType?: "website" | "article";
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = "/og-default.png",
+  ogType = "website",
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://luiscielak.com");
+const canonical = new URL(Astro.url.pathname, site).href;
+const image = ogImage.startsWith("http") ? ogImage : new URL(ogImage, site).href;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex ? <meta name="robots" content="noindex, nofollow" /> : null}
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:url" content={canonical} />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content="Luis Cielak" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />

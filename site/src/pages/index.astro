@@ -1,10 +1,11 @@
 ---
-import { getCollection } from "astro:content";
+import { Picture } from "astro:assets";
 import portrait from "../assets/about-portrait.avif";
 import BrandLockup from "../components/BrandLockup.astro";
 import Base from "../layouts/Base.astro";
+import { getPublishedWork } from "../lib/work";
 
-const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+const studies = await getPublishedWork();
 
 /**
  * Featured proof: the two strongest published cases, in the order the hero
@@ -352,12 +353,13 @@ const testimonials = [
             Rooted in research. Guided by systems. Delivered with care.
           </p>
         </div>
-        <img
+        <Picture
           class="about-portrait"
-          src={portrait.src}
-          width={portrait.width}
-          height={portrait.height}
+          src={portrait}
           alt="Portrait of Luis Cielak"
+          formats={["avif", "webp"]}
+          widths={[320, 480, 640, 960, 1200]}
+          sizes="(max-width: 900px) min(100vw - 40px, 560px), min(36vw, 520px)"
         />
       </div>
     </section>

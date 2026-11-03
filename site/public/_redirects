@@ -1,3 +1,4 @@
+# Cloudflare/Netlify format. Vercel ignores this file; HTTP 301s live in vercel.json.
 /case-study-mss /work/field-dispatch 301
 /case-study-pmi-da /work/pmi-disciplined-agile 301
 /case-study-pmi-pp /work/pmi-partner-platform 301

@@ -1,0 +1,76 @@
+{
+  "redirects": [
+    {
+      "source": "/case-study-mss",
+      "destination": "/work/field-dispatch",
+      "statusCode": 301
+    },
+    {
+      "source": "/case-study-pmi-da",
+      "destination": "/work/pmi-disciplined-agile",
+      "statusCode": 301
+    },
+    {
+      "source": "/case-study-pmi-pp",
+      "destination": "/work/pmi-partner-platform",
+      "statusCode": 301
+    },
+    {
+      "source": "/case-studies/redefining-field-dispatch-mobile-first-real-time",
+      "destination": "/work/field-dispatch",
+      "statusCode": 301
+    },
+    {
+      "source": "/case-studies/streamlining-certification-mobile-first-learning-journey",
+      "destination": "/work/pmi-disciplined-agile",
+      "statusCode": 301
+    },
+    {
+      "source": "/case-studies/transforming-enterprise-security-fraud-to-revenue",
+      "destination": "/work/pmi-partner-platform",
+      "statusCode": 301
+    },
+    {
+      "source": "/case-studies/straatclaw",
+      "destination": "/work/straatclaw",
+      "statusCode": 301
+    },
+    {
+      "source": "/case-studies/making-compare-actually-compare",
+      "destination": "/work/making-compare-actually-compare",
+      "statusCode": 301
+    },
+    {
+      "source": "/case-studies/:path*",
+      "destination": "/work/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/writing",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/about",
+      "destination": "/#about",
+      "statusCode": 301
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "luiscielak-com.vercel.app"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
+}

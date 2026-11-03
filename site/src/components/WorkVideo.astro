@@ -20,21 +20,27 @@ const cap = Math.min(maxCssPx, Math.floor(posterImage.width / 1.5));
 <figure
   class:list={["figure", phone && "phone"]}
   style={phone ? `--phone-max: ${cap}px` : `--figure-max: ${cap}px`}
+  data-loop-video
   data-src={poster}
   data-src-width={posterImage.width}
   data-render-max={cap}
 >
-  <video
-    class="js-loop-video"
-    autoplay
-    muted
-    loop
-    playsinline
-    poster={posterImage.src}
-    aria-label={caption}
-  >
-    <source src={src} type="video/mp4" />
-  </video>
+  <div class="figure-media">
+    <video
+      class="js-loop-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster={posterImage.src}
+      aria-label={caption}
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+    <button type="button" class="video-toggle" data-video-toggle>
+      Pause
+    </button>
+  </div>
   <div class="js-video-fallback" hidden>
     <Picture
       src={posterImage}
@@ -49,24 +55,52 @@ const cap = Math.min(maxCssPx, Math.floor(posterImage.width / 1.5));
 
 <script>
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function setToggle(button: HTMLButtonElement, playing: boolean) {
+    button.hidden = false;
+    button.textContent = playing ? "Pause" : "Play";
+    button.setAttribute("aria-label", playing ? "Pause video" : "Play video");
+  }
+
   function apply() {
-    document.querySelectorAll(".js-loop-video").forEach((node) => {
-      const video = node as HTMLVideoElement;
-      const fallback = video.parentElement?.querySelector(".js-video-fallback") as HTMLElement | null;
+    document.querySelectorAll("[data-loop-video]").forEach((node) => {
+      const figure = node as HTMLElement;
+      const video = figure.querySelector(".js-loop-video") as HTMLVideoElement | null;
+      const fallback = figure.querySelector(".js-video-fallback") as HTMLElement | null;
+      const toggle = figure.querySelector("[data-video-toggle]") as HTMLButtonElement | null;
+      if (!video || !toggle) return;
       if (reduce.matches) {
         video.pause();
         video.setAttribute("hidden", "");
         fallback?.removeAttribute("hidden");
+        toggle.hidden = true;
       } else {
         video.removeAttribute("hidden");
         fallback?.setAttribute("hidden", "");
-        void video.play().catch(() => {
+        void video.play().then(() => setToggle(toggle, true)).catch(() => {
           video.setAttribute("hidden", "");
           fallback?.removeAttribute("hidden");
+          toggle.hidden = true;
         });
       }
     });
   }
+
+  document.querySelectorAll("[data-video-toggle]").forEach((node) => {
+    const button = node as HTMLButtonElement;
+    const figure = button.closest("[data-loop-video]");
+    const video = figure?.querySelector(".js-loop-video") as HTMLVideoElement | null;
+    if (!video) return;
+    button.addEventListener("click", () => {
+      if (video.paused) {
+        void video.play().then(() => setToggle(button, true));
+      } else {
+        video.pause();
+        setToggle(button, false);
+      }
+    });
+  });
+
   apply();
   reduce.addEventListener("change", apply);
 </script>

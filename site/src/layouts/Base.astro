@@ -3,10 +3,15 @@ import "@hooman-loop/konstrukt/css";
 import "@hooman-loop/konstrukt/base.css";
 import "../styles/site.css";
 import BrandLockup from "../components/BrandLockup.astro";
+import Seo from "../components/Seo.astro";
 
 interface Props {
   title: string;
   description?: string;
+  /** Site-relative path or absolute URL for the social card. */
+  ogImage?: string;
+  ogType?: "website" | "article";
+  noindex?: boolean;
   /** Inverted nameplate landing. Replaces the light site chrome. */
   nameplate?: boolean;
   /** Résumé artboard. Page supplies its own header and footer. */
@@ -16,6 +21,9 @@ interface Props {
 const {
   title,
   description = "Lead Product Designer / design engineer. Portfolio of Luis Cielak.",
+  ogImage,
+  ogType = "website",
+  noindex = false,
   nameplate = false,
   resume = false,
 } = Astro.props;
@@ -30,13 +38,14 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <Seo title={title} description={description} ogImage={ogImage} ogType={ogType} noindex={noindex} />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0A0A0A" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap"

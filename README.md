@@ -34,7 +34,7 @@ Case studies live on the site; the writing favors honest outcomes over inflated 
 
 ## About this repo
 
-The live site is a static [Astro](https://astro.build) app in [`site/`](site/) (Astro 5, MDX, TypeScript, Sharp, and [Konstrukt](https://github.com/the-hooman-loop/konstrukt)). Case studies are MDX in [`site/src/content/work/`](site/src/content/work/); drafts are still built and labeled.
+The live site is a static [Astro](https://astro.build) app in [`site/`](site/) (Astro 5, MDX, TypeScript, Sharp, and [Konstrukt](https://github.com/the-hooman-loop/konstrukt)). Case studies are MDX in [`site/src/content/work/`](site/src/content/work/); `draft: true` entries are omitted from production builds.
 
 ```bash
 cd site

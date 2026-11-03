@@ -1,0 +1,24 @@
+Day 1 Needs review — Mobile
+
++---------------------------+
+| ←  DAY 1 · QUICK SORT [*] |
+| Needs review              |
+| {n}                       |
+| {g} groups · ~{m} min     |
+| [This month] [3 months]   |
+| Connection status    1 min|
+| Transfers            2 min|  [A7]
+| Merchants            6 min|
+| Rules                1 min|
+| [Button: Start review]    |
+| [Button: Edit]            |  [A8]
++---------------------------+
+
+A7: Order is the hypothesis — transfers before merchants. FR-013.
+A8: Edit starts the same cards with suggestions off. FR-015.
+[*] opens Insights (day1-insights).
+
+Next: day1-review-card (first group)
+Prev: hub
+
+Related FRs: FR-013, FR-015

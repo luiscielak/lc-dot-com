@@ -1,0 +1,31 @@
+Day 1 Review card — Mobile
+
++---------------------------+
+| ←  NEEDS REVIEW · 3 of n  |
+| Daily Grind            [*] |  [A9]
+| Coffee · 4 · Oct 2–28     |
+| [Select: Coffee shops]    |
+| [Button: Mark as reviewed]|
+| [Button: Skip for now]    |
+| Undo                      |
++---------------------------+
+
+Transfer card (same frame)
++---------------------------+
+| Looks like a transfer     |
+| Harbor Card autopay       |
+| [Button: It's a transfer] |
+| [Button: It's spending]   |
++---------------------------+
+
+A9: One group, not a row list. Mark as reviewed and Skip both advance.
+    Undo returns to previous group. FR-014.
+[*] opens Insights.
+
+Empty: no groups left → forward to Day 2.
+Error: Update on stale institution fails closed as toast; card stays.
+
+Next: next group, or Day 2 when empty
+Prev: day1-needs-review
+
+Related FRs: FR-014, FR-013

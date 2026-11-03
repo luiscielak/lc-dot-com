@@ -3,16 +3,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
 import { Button } from '../components/ui/button'
 import { PrototypeJump } from '../components/PrototypeJump'
-import { RulePreview } from '../components/RulePreview'
 import { Screen } from '../components/Screen'
 import { SwipeReview } from '../components/SwipeReview'
 import { AccountLine, AvatarRow, CategoryChip, SparkleButton } from '../components/visuals'
-import { household } from '../data/visual'
 import { conflictFlag, householdRules } from '../data/rules'
 import { requestQuickSort } from '../lib/ai'
 import { protoPath } from '../lib/proto'
-import { groupDateSpan, groupTotal, groups, sample } from '../lib/fixtures'
-import { shortDate } from '../lib/dates'
+import { groupTotal, groups, sample } from '../lib/fixtures'
 import { usd } from '../lib/money'
 import { useAppState } from '../state/AppState'
 import type { SuggestionGroup } from '../types'
@@ -24,7 +21,6 @@ export function Day1Sort() {
     setGroupIndex,
     decide,
     undo,
-    lastUndo,
     rulesOn,
     setRuleOn,
     aiEnabled,
@@ -34,8 +30,6 @@ export function Day1Sort() {
     showToast,
     ridgeReauthed,
     setRidgeReauthed,
-    partnerQueue,
-    askPartner,
   } = useAppState()
   const [params] = useSearchParams()
   const group = groups[groupIndex] ?? groups[0]
@@ -43,11 +37,16 @@ export function Day1Sort() {
 
   useEffect(() => {
     const wanted = params.get('group')
-    if (!wanted) return
-    const idx = groups.findIndex((item) => item.id === wanted)
-    if (idx >= 0) setGroupIndex(idx)
-    if (params.get('sheet') === 'ai') setSheet('ai')
-    if (params.get('sheet') === 'taxonomy') setSheet('taxonomy')
+    const sheet = params.get('sheet')
+    if (wanted) {
+      const idx = groups.findIndex((item) => item.id === wanted)
+      if (idx >= 0) setGroupIndex(idx)
+    } else if (sheet === 'ai') {
+      const grind = groups.findIndex((item) => item.id === 'g-daily-grind')
+      if (grind >= 0) setGroupIndex(grind)
+    }
+    if (sheet === 'ai') setSheet('ai')
+    if (sheet === 'taxonomy') setSheet('taxonomy')
   }, [params, setGroupIndex, setSheet])
 
   useEffect(() => {
@@ -65,14 +64,10 @@ export function Day1Sort() {
   }, [aiEnabled, group, setAiSource])
 
   const count = liveGroup.transactionIds.length
-  const span = groupDateSpan(liveGroup)
-  const next = groups[(groupIndex + 1) % groups.length]
   const isTransfer = liveGroup.kind === 'transfer'
   const isSync = liveGroup.kind === 'sync'
   const isRules = liveGroup.kind === 'rules'
   const lowConfidence = liveGroup.confidence !== 'likely' && !isSync && !isRules
-  const asked = partnerQueue.includes(liveGroup.id)
-  const partner = household.members.find((member) => member.shared)
 
   function goNext() {
     if (groupIndex >= groups.length - 1) {
@@ -112,36 +107,34 @@ export function Day1Sort() {
             <Button onClick={() => onDecide('accepted')}>Continue to transfers</Button>
           ) : isRules ? (
             <Button onClick={() => onDecide('accepted')}>Create rule</Button>
-          ) : (
+          ) : isTransfer ? (
             <div className="btn-row">
-              <Button
-                onClick={() => onDecide(isTransfer ? 'transfer' : 'accepted')}
-              >
-                Mark as reviewed
-              </Button>
+              <Button onClick={() => onDecide('transfer')}>It&rsquo;s a transfer</Button>
+              <button className="btn btn-secondary" type="button" onClick={() => onDecide('accepted')}>
+                It&rsquo;s spending
+              </button>
+            </div>
+          ) : (
+            <div className="btn-row-3">
+              <Button onClick={() => onDecide('accepted')}>Accept</Button>
+              <button className="btn btn-secondary" type="button" onClick={sortMyself}>
+                Change
+              </button>
               <button className="btn btn-secondary" type="button" onClick={() => onDecide('skipped')}>
-                Skip for now
+                Skip
               </button>
             </div>
           )}
-          {lowConfidence ? (
-            <button
-              className="btn btn-secondary"
-              type="button"
-              onClick={() => askPartner(liveGroup.id, liveGroup.merchantLabel)}
-            >
-              Needs review by {partner?.first}
-              {asked ? ' · queued' : ''}
-            </button>
+          {isTransfer || isSync || isRules ? (
+            <nav className="footer-links" aria-label="Review extras">
+              <button className="linkish" type="button" onClick={sortMyself}>
+                Edit
+              </button>
+              <button className="linkish" type="button" onClick={() => undo()}>
+                Undo
+              </button>
+            </nav>
           ) : null}
-          <nav className="footer-links" aria-label="Review extras">
-            <button className="linkish" type="button" onClick={sortMyself}>
-              Edit
-            </button>
-            <button className="linkish" type="button" onClick={() => undo()}>
-              Undo
-            </button>
-          </nav>
           <PrototypeJump />
         </>
       }
@@ -155,15 +148,11 @@ export function Day1Sort() {
           <SparkleButton onClick={() => setSheet('ai')} label="Insights" />
         ) : null}
       </div>
-      <h1>
-        {isSync
-          ? 'Connection status'
-          : isRules
-            ? 'Create rule'
-            : isTransfer
-              ? 'Looks like a transfer'
-              : liveGroup.merchantLabel}
-      </h1>
+      {isSync || isRules || isTransfer ? (
+        <h1>
+          {isSync ? 'Connection status' : isRules ? 'Create rule' : 'Looks like a transfer'}
+        </h1>
+      ) : null}
 
       {isSync ? (
         <>
@@ -232,63 +221,44 @@ export function Day1Sort() {
             onReviewed={() => onDecide(isTransfer ? 'transfer' : 'accepted')}
             onSkip={() => onDecide('skipped')}
           >
-            <div className="review-top">
-              <div>
+            {isTransfer ? (
+              <>
+                <div className="review-top">
+                  <div>
+                    <p className="review-merchant">{liveGroup.merchantLabel}</p>
+                    <p className="muted">
+                      {count} {count === 1 ? 'transaction' : 'transactions'}
+                    </p>
+                  </div>
+                  <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
+                </div>
+                <div className="review-foot">
+                  <CategoryChip category={liveGroup.suggestedCategory} />
+                </div>
+              </>
+            ) : (
+              <>
                 <p className="review-merchant">{liveGroup.merchantLabel}</p>
-                <p className="muted">
-                  {count} {count === 1 ? 'transaction' : 'transactions'}
-                  {span ? ` · ${shortDate(span.first)}–${shortDate(span.last)}` : ''}
+                <p className="muted" style={{ margin: '10px 0 8px' }}>
+                  Suggested
                 </p>
-              </div>
-              <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
-            </div>
-            <div className="review-foot">
-              <CategoryChip category={liveGroup.suggestedCategory} />
-              {lowConfidence ? <AvatarRow /> : null}
-            </div>
+                <CategoryChip category={liveGroup.suggestedCategory} />
+                <div className="review-top" style={{ marginTop: 18 }}>
+                  <p className="muted">
+                    {count} {count === 1 ? 'transaction' : 'transactions'}
+                  </p>
+                  <p className="review-amount">{usd(groupTotal(liveGroup))}</p>
+                </div>
+                {lowConfidence ? (
+                  <div className="review-foot" style={{ marginTop: 12 }}>
+                    <AvatarRow />
+                  </div>
+                ) : null}
+              </>
+            )}
           </SwipeReview>
-          <p className="swipe-hint">Swipe right to review · left to skip</p>
-
-          <div className="card" style={{ marginTop: 12 }}>
-            <div className="toggle">
-              <span>
-                <b>Create rule</b>
-                <span className="muted">
-                  If merchant contains “{liveGroup.ruleDraft.whenContains}”
-                </span>
-              </span>
-              <button
-                type="button"
-                className="switch"
-                data-on={Boolean(rulesOn[liveGroup.id])}
-                aria-pressed={Boolean(rulesOn[liveGroup.id])}
-                onClick={() => setRuleOn(liveGroup.id, !rulesOn[liveGroup.id])}
-              />
-            </div>
-            <p className="muted" style={{ marginTop: 8 }}>
-              Apply {count} changes to existing transactions
-            </p>
-          </div>
-          <RulePreview
-            whenContains={liveGroup.ruleDraft.whenContains}
-            setCategory={liveGroup.ruleDraft.setCategory}
-          />
-          <button className="linkish" type="button" onClick={() => setSheet('split')}>
-            Split transaction
-          </button>
         </>
       ) : null}
-
-      {lastUndo ? (
-        <p className="muted">
-          {lastUndo}.{' '}
-          <button className="linkish" type="button" onClick={() => undo()}>
-            Undo
-          </button>
-        </p>
-      ) : null}
-
-      <p className="muted">Next: {next.merchantLabel}</p>
     </Screen>
   )
 }

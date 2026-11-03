@@ -177,8 +177,8 @@ export const caseStudy = {
       headline: 'Show the week, then the bill.',
       line: 'What they built. Who charges them. Where to cancel.',
       src: '/figures/day6.png',
-      alt: 'Day 6. A week checklist and the plan in plain language.',
-      caption: 'Day 6. Checklist, then the plan.',
+      alt: 'Day 6. A week checklist and the bill in plain language.',
+      caption: 'Day 6. Checklist, then the bill.',
     },
   ],
   proof: {
@@ -205,6 +205,6 @@ export const caseStudy = {
   heroPhones: [
     { src: '/figures/day0.png', alt: 'Day 0 phone. Goal and trial card.', caption: 'Day 0' },
     { src: '/figures/quicksort_review_card.png', alt: 'Day 1 phone. Needs review card.', caption: 'Day 1' },
-    { src: '/figures/day6.png', alt: 'Day 6 phone. Week summary and plan.', caption: 'Day 6' },
+    { src: '/figures/day6.png', alt: 'Day 6 phone. Week summary and the bill.', caption: 'Day 6' },
   ],
 } as const

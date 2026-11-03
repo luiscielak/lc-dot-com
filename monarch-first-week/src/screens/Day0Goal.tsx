@@ -49,7 +49,7 @@ export function Day0Goal() {
         ))}
       </div>
       <div style={{ marginTop: 16 }}>
-        <BillingPlain />
+        <BillingPlain compact />
       </div>
     </Screen>
   )

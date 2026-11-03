@@ -1,0 +1,24 @@
+Hub — Your first week — Mobile
+
++---------------------------+
+| DAY 1 OF 7                |
+| Your first week           |
+| 6                         |
+| days left on us           |
+| ✓ Day 0 · Connection      |
+|   Day 1 · Needs review    |  [A6]
+|   Day 2 · Flex Budgeting  |
+|   Day 3 · Save up goal    |
+|   Day 4 · Weekly Recap    |
+|   Day 5 · Tags            |
+|   Day 6 · Before charge   |
+|   Day 7 · Rules           |
+| [Button: Continue]        |
++---------------------------+
+
+A6: Each row is a jump into that day. Continue opens Needs review. FR-004.
+
+Next: day1-needs-review
+Prev: day0-connect
+
+Related FRs: FR-004

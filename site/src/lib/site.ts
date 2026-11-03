@@ -34,6 +34,7 @@ export function isListedWork(id: string, listed = true) {
 export function includeInSitemap(page: string) {
   const path = new URL(page).pathname.replace(/\/+$/, "") || "/";
   if (path.startsWith("/case-studies")) return false;
+  if (path.startsWith("/prototypes/your-first-week")) return false;
   return !SITEMAP_EXCLUDE_PATHS.has(path);
 }
 

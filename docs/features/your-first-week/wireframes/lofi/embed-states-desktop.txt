@@ -1,0 +1,5 @@
+embed-states — Desktop
+
+Phone-only surface. Content matches embed-states-mobile.txt inside a centered 390×844 frame on the desktop case page or standalone prototype shell.
+
+See: embed-states-mobile.txt

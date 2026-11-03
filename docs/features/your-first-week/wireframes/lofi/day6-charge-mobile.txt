@@ -1,0 +1,21 @@
+Day 6 Charge — Mobile
+
++---------------------------+
+| DAY 6 OF 7                |
+| Your first week is on us  |
+| checklist of the week     |  [A11]
+| +-----------------------+ |
+| | Charge · amount       | |
+| | Who bills you         | |
+| | Cancel by             | |
+| | Where to cancel       | |
+| +-----------------------+ |
+| [Button: Continue]        |
++---------------------------+
+
+A11: What they built this week, then the bill again. Same facts as Day 0. FR-016.
+
+Next: Day 7 rules
+Prev: Day 5 tags (or hub jump)
+
+Related FRs: FR-016, FR-011

@@ -51,6 +51,12 @@
       "statusCode": 301
     }
   ],
+  "rewrites": [
+    {
+      "source": "/prototypes/your-first-week/:path*",
+      "destination": "/prototypes/your-first-week/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

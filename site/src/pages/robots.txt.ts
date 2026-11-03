@@ -5,6 +5,7 @@ export const GET: APIRoute = ({ site }) => {
   const sitemapURL = new URL("sitemap-index.xml", site);
   const disallows = [
     "/motion",
+    "/prototypes/your-first-week",
     ...[...UNLISTED_WORK].map((slug) => `/work/${slug}`),
   ];
   const body = [

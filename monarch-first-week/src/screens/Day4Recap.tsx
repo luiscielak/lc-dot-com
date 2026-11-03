@@ -1,16 +1,14 @@
-import { useNavigate } from 'react-router-dom'
 import { BackLink } from '../components/BackLink'
 import { Button } from '../components/ui/button'
 import { PrototypeJump } from '../components/PrototypeJump'
 import { Screen } from '../components/Screen'
-import { AvatarRow, CategoryChip, SparkleButton } from '../components/visuals'
+import { AvatarRow, SparkleButton } from '../components/visuals'
 import { story } from '../data/story'
 import { protoPath } from '../lib/proto'
 import { usd } from '../lib/money'
 import { useAppState } from '../state/AppState'
 
 export function Day4Recap() {
-  const nav = useNavigate()
   const { showToast, setSheet } = useAppState()
 
   return (
@@ -52,38 +50,9 @@ export function Day4Recap() {
       </div>
 
       <div className="card" style={{ marginTop: 12 }}>
-        {story.topMerchants.map((row) => (
-          <div className="step" key={row.name}>
-            <CategoryChip
-              category={
-                row.name === 'Fresh Basket'
-                  ? 'Groceries'
-                  : row.name === 'Fuel Stop'
-                    ? 'Auto & transport'
-                    : 'Restaurants & coffee'
-              }
-            />
-            <span className="money">{usd(row.amount)}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="card">
         <div className="head-row">
           <b>Share with a member</b>
           <AvatarRow />
-        </div>
-        <div className="btn-row" style={{ marginTop: 12 }}>
-          <button
-            className="btn btn-secondary"
-            type="button"
-            onClick={() => showToast(`Moved $${story.moveFromShopping} from Shopping.`)}
-          >
-            Move ${story.moveFromShopping}
-          </button>
-          <button className="btn btn-secondary" type="button" onClick={() => nav(protoPath('/week'))}>
-            Skip for now
-          </button>
         </div>
       </div>
     </Screen>

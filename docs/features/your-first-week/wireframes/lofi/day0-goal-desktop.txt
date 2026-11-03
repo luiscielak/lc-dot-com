@@ -1,0 +1,5 @@
+day0-goal — Desktop
+
+Phone-only surface. Content matches day0-goal-mobile.txt inside a centered 390×844 frame on the desktop case page or standalone prototype shell.
+
+See: day0-goal-mobile.txt

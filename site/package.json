@@ -6,8 +6,9 @@
   "scripts": {
     "postinstall": "npm install --prefix node_modules/@hooman-loop/konstrukt && npm run build --prefix node_modules/@hooman-loop/konstrukt",
     "dev": "astro dev",
+    "build:prototype": "node scripts/build-first-week-prototype.mjs",
     "check": "astro check && node scripts/check-image-resolution.mjs",
-    "build": "astro build && node scripts/check-image-resolution.mjs",
+    "build": "npm run build:prototype && astro build && node scripts/check-image-resolution.mjs",
     "preview": "astro preview",
     "og-image": "node scripts/render-og-image.mjs",
     "resume-pdf": "node --experimental-strip-types scripts/render-resume-pdf.mjs"

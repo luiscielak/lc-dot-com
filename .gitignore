@@ -4,3 +4,4 @@ _inputs/
 site/node_modules/
 site/dist/
 site/.astro/
+site/public/prototypes/your-first-week/

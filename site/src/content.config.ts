@@ -80,24 +80,135 @@ const editorialCell = z.object({
   label: z.string(),
 });
 
+const editorialStat = z.object({
+  value: z.string(),
+  label: z.string(),
+});
+
+const editorialCompetitor = z.object({
+  app: z.string(),
+  take: z.string(),
+});
+
+const editorialJob = z.object({
+  when: z.string(),
+  want: z.string(),
+  so: z.string(),
+});
+
+const editorialExperiment = z.object({
+  name: z.string(),
+  hypothesis: z.string(),
+  primary: z.string(),
+  guardrail: z.string(),
+});
+
+const editorialMethodItem = z.object({
+  label: z.string(),
+  body: z.string(),
+});
+
+const editorialFlow = z.object({
+  label: z.string(),
+  title: z.string(),
+  body: z.string(),
+  src: z.string(),
+  poster: z.string(),
+  fallbackAlt: z.string(),
+  maxCssPx: z.number().positive(),
+});
+
 const editorial = z.object({
   kicker: z.string(),
+  opener: z
+    .object({
+      heading: z.string(),
+      headline: z.string(),
+      body: z.string(),
+      note: z.string(),
+    })
+    .optional(),
+  method: z
+    .object({
+      heading: z.string(),
+      headline: z.string(),
+      items: z.array(editorialMethodItem).min(1),
+      note: z.string(),
+    })
+    .optional(),
   problem: z.object({
     heading: z.string(),
     headline: z.string(),
     body: z.string(),
     note: z.string(),
   }),
+  stats: z.array(editorialStat).optional(),
   field: z.object({
     heading: z.string(),
     quotes: z.array(editorialQuote).min(1),
     note: z.string(),
   }),
+  competitors: z
+    .object({
+      heading: z.string(),
+      fit: z.string(),
+      axes: z.object({
+        xLeft: z.string(),
+        xRight: z.string(),
+        yTop: z.string(),
+        yBottom: z.string(),
+      }),
+      cells: z.object({
+        longFree: z.array(editorialCompetitor).min(1),
+        longCard: z.array(editorialCompetitor).min(1),
+        shortFree: z.array(editorialCompetitor).min(1),
+        shortCard: z.array(editorialCompetitor).min(1),
+      }),
+      aside: z.string(),
+    })
+    .optional(),
+  bet: z
+    .object({
+      heading: z.string(),
+      headline: z.string(),
+      body: z.string(),
+    })
+    .optional(),
+  jobs: z
+    .object({
+      heading: z.string(),
+      items: z.array(editorialJob).min(1),
+    })
+    .optional(),
+  experiments: z
+    .object({
+      heading: z.string(),
+      note: z.string(),
+      items: z.array(editorialExperiment).min(1),
+    })
+    .optional(),
   figure: z.object({
     title: z.string(),
     caption: z.string(),
     steps: z.array(editorialStep).min(2),
   }),
+  flows: z
+    .object({
+      heading: z.string(),
+      body: z.string(),
+      items: z.array(editorialFlow).min(1),
+    })
+    .optional(),
+  prototype: z
+    .object({
+      heading: z.string(),
+      body: z.string(),
+      src: z.string(),
+      fullScreenHref: z.string(),
+      fullScreenLabel: z.string(),
+      note: z.string(),
+    })
+    .optional(),
   close: z.object({
     heading: z.string(),
     cells: z.array(editorialCell).length(3),

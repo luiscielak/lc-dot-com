@@ -7,3 +7,4 @@
 /case-studies/straatclaw /work/straatclaw 301
 /case-studies/making-compare-actually-compare /work/making-compare-actually-compare 301
 /case-studies/* /work/:splat 301
+/prototypes/your-first-week/* /prototypes/your-first-week/index.html 200

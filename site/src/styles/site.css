@@ -125,24 +125,35 @@ a:hover {
   gap: 32px;
 }
 
-.foot-mark {
+/* Lock the mark to paper ink in every link state. Konstrukt's `a:visited`
+   (accent mix, #2ABFCC in dark mode) and the global `a:hover` otherwise win
+   on specificity, and a currentColor mask would pick that teal up — the
+   usual case on a phone after visiting `/`. */
+a.foot-mark,
+a.foot-mark:link,
+a.foot-mark:visited,
+a.foot-mark:hover,
+a.foot-mark:active,
+a.foot-mark:focus,
+a.foot-mark:focus-visible {
   display: block;
   flex-shrink: 0;
   line-height: 0;
   color: var(--foot-ink);
+  -webkit-text-fill-color: var(--foot-ink);
+}
+
+a.foot-mark:hover {
+  opacity: 0.72;
 }
 
 .foot-mark-glyph {
   display: block;
   width: 128px;
   aspect-ratio: 966 / 1144;
-  background-color: currentColor;
+  background-color: var(--foot-ink);
   -webkit-mask: url("/logos/luis-cielak-mark-black.svg") center / contain no-repeat;
   mask: url("/logos/luis-cielak-mark-black.svg") center / contain no-repeat;
-}
-
-.foot-mark:hover {
-  color: var(--foot-accent);
 }
 
 .foot-baseline {

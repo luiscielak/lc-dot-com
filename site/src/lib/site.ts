@@ -13,7 +13,6 @@ export const UNLISTED_WORK = new Set(["your-first-week"]);
 /** Draft studies that stay on the site with a Draft badge, but out of the sitemap. */
 export const DRAFT_SITEMAP_SLUGS = [
   "your-first-week",
-  "making-compare-actually-compare",
   "straatclaw",
 ] as const;
 

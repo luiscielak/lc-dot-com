@@ -1127,7 +1127,8 @@ html[data-page="nameplate"] a:focus-visible {
   grid-template-areas:
     "index draft"
     "title title"
-    "blurb blurb";
+    "blurb blurb"
+    "result result";
   gap: 8px 16px;
   padding: 28px 0 32px;
   color: inherit;
@@ -1149,6 +1150,11 @@ html[data-page="nameplate"] a:focus-visible {
 .plate-catalog .plate-blurb {
   grid-area: blurb;
   max-width: 42rem;
+}
+
+.plate-catalog .plate-result {
+  grid-area: result;
+  margin-top: 0;
 }
 
 .plate-catalog .plate-draft {

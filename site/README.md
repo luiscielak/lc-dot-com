@@ -34,8 +34,8 @@ Case studies are MDX in [`src/content/work/`](src/content/work/); the frontmatte
 - Metrics render only when `confirmed: true`.
 - Drafts (`draft: true`) are still built and labeled Draft.
 
-Published: Field Dispatch, PMI Disciplined Agile, PMI Partner Platform.
-Draft: StraatClaw, Making "Compare" Actually Compare.
+Published: Field Dispatch, PMI Disciplined Agile, PMI Partner Platform, Making "Compare" Actually Compare.
+Draft: StraatClaw.
 
 ## Hosting
 

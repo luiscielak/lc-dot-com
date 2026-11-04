@@ -203,20 +203,6 @@ html[data-page="nameplate"] .site-footer {
     gap: 40px;
   }
 
-  .foot-col {
-    gap: 8px;
-  }
-
-  .foot-items {
-    gap: 0;
-  }
-
-  .foot-items a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-  }
-
   .foot-name {
     flex-direction: column;
     align-items: flex-start;
@@ -233,11 +219,21 @@ html[data-page="nameplate"] .site-footer {
     padding-bottom: 0;
   }
 
-  .foot-top,
-  .foot-meta {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
+  /* Grow the hit area without stretching the visual stack. */
+  .foot-items a,
+  .foot-top {
+    position: relative;
+  }
+
+  .foot-items a::before,
+  .foot-top::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: 44px;
+    transform: translate(-50%, -50%);
   }
 }
 

@@ -30,7 +30,6 @@ const slides = phones.map((p) => {
 });
 
 const maxRatio = Math.max(...slides.map((s) => s.ratio), 1.67);
-const minRatio = Math.min(...slides.map((s) => s.ratio), maxRatio);
 
 /** Start centered on the first phone; neighbors fan out from there. */
 const start = 0;
@@ -38,7 +37,7 @@ const start = 0;
 
 <section
   class="phone-stage"
-  style={`--phone-ratio: ${maxRatio}; --min-ratio: ${minRatio}`}
+  style={`--phone-ratio: ${maxRatio}`}
   data-active={start}
   data-count={slides.length}
   aria-roledescription="carousel"

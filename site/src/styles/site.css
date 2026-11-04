@@ -2428,15 +2428,13 @@ html[data-page="resume"] a:hover {
 }
 
 .phone-stage {
-  --phone-center: min(220px, 18cqi);
+  --phone-center: min(220px, 16vw);
   --phone-ratio: 1.67;
-  --min-ratio: 1.67;
   --phone-height: calc(var(--phone-center) * var(--phone-ratio));
-  --fan-1: 19cqi;
-  --fan-2: 36cqi;
+  --fan-1: 19vw;
+  --fan-2: 36vw;
   --scale-1: 0.88;
   --scale-2: 0.76;
-  container-type: inline-size;
   position: relative;
   margin-top: 2.5rem;
   background: var(--surface);
@@ -2469,17 +2467,19 @@ html[data-page="resume"] a:hover {
   position: absolute;
   top: 50%;
   left: 50%;
-  height: var(--phone-height);
-  width: calc(var(--phone-height) / var(--slide-ratio, var(--phone-ratio)));
+  width: var(--phone-center);
+  height: auto;
   transform: translate(-50%, -50%);
   transition: transform 0.4s ease;
   cursor: pointer;
   opacity: 1;
+  overflow: visible;
 }
 
 .phone-slide-frame {
   width: 100%;
-  height: 100%;
+  height: auto;
+  overflow: visible;
 }
 
 .phone-slide-frame img,
@@ -2487,9 +2487,10 @@ html[data-page="resume"] a:hover {
 .phone-slide-frame picture img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+  height: auto;
+  object-fit: unset;
+  object-position: unset;
+  overflow: visible;
 }
 
 .phone-slide-frame.is-screen {
@@ -2629,8 +2630,8 @@ html[data-page="resume"] a:hover {
 /* Three whole phones at tablet widths. */
 @media (max-width: 860px) {
   .phone-stage {
-    --phone-center: min(200px, 26cqi);
-    --fan-1: 24cqi;
+    --phone-center: min(200px, 24vw);
+    --fan-1: 24vw;
     padding-inline: 3.25rem;
   }
 
@@ -2647,11 +2648,35 @@ html[data-page="resume"] a:hover {
   }
 }
 
-/* Single swipeable phone + dots at phone width (390 design). */
+/* Single swipeable phone + dots at phone width (390 design).
+   Active slide is in-flow so the whole image sets the height — nothing clips. */
 @media (max-width: 480px) {
   .phone-stage {
-    --phone-center: min(280px, calc((100cqi - 1.5rem) * var(--min-ratio) / var(--phone-ratio)));
+    --phone-center: min(280px, calc(100vw - 4rem));
     padding: 1.5rem 0.75rem 1.25rem;
+  }
+
+  .phone-stage-viewport {
+    height: auto;
+    overflow: visible;
+  }
+
+  .phone-slide {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--phone-center);
+    height: auto;
+    transform: translateX(-50%);
+  }
+
+  .phone-slide[data-offset="0"] {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-inline: auto;
+    z-index: 5;
   }
 
   .phone-slide:not([data-offset="0"]) {

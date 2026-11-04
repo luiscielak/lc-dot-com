@@ -1,6 +1,26 @@
 {
   "redirects": [
     {
+      "source": "/prototypes/your-first-week",
+      "destination": "/work/your-first-week",
+      "statusCode": 301
+    },
+    {
+      "source": "/prototypes/your-first-week/",
+      "destination": "/work/your-first-week",
+      "statusCode": 301
+    },
+    {
+      "source": "/prototypes/your-first-week/case",
+      "destination": "/work/your-first-week",
+      "statusCode": 301
+    },
+    {
+      "source": "/prototypes/your-first-week/case/",
+      "destination": "/work/your-first-week",
+      "statusCode": 301
+    },
+    {
       "source": "/case-study-mss",
       "destination": "/work/field-dispatch",
       "statusCode": 301

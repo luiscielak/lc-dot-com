@@ -160,7 +160,7 @@ const editorial = z.object({
   field: z.object({
     heading: z.string(),
     quotes: z.array(editorialQuote).min(1),
-    note: z.string(),
+    note: z.string().optional(),
   }),
   competitors: z
     .object({
@@ -262,6 +262,12 @@ const editorial = z.object({
     heading: z.string(),
     cells: z.array(editorialCell).length(3),
   }),
+  reflection: z
+    .object({
+      heading: z.string(),
+      body: z.string(),
+    })
+    .optional(),
 });
 
 const work = defineCollection({

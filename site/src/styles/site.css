@@ -3353,6 +3353,10 @@ html[data-page="resume"] a:hover {
   margin-top: 0;
 }
 
+.es-split.is-single {
+  grid-template-columns: minmax(0, 640px);
+}
+
 .es-eyebrow {
   font-family: var(--es-mono);
   font-size: 0.75rem;

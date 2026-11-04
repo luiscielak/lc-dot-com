@@ -173,7 +173,7 @@ const flowPanels =
     </aside>
   </section>
 
-  <section class="es-split wrap" id="voices">
+  <section class:list={["es-split", "wrap", !e.field.note && "is-single"]} id="voices">
     <div class="es-main">
       <p class="es-eyebrow">{e.field.heading}</p>
       <div class="es-quotes">
@@ -187,10 +187,14 @@ const flowPanels =
         }
       </div>
     </div>
-    <aside class="es-note">
-      <p class="es-note-label">Note</p>
-      <p>{e.field.note}</p>
-    </aside>
+    {
+      e.field.note ? (
+        <aside class="es-note">
+          <p class="es-note-label">Note</p>
+          <p>{e.field.note}</p>
+        </aside>
+      ) : null
+    }
   </section>
 
   {
@@ -552,6 +556,15 @@ const flowPanels =
       }
     </div>
   </section>
+
+  {
+    e.reflection ? (
+      <section class="es-block wrap" id="reflection">
+        <p class="es-eyebrow">{e.reflection.heading}</p>
+        <p class="es-body">{e.reflection.body}</p>
+      </section>
+    ) : null
+  }
 
   {
     next ? (

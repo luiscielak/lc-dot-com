@@ -8,12 +8,10 @@ export const DEFAULT_OG_ALT = "Luis Cielak — Clarity above all.";
 export const DEFAULT_GA_ID = "G-3BV9V5XZSH";
 
 /** Built but unlisted. Hidden from the home catalog, next-study links, and sitemap. */
-export const UNLISTED_WORK = new Set(["your-first-week"]);
+export const UNLISTED_WORK = new Set<string>();
 
 /** Draft studies that stay on the site with a Draft badge, but out of the sitemap. */
-export const DRAFT_SITEMAP_SLUGS = [
-  "your-first-week",
-] as const;
+export const DRAFT_SITEMAP_SLUGS = [] as const;
 
 /** Badge in the Draft slot: Draft itself, or a compact status like In progress. */
 export function workBadge(data: { draft?: boolean; status?: string }) {

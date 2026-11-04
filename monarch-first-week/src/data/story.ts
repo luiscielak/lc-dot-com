@@ -1,0 +1,43 @@
+/** Designed copy numbers from the approved wireframes, tied to the mock household. */
+export const story = {
+  transactionsIn: 412,
+  uncategorized: 143,
+  groups: 9,
+  lookLikeTransfers: 6,
+  syncIssues: 2,
+  reviewMinutes: 10,
+  octoberDaysLeft: 12,
+  weekRange: 'Oct 21–27',
+  weekSpend: 642,
+  weekUnderPace: 50,
+  topMerchants: [
+    { name: 'Fresh Basket', amount: 188 },
+    { name: 'Fuel Stop', amount: 74 },
+    { name: 'Daily Grind', amount: 31 },
+  ],
+  weekBars: [
+    { label: 'W', amount: 74 },
+    { label: 'T', amount: 118 },
+    { label: 'F', amount: 96 },
+    { label: 'S', amount: 142 },
+    { label: 'S', amount: 88 },
+    { label: 'M', amount: 62 },
+    { label: 'T', amount: 62 },
+  ],
+  flex: {
+    fixed: 2950,
+    nonMonthlyLeft: 310,
+    flexibleLeft: 1870,
+    flexibleUsedPct: 58,
+  },
+  perCategory: [
+    { name: 'Groceries & coffee', spent: 1214, limit: 600 },
+    { name: 'Restaurants & coffee', spent: 368, limit: 250 },
+  ],
+  extraCategories: 11,
+  weekendOverBy: 1,
+  moveFromShopping: 18,
+  rulesRunning: 7,
+  sharedGoals: 1,
+  day6Connected: 3,
+}

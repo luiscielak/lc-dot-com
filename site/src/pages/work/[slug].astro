@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import CaseStudy from "../../components/CaseStudy.astro";
+import ProductStudy from "../../components/ProductStudy.astro";
+import EditorialStudy from "../../components/EditorialStudy.astro";
+import { workImage } from "../../lib/images";
+import { isListedWork } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const studies = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+  const listed = studies.filter((study) => isListedWork(study.id, study.data.listed));
+  return studies.map((entry) => {
+    const listedIndex = listed.findIndex((study) => study.id === entry.id);
+    const next =
+      listedIndex === -1 ? listed[0] : listed[(listedIndex + 1) % listed.length];
+    return {
+      params: { slug: entry.id },
+      props: { entry, next },
+    };
+  });
+}
+
+const { entry, next } = Astro.props;
+const presentation = entry.data.presentation;
+const cover = workImage(entry.data.cover);
+const listed = isListedWork(entry.id, entry.data.listed);
+---
+
+<Base
+  title={`${entry.data.title} — Luis Cielak`}
+  description={entry.data.subtitle}
+  image={cover.src}
+  imageAlt={entry.data.coverAlt}
+  robots={listed ? undefined : "noindex, nofollow"}
+>
+  {
+    presentation === "editorial" ? (
+      <EditorialStudy entry={entry} next={next} />
+    ) : presentation === "product" ? (
+      <ProductStudy entry={entry} next={next} />
+    ) : (
+      <CaseStudy entry={entry} next={next} />
+    )
+  }
+</Base>

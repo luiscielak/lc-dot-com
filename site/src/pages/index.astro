@@ -1,0 +1,373 @@
+---
+import { getCollection } from "astro:content";
+import portrait from "../assets/about-portrait.avif";
+import BrandLockup from "../components/BrandLockup.astro";
+import Base from "../layouts/Base.astro";
+import { isListedWork } from "../lib/site";
+
+const studies = (await getCollection("work"))
+  .filter((study) => isListedWork(study.id, study.data.listed))
+  .sort((a, b) => a.data.order - b.data.order);
+
+/**
+ * Featured proof: the two strongest published cases, in the order the hero
+ * promises. Only cases with a real page are featured — no "case study soon"
+ * placeholders in the first position a hiring manager reads.
+ */
+const plate = [
+  {
+    id: "pmi-partner-platform",
+    index: "01",
+    domain: "Certification",
+    title: "PMI Partner Platform",
+    blurb: "Self-service platform that replaced manual B2B workflows.",
+    result: "$3.1M in revenue in the first year",
+  },
+  {
+    id: "field-dispatch",
+    index: "02",
+    domain: "Logistics",
+    title: "MSS",
+    blurb: "Workflow platform for specialty moving ops.",
+    result: "47% faster dispatch",
+  },
+];
+
+const featured = plate.flatMap((item) => {
+  const study = studies.find((s) => s.id === item.id);
+  if (!study) return [];
+  return [{ ...item, draft: study.data.draft }];
+});
+
+const featuredIds = new Set(plate.map((item) => item.id));
+
+/** Everything else, numbered continuously after the featured strip. */
+const moreWork = studies.filter((study) => !featuredIds.has(study.id));
+
+/** Logo row after the work catalog, before the testimonials.
+ *  Width and height are the rendered pixel size, tuned to a similar visual area.
+ *  Medium screens break after four marks (4 / 5). Large screens add a second
+ *  break for the 4 / 3 / 2 taper. */
+const clientRowBreaks = { mid: 4, late: 7 };
+
+const clients = [
+  { name: "Vanguard", src: "/logos/clients/vanguard.png", width: 132, height: 28 },
+  { name: "JPMorgan Chase", src: "/logos/clients/jpmc.png", width: 196, height: 13 },
+  { name: "PMI", src: "/logos/clients/pmi.svg", width: 108, height: 32 },
+  { name: "Ford", src: "/logos/clients/ford.png", width: 100, height: 36 },
+  { name: "Westat", src: "/logos/clients/westat.png", width: 120, height: 32 },
+  { name: "FM", src: "/logos/clients/fm.png", width: 64, height: 32 },
+  { name: "Elsevier", src: "/logos/clients/elsevier.png", width: 40, height: 44 },
+  { name: "USA.gov", src: "/logos/clients/usagov.png", width: 44, height: 40 },
+  { name: "Celgene", src: "/logos/clients/celgene.png", width: 44, height: 40 },
+];
+
+/**
+ * Testimonials — LinkedIn recommendations. `quote` is a verbatim pull-quote
+ * from each recommendation (kept short so the cards stay compact); the full
+ * text lives on LinkedIn.
+ *
+ * Two layouts live here: "list" (stacked rows) and "cards" (bordered card
+ * carousel, inspired by the Save.design testimonials section). Flip
+ * `testimonialsLayout` to switch.
+ */
+const testimonialsLayout: "cards" | "list" = "cards";
+
+const testimonials = [
+  {
+    index: "01",
+    quote: "Luis is the kind of designer who makes teams better simply by being part of them.",
+    name: "Michael Pacheco",
+    role: "Lead UX Designer · PMI",
+    linkedin: "https://www.linkedin.com/in/michael-pacheco-0242b221",
+  },
+  {
+    index: "02",
+    quote:
+      "Luis brings sharp insight, expert design skill, and strategic clarity to everything he touches.",
+    name: "Keriann Sabatini",
+    role: "Principal Product Manager · PMI",
+    linkedin: "https://www.linkedin.com/in/keriannsabatini",
+  },
+  {
+    index: "03",
+    quote:
+      "Luis is incredibly talented at getting senior stakeholders on the same page through his masterful UX workshops.",
+    name: "James Brown",
+    role: "Sr. Experience Design Manager · FM",
+    linkedin: "https://www.linkedin.com/in/james-brown-a9236b5",
+  },
+  {
+    index: "04",
+    quote:
+      "A talented UX designer with an excellent ability to facilitate, shape, and collaborate in the early phases of work.",
+    name: "El Cruz",
+    role: "Senior Manager, Experience Design · FM",
+    linkedin: "https://www.linkedin.com/in/elcruz",
+  },
+  {
+    index: "05",
+    quote:
+      "Any team would be lucky to have Luis; he brings not only talent but a mindset that elevates every project he touches.",
+    name: "Danielle Trombino",
+    role: "Senior Product Owner · FM Global",
+    linkedin: "https://www.linkedin.com/in/danielle-trombino",
+  },
+  {
+    index: "06",
+    quote:
+      "His design approach helped lead the B2B platform redesign that drove $3.1M in revenue in the first year and eliminated $650K in losses.",
+    name: "Patrick Olivares",
+    role: "Executive Product Leader · PMI",
+    linkedin: "https://www.linkedin.com/in/patrickolivares",
+  },
+  {
+    index: "07",
+    quote:
+      "Luis is a talented UI/UX expert who brings clarity and innovation to every project and works well with product and engineering teams.",
+    name: "Ankur Pariyani",
+    role: "Co-Founder & CIO · Near-Miss Management",
+    linkedin: "https://www.linkedin.com/in/ankurpariyani",
+  },
+  {
+    index: "08",
+    quote:
+      "He has a way of seeing the best in people, creating a space where everyone feels heard and valued.",
+    name: "Shauna Mensah",
+    role: "Operations Manager · PMI",
+    linkedin: "https://www.linkedin.com/in/shauna-mensah",
+  },
+];
+---
+
+<Base
+  nameplate
+  title="Luis Cielak — Clarity above all."
+  description="I’m Luis Cielak, a lead product designer in Philadelphia. For fifteen years I’ve designed high-stakes products — risk, finance, certification, logistics — so people can see what a system is doing and decide what to do next."
+>
+  <header class="plate-bar" slot="banner">
+    <BrandLockup tone="paper" class="plate-name" />
+    <p class="plate-status">
+      <span>Lead Product Designer</span>
+    </p>
+    <nav class="plate-nav" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="/resume">Résumé</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="nameplate">
+    <div class="plate-stage">
+      <canvas class="plate-field" aria-hidden="true"></canvas>
+
+      <section class="plate-hero" aria-labelledby="plate-title">
+        <p class="plate-kicker">AI &amp; Enterprise Platforms</p>
+        <h1 id="plate-title">Clarity<br />above all<span class="plate-period">.</span></h1>
+      </section>
+
+      <div class="plate-intro">
+        {/* TODO(Luis): link "Cursor Philly" once the community URL is confirmed. */}
+        <p class="plate-bio">
+          I’m Luis Cielak, a lead product designer in Philadelphia. For fifteen years I’ve designed high-stakes products — risk, finance, certification, logistics — so people can see what a system is doing and decide what to do next. Lately that work includes AI-assisted tools and workflows, and organizing Cursor Philly, a community for designers and builders.
+        </p>
+        <div class="plate-actions">
+          <a class="plate-btn" href="#work">View work <span class="plate-btn-arrow" aria-hidden="true">→</span></a>
+          <a class="plate-btn plate-btn-ghost" href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+        </div>
+      </div>
+    </div>
+
+    <ul class="plate-strip" id="work">
+      {
+        featured.map((item) => (
+          <li>
+            <a href={`/work/${item.id}`}>
+              <span class="plate-kicker-row">
+                <span class="plate-index">
+                  {item.index} / {item.domain}
+                </span>
+                {item.draft ? <span class="plate-draft">Draft</span> : null}
+              </span>
+              <span class="plate-study">{item.title}</span>
+              <span class="plate-blurb">{item.blurb}</span>
+              {item.result ? <span class="plate-result">{item.result}</span> : null}
+              <svg
+                class="plate-card-arrow"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M3 11 11 3M4.5 3H11v6.5" stroke="currentColor" stroke-width="1.25" />
+              </svg>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <section class="plate-catalog" aria-labelledby="more-work">
+      <h2 id="more-work">More work</h2>
+      <ol>
+        {
+          moreWork.map((study, i) => (
+            <li>
+              <a href={`/work/${study.id}`}>
+                <span class="plate-index">
+                  {String(featured.length + i + 1).padStart(2, "0")}
+                  {study.data.company ? ` / ${study.data.company}` : ""}
+                </span>
+                <span class="plate-study">{study.data.title}</span>
+                <span class="plate-blurb">{study.data.subtitle}</span>
+                {study.data.draft ? <span class="plate-draft">Draft</span> : null}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="plate-clients" aria-labelledby="clients-label">
+      <p id="clients-label">Selected clients &amp; employers</p>
+      <ul class="plate-client-group">
+        {
+          clients.map((client, i) => (
+            <>
+              <li>
+                <img
+                  src={client.src}
+                  alt={client.name}
+                  width={client.width}
+                  height={client.height}
+                  draggable="false"
+                />
+              </li>
+              {i + 1 === clientRowBreaks.mid ? <li class="plate-client-break" aria-hidden="true" /> : null}
+              {i + 1 === clientRowBreaks.late ? (
+                <li class="plate-client-break plate-client-break-late" aria-hidden="true" />
+              ) : null}
+            </>
+          ))
+        }
+      </ul>
+    </section>
+
+    {
+      testimonialsLayout === "cards" ? (
+        <section class="plate-quotes plate-quotes--cards" aria-labelledby="testimonials">
+          <div class="plate-quotes-head">
+            <h2 id="testimonials">Testimonials</h2>
+            <div class="plate-quote-nav">
+              <button type="button" class="plate-quote-arrow" data-marquee="prev" aria-label="Previous testimonial">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M15 5 8 12l7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <button type="button" class="plate-quote-arrow" data-marquee="next" aria-label="Next testimonial">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="plate-quote-marquee">
+            <div class="plate-quote-track">
+              {[false, true].map((clone) => (
+                <ul class="plate-quote-group" aria-hidden={clone ? "true" : undefined}>
+                  {testimonials.map((item) => (
+                    <li>
+                      <blockquote>
+                        <span class="pqc-mark" aria-hidden="true">”</span>
+                        <p class="plate-quote-text">{item.quote}</p>
+                        <footer class="pqc-foot">
+                          <span class="pqc-id">
+                            <span class="pqc-name">{item.name.split(" ")[0]}</span>
+                            <span class="pqc-role">{item.role.split(" · ")[0]}</span>
+                          </span>
+                          <a
+                            class="pqc-link"
+                            href={item.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${item.name} on LinkedIn`}
+                            tabindex={clone ? -1 : undefined}
+                          >
+                            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                              <path
+                                d="M5 9.5V19M5 5.5h.01M10 19V9.5M10 13.2c0-2.1 1.6-3.7 3.7-3.7 2 0 3.3 1.2 3.3 3.6V19"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </a>
+                        </footer>
+                      </blockquote>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section class="plate-quotes" aria-labelledby="testimonials">
+          <h2 id="testimonials">Testimonials</h2>
+          <ul>
+            {testimonials.map((item) => (
+              <li>
+                <blockquote>
+                  <span class="plate-quote-meta">
+                    <span class="plate-index">{item.index}</span>
+                  </span>
+                  <p class="plate-quote-text">{item.quote}</p>
+                  <footer>
+                    <cite class="plate-quote-cite">
+                      {item.name} · {item.role}
+                    </cite>
+                  </footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="about-intro">
+        <div class="about-copy">
+          <h2 id="about-title">
+            I help product teams<br />
+            bring clarity to tools<br />
+            people rely on<br />
+            under pressure.
+          </h2>
+          <p class="about-closer">
+            Rooted in research. Guided by systems. Delivered with care.
+          </p>
+        </div>
+        <img
+          class="about-portrait"
+          src={portrait.src}
+          width={portrait.width}
+          height={portrait.height}
+          alt="Portrait of Luis Cielak"
+        />
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  import { mountSignalField } from "../scripts/signal-field";
+  import { mountTestimonialMarquee } from "../scripts/testimonial-marquee";
+
+  mountSignalField();
+  mountTestimonialMarquee();
+</script>

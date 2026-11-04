@@ -1,0 +1,527 @@
+---
+import { Picture } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { workImage } from "../lib/images";
+
+interface Props {
+  entry: CollectionEntry<"work">;
+  next?: CollectionEntry<"work">;
+}
+
+const { entry, next } = Astro.props;
+const d = entry.data;
+const e = d.editorial!;
+
+const meta = [
+  d.role ? { dt: "Role", dd: d.role } : null,
+  d.years ? { dt: "When", dd: d.years } : null,
+  d.platforms ? { dt: "Surfaces", dd: d.platforms } : null,
+  d.status ? { dt: "Status", dd: d.status } : null,
+].filter((m): m is { dt: string; dd: string } => m !== null);
+
+const isDev = import.meta.env.DEV;
+const prototypeSrc =
+  e.prototype && isDev
+    ? "http://127.0.0.1:45261/prototype"
+    : e.prototype?.src;
+
+const flowPanels =
+  e.flows?.items.map((item, i) => {
+    const poster = workImage(item.poster);
+    const cap = Math.min(item.maxCssPx, Math.floor(poster.width / 1.5));
+    const widths = [...new Set([320, 480, 640, poster.width].filter((w) => w <= poster.width))].sort(
+      (a, b) => a - b,
+    );
+    return { ...item, poster, cap, widths: widths.length ? widths : [poster.width], index: i };
+  }) ?? [];
+---
+
+<article class="editorial-study">
+  <header class="es-hero wrap">
+    <p class="es-kicker">
+      {d.draft ? <span class="es-badge">Draft</span> : null}
+      {e.kicker}
+    </p>
+    <h1>{d.title}</h1>
+    <p class="es-lede">{d.subtitle}</p>
+    {
+      meta.length ? (
+        <dl class="es-meta">
+          {meta.map((m) => (
+            <div>
+              <dt>{m.dt}</dt>
+              <dd>{m.dd}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null
+    }
+    </header>
+
+  {
+    d.tldr ? (
+      <section class="es-tldr wrap" id="tldr">
+        <p class="es-eyebrow">TL;DR</p>
+        <p class="es-tldr-body">{d.tldr}</p>
+      </section>
+    ) : null
+  }
+
+  {
+    e.opener ? (
+      <section class="es-split wrap" id="why">
+        <div class="es-main">
+          <p class="es-eyebrow">{e.opener.heading}</p>
+          <h2>{e.opener.headline}</h2>
+          <p class="es-body">{e.opener.body}</p>
+        </div>
+        <aside class="es-note">
+          <p class="es-note-label">Note</p>
+          <p>{e.opener.note}</p>
+        </aside>
+      </section>
+    ) : null
+  }
+
+  {
+    e.method ? (
+      <section class="es-block wrap" id="method">
+        <p class="es-eyebrow">{e.method.heading}</p>
+        <h2 class="es-block-title">{e.method.headline}</h2>
+        <ol class="es-method">
+          {e.method.items.map((item) => (
+            <li>
+              <span class="es-method-label">{item.label}</span>
+              <span class="es-method-body">{item.body}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="es-method-note">{e.method.note}</p>
+      </section>
+    ) : null
+  }
+
+  <section class="es-split wrap" id="problem">
+    <div class="es-main">
+      <p class="es-eyebrow">{e.problem.heading}</p>
+      <h2>{e.problem.headline}</h2>
+      <p class="es-body">{e.problem.body}</p>
+      {
+        e.stats?.length ? (
+          <div class="es-stats" role="list">
+            {e.stats.map((s) => (
+              <div class="es-stat" role="listitem">
+                <span class="es-stat-value">{s.value}</span>
+                <span class="es-stat-label">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        ) : null
+      }
+    </div>
+    <aside class="es-note">
+      <p class="es-note-label">Note</p>
+      <p>{e.problem.note}</p>
+    </aside>
+  </section>
+
+  <section class="es-split wrap" id="voices">
+    <div class="es-main">
+      <p class="es-eyebrow">{e.field.heading}</p>
+      <div class="es-quotes">
+        {
+          e.field.quotes.map((q) => (
+            <blockquote class="es-quote">
+              <p>{q.text}</p>
+              <cite>{q.cite}</cite>
+            </blockquote>
+          ))
+        }
+      </div>
+    </div>
+    <aside class="es-note">
+      <p class="es-note-label">Note</p>
+      <p>{e.field.note}</p>
+    </aside>
+  </section>
+
+  {
+    e.competitors ? (
+      <section class="es-block wrap" id="competitors">
+        <p class="es-eyebrow">{e.competitors.heading}</p>
+        <p class="es-body">{e.competitors.fit}</p>
+        <figure class="es-pos-map">
+          <div class="es-pos-grid">
+            <div class="es-pos-corner" aria-hidden="true" />
+            <div class="es-pos-x">{e.competitors.axes.xLeft}</div>
+            <div class="es-pos-x">{e.competitors.axes.xRight}</div>
+            <div class="es-pos-y">{e.competitors.axes.yTop}</div>
+            <div class="es-pos-cell">
+              {e.competitors.cells.longFree.map((item) => (
+                <span class="es-pos-app">
+                  {item.app}
+                  <span class="es-pos-take">{item.take}</span>
+                </span>
+              ))}
+            </div>
+            <div class="es-pos-cell">
+              {e.competitors.cells.longCard.map((item) => (
+                <span class="es-pos-app">
+                  {item.app}
+                  <span class="es-pos-take">{item.take}</span>
+                </span>
+              ))}
+            </div>
+            <div class="es-pos-y">{e.competitors.axes.yBottom}</div>
+            <div class="es-pos-cell">
+              {e.competitors.cells.shortFree.map((item) => (
+                <span class="es-pos-app">
+                  {item.app}
+                  <span class="es-pos-take">{item.take}</span>
+                </span>
+              ))}
+            </div>
+            <div class="es-pos-cell is-here">
+              {e.competitors.cells.shortCard.map((item) => (
+                <span class="es-pos-app">
+                  {item.app}
+                  <span class="es-pos-take">{item.take}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+          <figcaption class="es-pos-aside">{e.competitors.aside}</figcaption>
+        </figure>
+      </section>
+    ) : null
+  }
+
+  {
+    e.bet ? (
+      <section class="es-block wrap" id="bet">
+        <p class="es-eyebrow">{e.bet.heading}</p>
+        <h2 class="es-block-title">{e.bet.headline}</h2>
+        <p class="es-body">{e.bet.body}</p>
+      </section>
+    ) : null
+  }
+
+  {
+    e.jobs ? (
+      <section class="es-block wrap" id="jobs">
+        <p class="es-eyebrow">{e.jobs.heading}</p>
+        <ul class="es-jobs">
+          {e.jobs.items.map((job) => (
+            <li>
+              <span>
+                When <b>{job.when}</b>, I want to {job.want}, so I can {job.so}.
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ) : null
+  }
+
+  {
+    e.experiments ? (
+      <section class="es-block wrap" id="experiments">
+        <p class="es-eyebrow">{e.experiments.heading}</p>
+        <p class="es-body">{e.experiments.note}</p>
+        <ul class="es-experiments">
+          {e.experiments.items.map((item) => (
+            <li>
+              <h3>{item.name}</h3>
+              <p>{item.hypothesis}</p>
+              <p class="es-exp-meta">
+                <span>Primary: {item.primary}</span>
+                <span>Guardrail: {item.guardrail}</span>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ) : null
+  }
+
+  <section class="es-figure wrap" id="week-map">
+    <div class="es-figure-head">
+      <p class="es-figure-title">{e.figure.title}</p>
+      <p class="es-figure-caption">{e.figure.caption}</p>
+    </div>
+    <ol class="es-steps">
+      {
+        e.figure.steps.map((s, i) => (
+          <>
+            <li class="es-step">
+              <span class="es-step-index">{String(i + 1).padStart(2, "0")}</span>
+              <span class="es-step-label">{s.label}</span>
+              <span class="es-step-title">{s.title}</span>
+            </li>
+            {i < e.figure.steps.length - 1 ? (
+              <li class="es-step-arrow" aria-hidden="true">
+                →
+              </li>
+            ) : null}
+          </>
+        ))
+      }
+    </ol>
+  </section>
+
+  {
+    e.flows && flowPanels.length ? (
+      <section class="es-flows wrap" id="flows" data-es-flows>
+        <p class="es-eyebrow">{e.flows.heading}</p>
+        <p class="es-body">{e.flows.body}</p>
+        <div class="es-flow-stage" style={`--es-flow-phone: ${Math.max(...flowPanels.map((p) => p.cap))}px`}>
+          <div class="es-flow-tabs" role="tablist" aria-label={e.flows.heading}>
+            {
+              flowPanels.map((panel) => (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`es-flow-tab-${panel.index}`}
+                  aria-controls={`es-flow-panel-${panel.index}`}
+                  aria-selected={panel.index === 0 ? "true" : "false"}
+                  tabindex={panel.index === 0 ? 0 : -1}
+                >
+                  {panel.label}
+                </button>
+              ))
+            }
+          </div>
+          {
+            flowPanels.map((panel) => (
+              <div
+                class="es-flow-panel"
+                role="tabpanel"
+                id={`es-flow-panel-${panel.index}`}
+                aria-labelledby={`es-flow-tab-${panel.index}`}
+                data-selected={panel.index === 0 ? "" : undefined}
+              >
+                <figure class="es-flow-phone">
+                  <video
+                    class="es-flow-video js-loop-video"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    poster={panel.poster.src}
+                    aria-label={panel.title}
+                    data-flow-video
+                  >
+                    <source src={panel.src} type="video/mp4" />
+                  </video>
+                  <div class="es-flow-fallback js-video-fallback" hidden>
+                    <Picture
+                      src={panel.poster}
+                      alt={panel.fallbackAlt}
+                      formats={["avif", "webp"]}
+                      widths={panel.widths}
+                      sizes={`min(100vw - 2rem, ${panel.cap}px)`}
+                      loading={panel.index === 0 ? "eager" : "lazy"}
+                    />
+                  </div>
+                </figure>
+                <div class="es-flow-caption">
+                  <p class="es-flow-title">{panel.title}</p>
+                  <p>{panel.body}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    ) : null
+  }
+
+  {
+    e.prototype && prototypeSrc ? (
+      <section class="es-proto wrap" id="prototype" data-es-proto>
+        <p class="es-eyebrow">{e.prototype.heading}</p>
+        <p class="es-body">{e.prototype.body}</p>
+        <div class="es-proto-frame-wrap">
+          <div class="es-proto-frame" data-state="loading">
+            <p class="es-proto-status" data-status="loading">Loading the week…</p>
+            <p class="es-proto-status" data-status="error" hidden>
+              The prototype didn’t load.{" "}
+              <button type="button" class="es-proto-retry" data-retry>
+                Retry
+              </button>
+            </p>
+            <iframe
+              class="es-proto-iframe"
+              title="Your First Week prototype"
+              src={prototypeSrc}
+              width="390"
+              height="844"
+              loading="lazy"
+              data-proto-iframe
+            />
+          </div>
+          <p class="es-proto-actions">
+            <a class="es-proto-link" href={e.prototype.fullScreenHref}>
+              {e.prototype.fullScreenLabel}
+            </a>
+          </p>
+          <p class="es-proto-note">{e.prototype.note}</p>
+        </div>
+      </section>
+    ) : null
+  }
+
+  <section class="es-close-grid wrap">
+    <p class="es-eyebrow">{e.close.heading}</p>
+    <div class="es-cells">
+      {
+        e.close.cells.map((c) => (
+          <div class="es-cell">
+            <span class="es-cell-value">{c.value}</span>
+            <span class="es-cell-label">{c.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    next ? (
+      <nav class="es-next wrap">
+        <span>Next case study</span>
+        <a href={`/work/${next.id}`}>
+          {next.data.draft ? "Draft · " : ""}
+          {next.data.title}
+        </a>
+      </nav>
+    ) : null
+  }
+</article>
+
+{
+  e.flows ? (
+    <script is:inline>
+      (function () {
+        function bindFlows() {
+          var stage = document.querySelector("[data-es-flows]");
+          if (!stage || stage.getAttribute("data-bound") === "1") return;
+          stage.setAttribute("data-bound", "1");
+          var tabs = Array.prototype.slice.call(stage.querySelectorAll('[role="tab"]'));
+          var panels = Array.prototype.slice.call(stage.querySelectorAll('[role="tabpanel"]'));
+          if (tabs.length < 2) return;
+
+          function playSelected() {
+            panels.forEach(function (panel) {
+              var video = panel.querySelector("[data-flow-video]");
+              if (!video) return;
+              if (panel.hasAttribute("data-selected")) {
+                try {
+                  video.play();
+                } catch (e) {}
+              } else {
+                video.pause();
+              }
+            });
+          }
+
+          function select(index, focus) {
+            tabs.forEach(function (tab, i) {
+              var on = i === index;
+              tab.setAttribute("aria-selected", on ? "true" : "false");
+              tab.tabIndex = on ? 0 : -1;
+              if (on && focus) tab.focus();
+            });
+            panels.forEach(function (panel, i) {
+              if (i === index) panel.setAttribute("data-selected", "");
+              else panel.removeAttribute("data-selected");
+            });
+            playSelected();
+          }
+
+          tabs.forEach(function (tab, i) {
+            tab.addEventListener("click", function () {
+              select(i, false);
+            });
+            tab.addEventListener("keydown", function (event) {
+              var next = null;
+              if (event.key === "ArrowRight") next = (i + 1) % tabs.length;
+              else if (event.key === "ArrowLeft") next = (i - 1 + tabs.length) % tabs.length;
+              else if (event.key === "Home") next = 0;
+              else if (event.key === "End") next = tabs.length - 1;
+              if (next === null) return;
+              event.preventDefault();
+              select(next, true);
+            });
+          });
+
+          var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+          function applyMotion() {
+            stage.querySelectorAll(".js-loop-video").forEach(function (node) {
+              var video = node;
+              var fallback = video.parentElement && video.parentElement.querySelector(".js-video-fallback");
+              if (reduce.matches) {
+                video.pause();
+                video.setAttribute("hidden", "");
+                if (fallback) fallback.removeAttribute("hidden");
+              } else {
+                video.removeAttribute("hidden");
+                if (fallback) fallback.setAttribute("hidden", "");
+                playSelected();
+              }
+            });
+          }
+          applyMotion();
+          reduce.addEventListener("change", applyMotion);
+        }
+        bindFlows();
+        document.addEventListener("astro:page-load", bindFlows);
+      })();
+    </script>
+  ) : null
+}
+
+{
+  e.prototype ? (
+    <script is:inline>
+      (function () {
+        function bindProto() {
+          var section = document.querySelector("[data-es-proto]");
+          if (!section || section.getAttribute("data-bound") === "1") return;
+          section.setAttribute("data-bound", "1");
+          var frame = section.querySelector(".es-proto-frame");
+          var iframe = section.querySelector("[data-proto-iframe]");
+          var retry = section.querySelector("[data-retry]");
+          if (!frame || !iframe) return;
+
+          function setState(state) {
+            frame.setAttribute("data-state", state);
+            section.querySelectorAll(".es-proto-status").forEach(function (el) {
+              el.hidden = el.getAttribute("data-status") !== state;
+            });
+          }
+
+          setState("loading");
+          iframe.addEventListener("load", function () {
+            setState("ready");
+          });
+          iframe.addEventListener("error", function () {
+            setState("error");
+          });
+
+          window.setTimeout(function () {
+            if (frame.getAttribute("data-state") === "loading") setState("error");
+          }, 12000);
+
+          if (retry) {
+            retry.addEventListener("click", function () {
+              setState("loading");
+              iframe.src = iframe.src;
+            });
+          }
+        }
+        bindProto();
+        document.addEventListener("astro:page-load", bindProto);
+      })();
+    </script>
+  ) : null
+}

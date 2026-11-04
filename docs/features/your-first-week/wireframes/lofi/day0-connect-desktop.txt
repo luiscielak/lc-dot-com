@@ -1,0 +1,5 @@
+day0-connect — Desktop
+
+Phone-only surface. Content matches day0-connect-mobile.txt inside a centered 390×844 frame on the desktop case page or standalone prototype shell.
+
+See: day0-connect-mobile.txt

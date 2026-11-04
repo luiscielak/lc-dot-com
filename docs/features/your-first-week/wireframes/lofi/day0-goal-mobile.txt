@@ -1,0 +1,30 @@
+Day 0 Goal — Mobile
+
++---------------------------+
+| UNOFFICIAL CONCEPT        |  [A1]
+| DAY 0 OF 7                |
+| What do you want first?   |
+| ( ) See everything        |
+| ( ) Stop overspending     |
+| (•) Plan with a household |  [A2]
+|     member                |
+| +-----------------------+ |
+| | Your first week is    | |
+| | on us                 | |
+| | 7 days                | |
+| | Charge · amount       | |  [A3]
+| | Cancel by · 24h before| |
+| | Who bills · [Web|App] | |
+| +-----------------------+ |
+| [Button: Continue]        |
+| [Button: Skip for now]    |
++---------------------------+
+
+A1: Unofficial banner on every phone screen. NFR-001.
+A2: One goal. Continue advances even if none selected.
+A3: Charge date, amount, who bills, cancel-by — before any account connects. FR-011.
+
+Next: day0-connect (Continue or Skip for now)
+Prev: —
+
+Related FRs: FR-011, FR-010, NFR-001, NFR-005

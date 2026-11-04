@@ -1,0 +1,167 @@
+---
+import "@fontsource/inter/latin-400.css";
+import "@fontsource/inter/latin-500.css";
+import "@fontsource/ibm-plex-mono/latin-400.css";
+import "@fontsource/ibm-plex-mono/latin-500.css";
+import "@fontsource/space-grotesk/latin-500.css";
+import "@fontsource/space-grotesk/latin-600.css";
+import inter400 from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
+import spaceGrotesk500 from "@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff2?url";
+import "@hooman-loop/konstrukt/css";
+import "@hooman-loop/konstrukt/base.css";
+import "../styles/site.css";
+import BrandLockup from "../components/BrandLockup.astro";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_GA_ID,
+  DEFAULT_OG_ALT,
+  DEFAULT_OG_IMAGE,
+  SITE_NAME,
+  SITE_ORIGIN,
+  absoluteUrl,
+  canonicalPath,
+} from "../lib/site";
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  robots?: string;
+  /** Inverted nameplate landing. Replaces the light site chrome. */
+  nameplate?: boolean;
+  /** Résumé artboard. Page supplies its own header and footer. */
+  resume?: boolean;
+}
+
+const {
+  title,
+  description = DEFAULT_DESCRIPTION,
+  image = DEFAULT_OG_IMAGE,
+  imageAlt = DEFAULT_OG_ALT,
+  robots,
+  nameplate = false,
+  resume = false,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL(SITE_ORIGIN);
+const canonical = new URL(canonicalPath(Astro.url.pathname), siteUrl).href;
+const ogImage = absoluteUrl(image, siteUrl.href);
+const gaId = import.meta.env.PUBLIC_GA_ID || DEFAULT_GA_ID;
+---
+
+<!doctype html>
+<html
+  lang="en"
+  data-mode="light"
+  data-page={nameplate ? "nameplate" : resume ? "resume" : undefined}
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {robots ? <meta name="robots" content={robots} /> : null}
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content={nameplate ? "website" : "article"} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    {image === DEFAULT_OG_IMAGE ? (
+      <>
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      </>
+    ) : null}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <link rel="preload" href={inter400} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={spaceGrotesk500} as="font" type="font/woff2" crossorigin />
+    {gaId ? (
+      <>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag("js", new Date());
+          gtag("config", gaId);
+        </script>
+      </>
+    ) : null}
+  </head>
+  <body id="top">
+    <a class="skip" href="#content">Skip to content</a>
+    {
+      nameplate || resume ? (
+        <slot name="banner" />
+      ) : (
+        <header class="site-header">
+          <div class="wrap nav">
+            <BrandLockup class="nav-home" />
+            <nav class="nav-links" aria-label="Primary">
+              <a href="/#work">Work</a>
+              <a href="/#about">About</a>
+              <a href="/resume">Résumé</a>
+              <a href="/#contact">Contact</a>
+            </nav>
+          </div>
+        </header>
+      )
+    }
+    <main id="content">
+      <slot />
+    </main>
+    {
+      !resume && (
+        <footer class="site-footer" id="contact">
+          <div class="foot-links">
+            <nav class="foot-col" aria-labelledby="foot-index">
+              <p class="foot-label" id="foot-index">Index</p>
+              <ul class="foot-items">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#work">Work</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/resume">Résumé</a></li>
+              </ul>
+            </nav>
+            <nav class="foot-col" aria-labelledby="foot-contact">
+              <p class="foot-label" id="foot-contact">Contact</p>
+              <ul class="foot-items">
+                <li><a href="https://www.linkedin.com/in/cielak">LinkedIn</a></li>
+                <li><a href="https://github.com/luiscielak">GitHub</a></li>
+                <li>
+                  <a class="foot-email" href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="foot-name">
+            <a class="foot-mark" href="/" aria-label="Luis Cielak">
+              <span class="foot-mark-glyph" aria-hidden="true"></span>
+            </a>
+            <p class="foot-baseline">
+              <a class="foot-top" href="#top">Back to top</a>
+              <span class="foot-meta">© 2026 · Philadelphia · CDMX</span>
+            </p>
+          </div>
+        </footer>
+      )
+    }
+  </body>
+</html>

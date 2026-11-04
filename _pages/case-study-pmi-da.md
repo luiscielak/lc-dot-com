@@ -24,7 +24,7 @@ featured_image: /images/case-studies/case-study-03.png
 
 ## TL;DR
 
-Led the redesign of a certification experience platform, transforming a fragmented process into a streamlined, mobile-first journey. Reduced learner drop-offs by 18% and accelerated certification timelines by 23%.
+Led the redesign of a certification experience platform, transforming a fragmented process into a streamlined, mobile-first journey. Reduced support tickets by 18% and accelerated certification timelines by 23%.
 
 ### Overview
 

@@ -1,0 +1,19 @@
+# Cloudflare Pages config for a later deploy.
+# Do not run wrangler deploy from this prototype unless you intend to publish.
+name = "first-week"
+compatibility_date = "2026-10-29"
+pages_build_output_dir = "dist"
+
+[vars]
+DAILY_AI_CAP = "200"
+PER_IP_HOURLY_CAP = "20"
+
+# Workers AI — bind after you create a Pages project.
+[ai]
+binding = "AI"
+
+# Replace the placeholder id with a KV namespace you create in the dashboard.
+# This repo does not create Cloudflare resources for you.
+[[kv_namespaces]]
+binding = "QUICKSORT_CACHE"
+id = "00000000000000000000000000000000"

@@ -1,0 +1,162 @@
+---
+import BrandLockup from "../components/BrandLockup.astro";
+import Base from "../layouts/Base.astro";
+import {
+  certifications,
+  communityBody,
+  communityTitle,
+  competencies,
+  education,
+  impact,
+  languages,
+  resumeContacts,
+  resumeFoot,
+  resumeKicker,
+  resumeLede,
+  resumePdfHref,
+  resumeSubtitle,
+  resumeTitle,
+  roles,
+  toolGroups,
+} from "../lib/resume";
+---
+
+<Base
+  resume
+  title="Résumé — Luis Cielak"
+  description="Lead Product Designer for AI and enterprise platforms. Fifteen years across financial services, risk, and data-dense research."
+>
+  <header class="cv-band" slot="banner">
+    <div class="cv-sheet cv-bar">
+      <BrandLockup class="cv-name" />
+      <nav class="cv-nav" aria-label="Primary">
+        <a href="/#work">Work</a>
+        <a href="/#about">About</a>
+        <a href="/resume" aria-current="page">Résumé</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="cv-band cv-band-ink">
+    <header class="cv-sheet cv-hero">
+      <div class="cv-kicker-row">
+        <p class="cv-kicker">{resumeKicker}</p>
+        <a class="cv-download" href={resumePdfHref} download>Download PDF ↓</a>
+      </div>
+      <h1>
+        <span class="cv-title">{resumeTitle}</span>
+        <span class="cv-title-faint">{resumeSubtitle}</span>
+      </h1>
+      <p class="cv-lede">
+        {resumeLede}
+      </p>
+      <ul class="cv-contact">
+        {
+          resumeContacts.map((item) =>
+            "href" in item ? (
+              <li>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ) : (
+              <li>{item.label}</li>
+            ),
+          )
+        }
+      </ul>
+    </header>
+  </div>
+
+  <div class="cv-band">
+    <section class="cv-sheet cv-impact" aria-labelledby="impact-title">
+      <h2 id="impact-title">Selected impact</h2>
+      <ol>
+        {
+          impact.map((item, i) => (
+            <li>
+              <span>{String(i + 1).padStart(2, "0")}</span>
+              <p>{item}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </div>
+
+  <section class="cv-sheet cv-work" aria-labelledby="experience-title">
+    <h2 id="experience-title">Professional experience</h2>
+    <ol>
+      {
+        roles.map((role) => (
+          <li
+            class:list={[
+              role.scale === "lead" && "is-lead",
+              role.rule === "ink" && "is-ink",
+              role.last && "is-last",
+            ]}
+          >
+            <p class:list={["cv-when", role.datesFaint && "is-faint"]}>
+              {role.dates.map((line) => (
+                <span>{line}</span>
+              ))}
+            </p>
+            <div class="cv-role">
+              <div class="cv-role-head">
+                <h3>{role.title}</h3>
+                <p>{role.place}</p>
+              </div>
+              <p class="cv-org">{role.org}</p>
+              <p class="cv-summary">{role.summary}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="cv-sheet cv-facts" aria-label="Skills, education, and community">
+    <div>
+      <h2>Core competencies</h2>
+      <p>{competencies}</p>
+      <h2>Languages</h2>
+      <p>{languages}</p>
+    </div>
+    <div class="cv-tools">
+      {
+        toolGroups.map((group) => (
+          <>
+            <h2 class:list={[group.accent && "is-accent"]}>{group.title}</h2>
+            <p>{group.body}</p>
+          </>
+        ))
+      }
+    </div>
+    <div class="cv-edu">
+      <h2>Education</h2>
+      {
+        education.map((item) => (
+          <>
+            <p class="cv-degree">{item.degree}</p>
+            <p class="cv-school">{item.school}</p>
+          </>
+        ))
+      }
+      <h2>Certifications</h2>
+      <p class="cv-certs">
+        {certifications[0]}
+        <br />
+        {certifications[1]}
+      </p>
+      <h2 class="is-accent">Community</h2>
+      <p class="cv-degree">{communityTitle}</p>
+      <p class="cv-community">{communityBody}</p>
+    </div>
+  </section>
+
+  <footer class="cv-band cv-band-top">
+    <div class="cv-sheet cv-foot">
+      <p>{resumeFoot}</p>
+      <a href="mailto:luis@luiscielak.com">luis@luiscielak.com →</a>
+    </div>
+  </footer>
+</Base>

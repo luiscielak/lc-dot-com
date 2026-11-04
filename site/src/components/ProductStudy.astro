@@ -1,0 +1,155 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Figure from "./Figure.astro";
+import PhoneStage from "./PhoneStage.astro";
+import { renderProse } from "../lib/prose";
+
+interface Props {
+  entry: CollectionEntry<"work">;
+  next?: CollectionEntry<"work">;
+}
+
+const { entry, next } = Astro.props;
+const d = entry.data;
+const v = d.visuals;
+
+function html(s?: string) {
+  return s ? renderProse(s) : "";
+}
+
+type Band = {
+  heading: string;
+  html?: string;
+  figure?: (typeof v)["decisions"];
+};
+
+// Each feature of the page gets one claim heading and the existing prose.
+const bands: Band[] = [
+  d.solution ? { heading: "A small organization", html: html(d.solution) } : null,
+  d.research ? { heading: d.researchHeading, html: html(d.research) } : null,
+  d.decisions ? { heading: "The permission matrix", html: html(d.decisions) } : null,
+  v.decisions ? { heading: "The approval moment", figure: v.decisions } : null,
+  d.outcome ? { heading: "In daily use", html: html(d.outcome) } : null,
+].filter((b): b is Band => b !== null);
+---
+
+<article class="product-study">
+  <header class="ps-hero wrap">
+    <p class="ps-kicker">
+      {d.draft ? <span class="badge">Draft</span> : null}
+      Case study
+    </p>
+    <h1>{d.title}</h1>
+    <p class="ps-sub">{d.subtitle}</p>
+    {d.tldr ? <div class="prose ps-lede" set:html={html(d.tldr)} /> : null}
+    {
+      d.role || d.platforms || d.tools || d.status || d.company || d.years ? (
+        <dl class="meta-row ps-meta">
+          {d.company ? (
+            <div>
+              <dt>Company</dt>
+              <dd>{d.company}</dd>
+            </div>
+          ) : null}
+          {d.role ? (
+            <div>
+              <dt>Role</dt>
+              <dd>{d.role}</dd>
+            </div>
+          ) : null}
+          {d.years ? (
+            <div>
+              <dt>Timeline</dt>
+              <dd>{d.years}</dd>
+            </div>
+          ) : null}
+          {d.platforms ? (
+            <div>
+              <dt>Platforms</dt>
+              <dd>{d.platforms}</dd>
+            </div>
+          ) : null}
+          {d.tools ? (
+            <div>
+              <dt>Tools</dt>
+              <dd>{d.tools}</dd>
+            </div>
+          ) : null}
+          {d.status ? (
+            <div>
+              <dt>Status</dt>
+              <dd>{d.status}</dd>
+            </div>
+          ) : null}
+        </dl>
+      ) : null
+    }
+    {d.overview ? <div class="prose ps-overview" set:html={html(d.overview)} /> : null}
+  </header>
+
+  {
+    d.challenges.length ? (
+      <section class="ps-principles wrap" aria-label="Design principles">
+        <ul>
+          {d.challenges.map((c) => (
+            <li>
+              <h2>{c.title}</h2>
+              <p>{c.body}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ) : null
+  }
+
+  {
+    d.phones?.length ? (
+      <section class="ps-band ps-phones wrap" aria-labelledby="ps-phones-title">
+        <div class="ps-band-head">
+          <h2 id="ps-phones-title">Where it reaches me</h2>
+          <p>
+            Telegram for quick captures, status, and the morning brief. Slack for real work, one
+            thread per task.
+          </p>
+        </div>
+        <PhoneStage phones={d.phones} />
+      </section>
+    ) : null
+  }
+
+  {
+    bands.map((band) => (
+      <section class="ps-band wrap">
+        <div class="ps-band-head">
+          <h2>{band.heading}</h2>
+        </div>
+        {band.html ? <div class="prose" set:html={band.html} /> : null}
+        {band.figure ? (
+          <div class="ps-panel">
+            <Figure {...band.figure} />
+          </div>
+        ) : null}
+      </section>
+    ))
+  }
+
+  {
+    d.reflection ? (
+      <section class="ps-close wrap">
+        <div class="prose" set:html={html(d.reflection)} />
+      </section>
+    ) : null
+  }
+
+  {
+    next ? (
+      <nav class="next wrap">
+        <span>Next case study</span>
+        <a href={`/work/${next.id}`}>
+          {next.data.draft ? "Draft · " : ""}
+          {next.data.title}
+        </a>
+      </nav>
+    ) : null
+  }
+</article>

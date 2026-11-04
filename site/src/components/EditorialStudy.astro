@@ -91,7 +91,7 @@ const flowPanels =
           <p class="es-eyebrow" id="es-week-title">{e.weekStrip.heading}</p>
           <p class="es-week-caption">{e.weekStrip.caption}</p>
         </div>
-        <ol class="es-week-strip">
+        <ol class="es-week-strip" tabindex="0" aria-labelledby="es-week-title">
           {
             weekPhones.map((phone) => (
               <li class="es-week-item">
@@ -471,7 +471,6 @@ const flowPanels =
                 <figure class="es-flow-phone">
                   <video
                     class="es-flow-video js-loop-video"
-                    autoplay
                     muted
                     loop
                     playsinline
@@ -491,6 +490,9 @@ const flowPanels =
                       loading={panel.index === 0 ? "eager" : "lazy"}
                     />
                   </div>
+                  <button type="button" class="work-loop-toggle" data-loop-toggle>
+                    Play
+                  </button>
                 </figure>
                 <div class="es-flow-caption">
                   <p class="es-flow-title">{panel.title}</p>
@@ -579,10 +581,11 @@ const flowPanels =
           if (tabs.length < 2) return;
 
           function playSelected() {
+            var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             panels.forEach(function (panel) {
               var video = panel.querySelector("[data-flow-video]");
               if (!video) return;
-              if (panel.hasAttribute("data-selected")) {
+              if (panel.hasAttribute("data-selected") && !reduce) {
                 try {
                   video.play();
                 } catch (e) {}
@@ -624,19 +627,13 @@ const flowPanels =
 
           var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
           function applyMotion() {
-            stage.querySelectorAll(".js-loop-video").forEach(function (node) {
-              var video = node;
-              var fallback = video.parentElement && video.parentElement.querySelector(".js-video-fallback");
-              if (reduce.matches) {
-                video.pause();
-                video.setAttribute("hidden", "");
-                if (fallback) fallback.removeAttribute("hidden");
-              } else {
-                video.removeAttribute("hidden");
-                if (fallback) fallback.setAttribute("hidden", "");
-                playSelected();
-              }
-            });
+            if (reduce.matches) {
+              stage.querySelectorAll(".js-loop-video").forEach(function (node) {
+                node.pause();
+              });
+              return;
+            }
+            playSelected();
           }
           applyMotion();
           reduce.addEventListener("change", applyMotion);
@@ -647,6 +644,11 @@ const flowPanels =
     </script>
   ) : null
 }
+
+<script>
+  import { mountLoopVideos } from "../scripts/loop-video";
+  mountLoopVideos();
+</script>
 
 {
   e.prototype ? (

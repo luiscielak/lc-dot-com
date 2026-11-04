@@ -15,6 +15,7 @@ interface Props {
 const { src, poster, caption, fallbackAlt, maxCssPx, phone = true } = Astro.props;
 const posterImage = workImage(poster);
 const cap = Math.min(maxCssPx, Math.floor(posterImage.width / 1.5));
+const capId = `work-loop-cap-${src.replace(/[^a-z0-9]+/gi, "-")}`;
 ---
 
 <figure
@@ -24,49 +25,34 @@ const cap = Math.min(maxCssPx, Math.floor(posterImage.width / 1.5));
   data-src-width={posterImage.width}
   data-render-max={cap}
 >
-  <video
-    class="js-loop-video"
-    autoplay
-    muted
-    loop
-    playsinline
-    poster={posterImage.src}
-    aria-label={caption}
-  >
-    <source src={src} type="video/mp4" />
-  </video>
-  <div class="js-video-fallback" hidden>
-    <Picture
-      src={posterImage}
-      alt={fallbackAlt}
-      formats={["avif", "webp"]}
-      widths={[640, 960]}
-      sizes={`min(100vw - 2rem, ${cap}px)`}
-    />
+  <div class="work-loop-stage">
+    <video
+      class="js-loop-video"
+      muted
+      loop
+      playsinline
+      poster={posterImage.src}
+      aria-labelledby={capId}
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+    <div class="js-video-fallback" hidden>
+      <Picture
+        src={posterImage}
+        alt={fallbackAlt}
+        formats={["avif", "webp"]}
+        widths={[640, 960]}
+        sizes={`min(100vw - 2rem, ${cap}px)`}
+      />
+    </div>
+    <button type="button" class="work-loop-toggle" data-loop-toggle>
+      Play
+    </button>
   </div>
-  <figcaption>{caption}</figcaption>
+  <figcaption id={capId}>{caption}</figcaption>
 </figure>
 
 <script>
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-  function apply() {
-    document.querySelectorAll(".js-loop-video").forEach((node) => {
-      const video = node as HTMLVideoElement;
-      const fallback = video.parentElement?.querySelector(".js-video-fallback") as HTMLElement | null;
-      if (reduce.matches) {
-        video.pause();
-        video.setAttribute("hidden", "");
-        fallback?.removeAttribute("hidden");
-      } else {
-        video.removeAttribute("hidden");
-        fallback?.setAttribute("hidden", "");
-        void video.play().catch(() => {
-          video.setAttribute("hidden", "");
-          fallback?.removeAttribute("hidden");
-        });
-      }
-    });
-  }
-  apply();
-  reduce.addEventListener("change", apply);
+  import { mountLoopVideos } from "../scripts/loop-video";
+  mountLoopVideos();
 </script>

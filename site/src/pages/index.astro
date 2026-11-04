@@ -19,7 +19,6 @@ const plate = [
     id: "pmi-partner-platform",
     index: "01",
     domain: "Certification",
-    title: "PMI Partner Platform",
     blurb: "Self-service platform that replaced manual B2B workflows.",
     result: "$3.1M in revenue in the first year",
   },
@@ -27,7 +26,6 @@ const plate = [
     id: "field-dispatch",
     index: "02",
     domain: "Logistics",
-    title: "MSS",
     blurb: "Workflow platform for specialty moving ops.",
     result: "47% faster dispatch",
   },
@@ -36,10 +34,22 @@ const plate = [
 const featured = plate.flatMap((item) => {
   const study = studies.find((s) => s.id === item.id);
   if (!study) return [];
-  return [{ ...item, draft: study.data.draft }];
+  return [{ ...item, title: study.data.title, draft: study.data.draft }];
 });
 
 const featuredIds = new Set(plate.map((item) => item.id));
+
+/**
+ * Result line on every listing card. Sourced from confirmed frontmatter
+ * metrics or a claim already stated in that study’s MDX — never invented.
+ */
+const listingResults: Record<string, string> = {
+  "pmi-partner-platform": "$3.1M in revenue in the first year",
+  "field-dispatch": "47% faster dispatch",
+  "making-compare-actually-compare": "4 advice tiers, one comparison",
+  "pmi-disciplined-agile": "$2.8M in impact",
+  "straatclaw": "In daily personal use",
+};
 
 /** Everything else, numbered continuously after the featured strip. */
 const moreWork = studies.filter((study) => !featuredIds.has(study.id));
@@ -222,6 +232,9 @@ const testimonials = [
                 </span>
                 <span class="plate-study">{study.data.title}</span>
                 <span class="plate-blurb">{study.data.subtitle}</span>
+                {listingResults[study.id] ? (
+                  <span class="plate-result">{listingResults[study.id]}</span>
+                ) : null}
                 {study.data.draft ? <span class="plate-draft">Draft</span> : null}
               </a>
             </li>

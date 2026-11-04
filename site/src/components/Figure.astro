@@ -34,6 +34,7 @@ const widths = [
     formats={["avif", "webp"]}
     widths={widths.length ? widths : [image.width]}
     sizes={`min(100vw - 2rem, ${cap}px)`}
+    quality={90}
   />
   {caption ? <figcaption>{caption}</figcaption> : null}
 </figure>

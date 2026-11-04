@@ -34,6 +34,10 @@ const clip = z.object({
   section: z.enum(["header", "tldr", "overview", "challenge", "solution", "research", "decisions", "outcome"]),
   maxCssPx: z.number().positive(),
   phone: z.boolean().optional(),
+  /** Public URL of a grayscale mask that knocks the device silhouette onto `--bg`. */
+  mask: z.string().optional(),
+  /** Optional VP9-alpha WebM served before the MP4. */
+  webm: z.string().optional(),
 });
 
 const challenge = z.object({

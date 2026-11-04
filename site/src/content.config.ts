@@ -287,6 +287,8 @@ const work = defineCollection({
     presentation: z.enum(["product", "editorial"]).optional(),
     editorial: editorial.optional(),
     phones: z.array(phone).optional(),
+    /** Second phone row, used for a later “in daily use” carousel. */
+    dailyPhones: z.array(phone).optional(),
     /** Public-safe roster diagram when a team-map image is not available. */
     teamMap: z
       .object({

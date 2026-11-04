@@ -2400,15 +2400,19 @@ html[data-page="resume"] a:hover {
 }
 
 .phone-stage {
-  --phone-center: 320px;
+  --phone-center: min(268px, 24cqi);
   --phone-ratio: 1.67;
   --phone-chip: 2.75rem;
+  --fan-shift: 11.5cqi;
+  --fan-scale: 0.78;
+  container-type: inline-size;
   position: relative;
   margin-top: 2.5rem;
   background: var(--surface);
   border: var(--stroke-hairline) solid var(--border);
-  padding: 2.25rem 3.5rem 1.5rem;
+  padding: 2.5rem 4.25rem 1.5rem;
   outline: none;
+  overflow: hidden;
 }
 
 .phone-stage:focus-visible {
@@ -2419,7 +2423,7 @@ html[data-page="resume"] a:hover {
 .phone-stage-viewport {
   position: relative;
   height: calc(var(--phone-center) * var(--phone-ratio) + var(--phone-chip));
-  overflow: hidden;
+  overflow: visible;
   touch-action: pan-y;
 }
 
@@ -2487,7 +2491,7 @@ html[data-page="resume"] a:hover {
   border-radius: 1.7rem;
 }
 
-/* Center phone and its two neighbors; everything else tucks away. */
+/* Three complete phones: center plus one whole neighbor on each side. */
 .phone-slide[data-offset="0"] {
   transform: translateX(-50%) scale(1);
   z-index: 3;
@@ -2495,33 +2499,20 @@ html[data-page="resume"] a:hover {
 }
 
 .phone-slide[data-offset="-1"] {
-  transform: translateX(calc(-50% - 58%)) scale(0.82);
+  transform: translateX(calc(-50% - var(--fan-shift))) scale(var(--fan-scale));
   z-index: 2;
-  opacity: 0.68;
+  opacity: 0.72;
 }
 
 .phone-slide[data-offset="1"] {
-  transform: translateX(calc(-50% + 58%)) scale(0.82);
+  transform: translateX(calc(-50% + var(--fan-shift))) scale(var(--fan-scale));
   z-index: 2;
-  opacity: 0.68;
+  opacity: 0.72;
 }
 
-.phone-slide[data-offset="-2"] {
-  transform: translateX(calc(-50% - 108%)) scale(0.66);
-  z-index: 1;
-  opacity: 0.32;
-}
-
-.phone-slide[data-offset="2"] {
-  transform: translateX(calc(-50% + 108%)) scale(0.66);
-  z-index: 1;
-  opacity: 0.32;
-}
-
-.phone-slide:not([data-offset="0"]):not([data-offset="-1"]):not([data-offset="1"]):not(
-    [data-offset="-2"]
-  ):not([data-offset="2"]) {
+.phone-slide:not([data-offset="0"]):not([data-offset="-1"]):not([data-offset="1"]) {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   z-index: 0;
 }
@@ -2593,14 +2584,10 @@ html[data-page="resume"] a:hover {
   }
 
   .phone-stage {
-    --phone-center: min(280px, 68vw);
-    padding-inline: 2.5rem;
-  }
-
-  .phone-slide[data-offset="-2"],
-  .phone-slide[data-offset="2"] {
-    opacity: 0;
-    pointer-events: none;
+    --phone-center: clamp(160px, 32cqi, 210px);
+    --fan-shift: 9cqi;
+    --fan-scale: 0.72;
+    padding-inline: 3rem;
   }
 }
 

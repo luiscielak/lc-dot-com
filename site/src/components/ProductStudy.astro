@@ -121,9 +121,8 @@ function html(s?: string) {
           <div class="ps-panel">
             <Figure {...v.solution} />
           </div>
-        ) : d.teamMap ? (
-          <AgentTeamMap caption={d.teamMap.caption} />
         ) : null}
+        {d.teamMap ? <AgentTeamMap caption={d.teamMap.caption} /> : null}
         {(gallery.solution ?? []).map((item) => (
           <div class="ps-panel">
             <Figure {...item} />

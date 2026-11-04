@@ -28,14 +28,30 @@ a:hover {
 .skip {
   position: absolute;
   left: -999px;
+  color: #17150f;
 }
 
-.skip:focus {
+/* Light plate on every theme so :visited cannot keep --ink on an ink page
+   (~1:1). Paper #F5F5F0 / ink #17150f is ≥4.5:1; keep the 2px ring. */
+a.skip:link,
+a.skip:visited {
+  color: #17150f;
+  -webkit-text-fill-color: #17150f;
+}
+
+a.skip:focus,
+a.skip:focus-visible,
+a.skip:visited:focus,
+a.skip:visited:focus-visible {
   left: 1rem;
   top: 1rem;
   z-index: 10;
-  background: var(--bg);
+  background: #f5f5f0;
+  color: #17150f;
+  -webkit-text-fill-color: #17150f;
   padding: 0.5rem;
+  outline: 2px solid #057079;
+  outline-offset: 3px;
 }
 
 /* WCAG 1.4.11: the default Konstrukt ring is teal #057079 on paper.
@@ -273,6 +289,32 @@ html[data-page="nameplate"] .site-footer {
   }
 }
 
+/* Fine pointers keep the 44px mobile targets above; grow small text
+   links to at least 24px without changing type size. */
+@media (pointer: fine) and (min-width: 721px) {
+  .nav-links a,
+  .plate-nav a,
+  .foot-items a,
+  .foot-top,
+  .cv-download {
+    position: relative;
+  }
+
+  .nav-links a::before,
+  .plate-nav a::before,
+  .foot-items a::before,
+  .foot-top::before,
+  .cv-download::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 24px);
+    height: 24px;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .nav {
   display: flex;
   flex-wrap: wrap;
@@ -402,6 +444,7 @@ html[data-page="nameplate"] .site-footer {
 
 .cs-header h1 {
   font: var(--type-display);
+  font-size: clamp(2.25rem, 9vw, 3.5rem);
   letter-spacing: var(--type-display-tracking);
   margin: 0 0 0.75rem;
 }
@@ -660,10 +703,18 @@ html[data-page="nameplate"] .site-footer {
 .next {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
+  min-height: 44px;
   margin-top: 3rem;
   padding-top: 1.5rem;
   border-top: var(--stroke-rule) solid var(--border);
+}
+
+.next a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .page h1 {
@@ -715,9 +766,13 @@ html[data-page="nameplate"] ::selection {
   color: var(--np-ink);
 }
 
-html[data-page="nameplate"] .skip:focus {
-  background: var(--np-ink);
-  color: var(--np-paper);
+html[data-page="nameplate"] a.skip:focus,
+html[data-page="nameplate"] a.skip:focus-visible,
+html[data-page="nameplate"] a.skip:visited:focus,
+html[data-page="nameplate"] a.skip:visited:focus-visible {
+  background: #f5f5f0;
+  color: #17150f;
+  -webkit-text-fill-color: #17150f;
   outline: 2px solid #2abfcc;
 }
 
@@ -1361,8 +1416,8 @@ html[data-page="nameplate"] a:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 1px solid var(--np-rule);
   background: transparent;
@@ -1684,9 +1739,14 @@ html[data-page="resume"] a:focus-visible {
   outline-offset: 3px;
 }
 
-html[data-page="resume"] .skip:focus {
-  background: var(--cv-bg);
-  color: var(--cv-ink);
+html[data-page="resume"] a.skip:focus,
+html[data-page="resume"] a.skip:focus-visible,
+html[data-page="resume"] a.skip:visited:focus,
+html[data-page="resume"] a.skip:visited:focus-visible {
+  background: #f5f5f0;
+  color: #17150f;
+  -webkit-text-fill-color: #17150f;
+  outline: 2px solid var(--cv-accent);
 }
 
 html[data-page="resume"] a {
@@ -2313,6 +2373,7 @@ html[data-page="resume"] a:hover {
 
 .ps-hero h1 {
   font: var(--type-display);
+  font-size: clamp(2.25rem, 9vw, 3.5rem);
   letter-spacing: var(--type-display-tracking);
   margin: 0 0 1rem;
   max-width: 20ch;
@@ -2356,6 +2417,12 @@ html[data-page="resume"] a:hover {
   padding-block: var(--ps-gap);
 }
 
+.ps-principles > h2 {
+  font: var(--type-heading);
+  letter-spacing: var(--type-heading-tracking);
+  margin: 0 0 1.5rem;
+}
+
 .ps-principles ul {
   list-style: none;
   margin: 0;
@@ -2367,7 +2434,7 @@ html[data-page="resume"] a:hover {
   padding-top: 2rem;
 }
 
-.ps-principles h2 {
+.ps-principles h3 {
   font: var(--type-heading);
   letter-spacing: var(--type-heading-tracking);
   margin: 0 0 0.5rem;
@@ -2577,6 +2644,10 @@ html[data-page="resume"] a:hover {
   white-space: nowrap;
 }
 
+.phone-slide-caption {
+  display: none;
+}
+
 .phone-slide-frame {
   width: 100%;
 }
@@ -2717,16 +2788,44 @@ html[data-page="resume"] a:hover {
   }
 }
 
-/* Single swipeable phone + chips at 390px. */
-@media (max-width: 390px) {
+/* Stack both phones below 640px. Carousel + arrows stay at 640 and up. */
+@media (max-width: 639px) {
   .phone-stage {
     --phone-center: min(280px, calc(100vw - 3rem));
-    padding: 1.5rem 0.75rem 1.25rem;
+    padding: 1.5rem 1rem 1.25rem;
   }
 
-  .phone-slide:not([data-offset="0"]) {
-    opacity: 0;
-    pointer-events: none;
+  .phone-stage-viewport {
+    height: auto;
+    overflow: visible;
+  }
+
+  .phone-stage-track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    height: auto;
+  }
+
+  .phone-slide,
+  .phone-slide[data-offset="0"],
+  .phone-slide[data-offset="-1"],
+  .phone-slide[data-offset="1"],
+  .phone-slide[data-offset="-2"],
+  .phone-slide[data-offset="2"],
+  .phone-slide:not([data-offset="0"]):not([data-offset="-1"]):not([data-offset="1"]):not(
+      [data-offset="-2"]
+    ):not([data-offset="2"]) {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: min(var(--phone-center), 100%);
+    transform: none;
+    opacity: 1;
+    z-index: 1;
+    cursor: default;
+    pointer-events: auto;
   }
 
   .phone-slide-label {
@@ -2735,14 +2834,19 @@ html[data-page="resume"] a:hover {
     max-width: 100%;
   }
 
-  .phone-stage-controls {
-    position: static;
-    height: auto;
-    inset: auto;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-    pointer-events: auto;
+  .phone-slide-caption {
+    display: block;
+    margin: 0.85rem 0 0;
+    max-width: 28rem;
+    text-align: center;
+    font: var(--type-meta);
+    letter-spacing: var(--type-meta-tracking);
+    color: var(--ps-muted);
+  }
+
+  .phone-stage-controls,
+  .phone-stage-caption {
+    display: none;
   }
 }
 
@@ -4086,9 +4190,10 @@ html[data-page="resume"] a:hover {
 .es-next {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem 1.5rem;
+  min-height: 44px;
   margin-top: var(--es-gap);
   padding-top: 2rem;
   border-top: 1px solid var(--es-rule);
@@ -4103,6 +4208,9 @@ html[data-page="resume"] a:hover {
 }
 
 .es-next a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-family: var(--es-display);
   font-weight: 600;
   font-size: clamp(1.25rem, 2.5vw, 1.75rem);

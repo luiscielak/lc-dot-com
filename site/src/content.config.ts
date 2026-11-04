@@ -290,7 +290,7 @@ const work = defineCollection({
     /** Public-safe roster diagram when a team-map image is not available. */
     teamMap: z
       .object({
-        caption: z.string(),
+        caption: z.string().optional(),
       })
       .optional(),
     recreatedNote: z.string().optional(),

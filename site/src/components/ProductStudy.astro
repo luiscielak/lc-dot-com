@@ -68,7 +68,7 @@ function html(s?: string) {
               <dd>{d.tools}</dd>
             </div>
           ) : null}
-          {d.status ? (
+          {d.status && !badge ? (
             <div>
               <dt>Status</dt>
               <dd>{d.status}</dd>
@@ -82,11 +82,12 @@ function html(s?: string) {
 
   {
     d.challenges.length ? (
-      <section class="ps-principles wrap" aria-label="Design principles">
+      <section class="ps-principles wrap" aria-labelledby="ps-brief-title">
+        <h2 id="ps-brief-title">Design brief</h2>
         <ul>
           {d.challenges.map((c) => (
             <li>
-              <h2>{c.title}</h2>
+              <h3>{c.title}</h3>
               <p>{c.body}</p>
             </li>
           ))}

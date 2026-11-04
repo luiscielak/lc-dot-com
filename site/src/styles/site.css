@@ -2860,7 +2860,7 @@ html[data-page="resume"] a:hover {
 
 /* Hero */
 .es-hero {
-  padding-block: clamp(2.5rem, 6vw, 4.5rem) 0;
+  padding-block: clamp(1.75rem, 4vw, 3rem) 0;
 }
 
 .es-kicker {
@@ -2934,10 +2934,10 @@ html[data-page="resume"] a:hover {
   max-width: 22ch;
 }
 
-/* TL;DR — short claim between hero and opener */
+/* TL;DR — short claim between hero and the week strip */
 .es-tldr {
-  padding-block: clamp(2rem, 4vw, 3rem) 0;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-block: clamp(1.25rem, 3vw, 2rem) 0;
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
   border-top: 1px solid var(--es-ink);
 }
 
@@ -2954,6 +2954,204 @@ html[data-page="resume"] a:hover {
   color: var(--es-ink);
   max-width: 42rem;
   margin: 0;
+}
+
+/* Week strip — first real screens, right after TL;DR */
+.es-week,
+.es-gallery,
+.es-process {
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.es-week-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.es-week-caption {
+  font-family: var(--es-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--es-faint);
+  margin: 0;
+}
+
+.es-week-strip,
+.es-gallery-grid,
+.es-process-strip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.es-week-strip {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+}
+
+.es-week-item,
+.es-gallery-grid li,
+.es-process-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.es-week-item {
+  flex: 0 0 auto;
+  width: min(42vw, 168px);
+  scroll-snap-align: start;
+}
+
+.es-week-label {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--es-accent);
+}
+
+.es-week-title {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: var(--es-ink);
+}
+
+.es-phone {
+  margin: 0;
+  border-radius: 1.35rem;
+  overflow: hidden;
+  background: #2a2118;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--es-ink) 12%, transparent);
+}
+
+.es-phone img,
+.es-phone picture {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.es-phone.is-screen {
+  padding: 8px;
+  background: color-mix(in srgb, var(--es-ink) 14%, var(--es-bg));
+}
+
+.es-phone.is-screen img {
+  border-radius: 1rem;
+}
+
+.es-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 220px));
+  gap: 1rem 1.25rem;
+}
+
+.es-process-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.es-lofi {
+  margin: 0;
+  padding: 0.85rem 0.9rem;
+  background: var(--es-surface);
+  border: 1px solid var(--es-rule);
+  border-radius: 0.75rem;
+  font-family: var(--es-mono);
+  font-size: 0.62rem;
+  line-height: 1.35;
+  color: var(--es-ink);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.es-built {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+  max-width: 52rem;
+}
+
+.es-built li {
+  display: grid;
+  grid-template-columns: minmax(6rem, 8rem) minmax(0, 1fr);
+  gap: 0.75rem 1.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--es-rule);
+}
+
+.es-built li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.es-exp-ab {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0 0 0.85rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--es-ink);
+}
+
+.es-exp-ab b {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--es-accent);
+  margin-right: 0.4rem;
+}
+
+.es-pos-state {
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-family: var(--es-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--es-faint);
+  border: 1px dashed var(--es-faint);
+  border-radius: 999px;
+  padding: 0.1rem 0.4rem;
+  vertical-align: middle;
+}
+
+.es-pos-app.is-unconfirmed {
+  opacity: 0.92;
+}
+
+.es-pos-unconfirmed {
+  margin-top: 0.75rem;
+  padding: 1rem 1.1rem;
+  border: 1px dashed var(--es-faint);
+  background: color-mix(in srgb, var(--es-surface) 70%, transparent);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  align-items: baseline;
+}
+
+.es-pos-unconfirmed-label {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--es-faint);
+  margin: 0;
+  width: 100%;
 }
 
 /* Split sections — main column plus a mono side note */
@@ -3430,6 +3628,13 @@ html[data-page="resume"] a:hover {
   line-height: 1.5;
   color: var(--es-ink);
   max-width: 52rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.es-jobs li span {
+  color: var(--es-muted);
 }
 
 .es-jobs li:first-child {
@@ -3694,6 +3899,49 @@ html[data-page="resume"] a:hover {
 
   .es-flow-caption {
     max-width: 40ch;
+  }
+
+  .es-gallery-grid,
+  .es-process-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .es-process-step:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .es-built li {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .es-week-item {
+    width: min(48vw, 180px);
+  }
+
+  .es-hero {
+    padding-block: 1.25rem 0;
+  }
+
+  .es-hero h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .es-meta {
+    gap: 0.85rem 1.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+  }
+
+  .es-tldr {
+    padding-block: 1rem 0;
+    margin-top: 1rem;
+  }
+
+  .es-week,
+  .es-gallery,
+  .es-process {
+    margin-top: 1.15rem;
   }
 }
 

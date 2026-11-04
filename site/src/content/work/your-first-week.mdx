@@ -15,33 +15,54 @@ recreatedNote: "Unofficial concept by Luis Cielak. Not affiliated with or endors
 cover: "monarch/cover.png"
 coverAlt: "Day 0 of the concept: a goal and a trial card that states the charge date, amount, and cancel-by time"
 coverMaxCssPx: 260
-tldr: "Unofficial concept for Monarch’s 7-day, card-required trial: one job a day, charge facts before connect, AI Quick Sort on groups not rows — so a household can trust a month before the bill. Public research coded Oct 29, 2026; walkable phone prototype."
-overview: "I use Monarch with a household, and I already run Finley on Monarch’s MCP. A household opens with seven days on the clock and a payment method required. The trial is the product, so this concept makes the week complete: one screen a day, one job, AI that drafts and a member who marks as reviewed, edits, or skips."
+tldr: "A 7-day, card-required trial as one job a day: charge facts before connect, Quick Sort on groups. Research coded Oct 29, 2026. Walkable phone prototype."
+overview: "I use Monarch with my household, and I already run Finley on Monarch’s official MCP. A household opens with seven days on the clock and a payment method required. The trial is the product, so this concept makes the week complete: one screen a day, one job, AI that drafts and a member who marks as reviewed, edits, or skips."
 editorial:
   kicker: "Unofficial concept"
+  weekStrip:
+    heading: "The week"
+    caption: "Day 0 → Day 6. Mock data."
+    items:
+      - label: "Day 0"
+        src: "monarch/flow-day0.png"
+        alt: "Day 0. Goal choices and a trial card that states Day 7, the amount, and cancel up to 24 hours before."
+        maxCssPx: 168
+        framed: false
+      - label: "Connect"
+        src: "monarch/flow-connect.png"
+        alt: "Connection status with three institutions and an Update action on the stale one."
+        maxCssPx: 168
+        framed: false
+      - label: "Quick Sort"
+        src: "monarch/flow-quicksort.png"
+        alt: "Quick Sort card for Daily Grind suggesting Restaurants & coffee, with Accept, Change, and Skip."
+        maxCssPx: 168
+        framed: false
+      - label: "Insights"
+        src: "monarch/flow-insights.png"
+        alt: "Insights on Daily Grind: suggested category, the reason, and fields the model saw."
+        maxCssPx: 168
+        framed: false
+      - label: "Day 4"
+        src: "monarch/weekly-recap.png"
+        alt: "Weekly Recap with four number tiles and household avatars."
+        maxCssPx: 168
+        framed: true
+      - label: "Day 6"
+        src: "monarch/flow-day6.png"
+        alt: "Day 6. A week checklist, spent amount, and Keep Core annual."
+        maxCssPx: 168
+        framed: false
   opener:
     heading: "00 — Why this case"
     headline: "I already live this week."
-    body: "My wife and I use Monarch together. I built Finley, a finance agent, on Monarch’s MCP. A designer who already lives in the product can feel when a first week is honest. This unofficial concept does not invent a conversion rate. It makes the trial week complete."
-    note: "Not affiliated with or endorsed by Monarch Money, Inc. Synthetic household in the prototype only."
-  method:
-    heading: "01 — What I checked"
-    headline: "Public record first. Lived use beside it."
-    items:
-      - label: "App Store"
-        body: "Pulled the 500 most recent US App Store reviews on Oct 29, 2026 (dated Mar 24 to Oct 28, 2026) and coded them by keyword. One review can land in several themes. Keyword counts. Hand-read only the trial-charge group."
-      - label: "Reddit"
-        body: "Opened threads in r/MonarchMoney, r/ynab, r/copilotmoney, and r/personalfinance. Reddit’s data feed was blocked. Not counted."
-      - label: "X"
-        body: "Three searches of posts since Apr 1, 2026 on Monarch, onboarding, categorization, and AI: 48 results with overlap, read by hand. Not counted."
-      - label: "Competitors"
-        body: "Eight apps checked on trial length and whether a card is required. Rocket Money’s Premium trial was from earlier research and was not rechecked."
-    note: "Counts are signals, not rates. Lived use is labeled as lived use — not as a sample size."
+    body: "I use Monarch with my household. I built Finley on Monarch’s official MCP. This concept does not invent a conversion rate."
+    note: "Not affiliated with Monarch Money, Inc. Synthetic household only."
   problem:
-    heading: "02 — What week one breaks on"
+    heading: "01 — What week one breaks on"
     headline: "Week one breaks on the bill, the sync, and the categories."
-    body: "Payment method required. Cancel at least 24 hours before the trial ends, or the card is billed. Setup lives in a help article, not in the product. I see the same friction at home that shows up in the public record: miscategorizations, sync gaps, transfers counted as spend, a billing surprise."
-    note: "500 most recent US App Store reviews, coded Oct 29, 2026. Counts are signals, not rates. Synthetic household only."
+    body: "Payment method required. Cancel at least 24 hours before the trial ends, or the card is billed. Public record: miscategorizations, sync gaps, transfers counted as spend, a billing surprise."
+    note: "500 US reviews, coded Oct 29, 2026. Reddit feed blocked. 48 X posts not counted. Eight competitors. Signals, not rates."
   stats:
     - value: "500"
       label: "reviews coded"
@@ -52,16 +73,16 @@ editorial:
     - value: "47"
       label: "sync, of those 183"
   field:
-    heading: "02 — Voices from the store"
+    heading: "Voices from the store"
     quotes:
       - text: "Seven days is barely enough to finish setting everything up, much less evaluate whether the product actually works for you."
         cite: "PursuitOfAppiness, App Store, 2 stars, Sep 5, 2026"
       - text: "I canceled within the trial period and they continue to try to charge me for an entire year."
         cite: "queenepeachie, App Store, 1 star, Sep 20, 2026"
-    note: "Monarch's 7 days is the shortest paid trial in this set. And the price story disagrees with itself: cancel wording, the guarantee, and the referral all read two ways."
+    note: "Cancel wording, the guarantee, and the referral all read two ways."
   competitors:
-    heading: "03 — The field"
-    fit: "Everyone else gives the first month more room. Monarch’s 7 days is the shortest paid trial in this set. First Week is the design answer if the length stays."
+    heading: "02 — The field"
+    fit: "Tied for the shortest paid trial in this set. First Week is the answer if the length stays."
     axes:
       xLeft: "No card / free"
       xRight: "Card required"
@@ -81,119 +102,113 @@ editorial:
       shortFree:
         - app: "Empower"
           take: "Free. No trial needed."
-        - app: "Simplifi"
-          take: "No trial. Paid at signup."
       shortCard:
         - app: "Monarch"
           take: "7 days, card required"
-        - app: "Origin"
-          take: "7 days"
-    aside: "Rocket Money: 7-day Premium trial (from earlier research, not rechecked). Card not confirmed. Checked Oct 29, 2026."
+        - app: "Simplifi"
+          take: "Paid at signup. No trial."
+    unconfirmed:
+      - app: "Origin"
+        take: "7 days normally; trial paused during the $1 offer."
+        state: "not-confirmed"
+    aside: "Rocket Money: 7-day Premium trial, not rechecked. Card not confirmed."
   bet:
-    heading: "04 — The bet"
+    heading: "03 — The bet"
     headline: "If the trial is the product, make the week complete."
-    body: "First Week + Quick Sort. One job a day. AI drafts. The member marks as reviewed, edits, or skips. A rule runs only when they say so."
-  jobs:
-    heading: "Jobs to be done"
+    body: "One job a day. AI drafts. The member marks as reviewed, edits, or skips. A rule runs only when they say so."
+  gallery:
+    heading: "Key screens"
+    caption: "Day 4 recap and the Insights privacy panel. Mock household only."
     items:
-      - when: "I’ve just connected every account in a 7-day trial"
-        want: "see a month I trust within a day"
-        so: "decide if it’s worth paying for before the charge"
-      - when: "a transaction lands in the wrong category"
-        want: "fix it once and know it stays fixed"
-        so: "stop checking the app every day"
-      - when: "money moves between our own accounts"
-        want: "keep it out of income and spending"
-        so: "trust the totals"
-      - when: "my partner and I share money"
-        want: "give them a small, clear part"
-        so: "not carry it all alone"
-      - when: "the trial is about to end"
-        want: "know the amount, the date, who bills me and how to cancel"
-        so: "decide calmly instead of feeling tricked"
+      - label: "Day 4"
+        title: "Weekly Recap"
+        src: "monarch/weekly-recap.png"
+        alt: "Weekly Recap with four number tiles and a share row for household members."
+        maxCssPx: 220
+        framed: true
+      - label: "Insights"
+        title: "What the model never sent"
+        src: "monarch/ai-panel.png"
+        alt: "Insights panel listing fields looked at and fields never sent, with AI suggestions on."
+        maxCssPx: 220
+        framed: true
+  process:
+    heading: "Lo-fi → mid-fi → Day 0"
+    lofi:
+      label: "Lo-fi"
+      title: "Day 0 goal"
+      body: |
+        UNOFFICIAL CONCEPT
+        DAY 0 · What do you want first?
+        ( ) See everything
+        (•) Plan with a household
+        7 days · charge · cancel 24h before
+        [Continue] [Skip]
+    midfi:
+      label: "Mid-fi"
+      title: "Day 0 goal"
+      src: "monarch/process-midfi-day0.png"
+      alt: "Mid-fi Day 0 phone: goal choices, a 7-day trial card, Continue and Skip for now."
+      maxCssPx: 220
+      framed: true
+    final:
+      label: "Final"
+      title: "Day 0 in the prototype"
+      src: "monarch/flow-day0.png"
+      alt: "Final Day 0 screen with goal choices and a trial card that states the charge date, amount, and cancel-by time."
+      maxCssPx: 220
+      framed: false
   experiments:
     heading: "How we’d test"
-    note: "Proposed only. No public baseline. Split by web and App Store when measured."
+    note: "Proposed only. No public baseline."
     items:
-      - name: "Trial timeline that says who bills you"
+      - name: "Test 1: Trial timeline that says who bills you"
         hypothesis: "If the paywall and Day 6 show the charge date, amount, who bills you, and exactly where to cancel, fewer people feel tricked, and conversion holds."
+        control: "Today’s paywall."
+        variant: "A timeline card, a “remind me 2 days before” option, and a direct path to the right cancel screen."
         primary: "Refund requests and billing tickets per 100 trial starts within 30 days of the first charge."
         guardrail: "Trial-to-paid rate."
-      - name: "Quick Sort right after first sync"
+      - name: "Test 2: Quick Sort right after first sync"
         hypothesis: "Offering Quick Sort while motivation is highest gets more people to a clean month than waiting for a Day 1 nudge."
+        control: "A Day 1 morning prompt."
+        variant: "Offered on the sync-complete screen, with “later” always available."
         primary: "Quick Sort completion within 48 hours."
         guardrail: "Day 0 drop-off before the first account connects; Day 2 return rate."
-      - name: "Transfers first"
+      - name: "Test 3: Transfers first"
         hypothesis: "Sorting transfers and card payments before merchants removes the biggest cause of wrong totals, so fewer categories need fixing later."
+        control: "Biggest merchant groups first."
+        variant: "Transfers and card payments first, with a one-line why for each."
         primary: "% of current-month transactions uncategorized or re-edited by Day 7."
         guardrail: "Time to finish Quick Sort; undo rate."
-  figure:
-    title: "The week, as one job a day"
-    caption: "Fig. 1 — One screen a day. A rule runs only when they say so."
-    steps:
-      - label: "Day 0"
-        title: "Say the charge before they connect."
-      - label: "Day 1"
-        title: "Review groups, not rows."
-      - label: "Insights"
-        title: "Show what the model saw."
-      - label: "Day 4"
-        title: "A recap both members can share."
-      - label: "Day 6"
-        title: "Show the week, then the bill."
-  flows:
-    heading: "05 — The week, one flow at a time"
-    body: "Five short loops. Each is one job, not the whole week."
+      - name: "Test 4: Give the partner a job"
+        hypothesis: "A small task (review 3 transactions the AI wasn’t sure about) gets more partners active than a plain invite."
+        control: "Invite from settings."
+        variant: "“Ask your partner” on unsure Quick Sort cards, with an invite that lands on those cards."
+        primary: "Partner active in week 2, per household that sent an invite."
+        guardrail: "Invite-related support tickets; privacy complaints; the inviter’s own Quick Sort completion."
+  built:
+    heading: "04 — How I built it"
     items:
-      - label: "Day 0"
-        title: "Charge before connect"
-        body: "Goal, then the facts: amount, Day 7, who bills you, where to cancel, 24 hours before."
-        src: "/video/your-first-week/day0-charge.mp4"
-        poster: "monarch/flow-day0.png"
-        fallbackAlt: "Day 0. Goal choices and a trial card that states Day 7, the amount, and cancel up to 24 hours before."
-        maxCssPx: 260
-      - label: "Connect"
-        title: "Status before review"
-        body: "Two of three institutions healthy. Update the stale one, or continue with what you have."
-        src: "/video/your-first-week/connect-status.mp4"
-        poster: "monarch/flow-connect.png"
-        fallbackAlt: "Connection status with three institutions and an Update action on the stale one."
-        maxCssPx: 260
+      - label: "In code"
+        body: "Walkable phone prototype. Mock household only."
       - label: "Quick Sort"
-        title: "Groups, transfers first"
-        body: "One grouped suggestion. Accept, change, or skip."
-        src: "/video/your-first-week/quick-sort.mp4"
-        poster: "monarch/flow-quicksort.png"
-        fallbackAlt: "Quick Sort card for Daily Grind suggesting Restaurants & coffee, with Accept, Change, and Skip."
-        maxCssPx: 260
+        body: "API call, pre-written fallback on fail or timeout. A Pages Function can run Workers AI with hash cache, daily cap, per-IP limit, and 8-second timeout."
       - label: "Insights"
-        title: "What the model saw"
-        body: "Daily Grind to Restaurants & coffee. Why, what the model looked at, and what it never sent."
-        src: "/video/your-first-week/insights.mp4"
-        poster: "monarch/flow-insights.png"
-        fallbackAlt: "Insights on Daily Grind: suggested category Restaurants & coffee, the reason, and fields the model saw."
-        maxCssPx: 260
-      - label: "Day 6"
-        title: "Week, then the bill"
-        body: "What they built this week. Then the same charge facts as Day 0."
-        src: "/video/your-first-week/day6-bill.mp4"
-        poster: "monarch/flow-day6.png"
-        fallbackAlt: "Day 6. A week checklist, $642 spent, and Keep Core annual."
-        maxCssPx: 260
+        body: "What the model looked at vs never sent: name, account numbers, balances, login tokens."
   prototype:
     heading: "Try the week"
-    body: "Walk Days 0–6 in the phone. Mock household. AI suggestions are Pre-written on this static build."
+    body: "Walk Days 0–6. Mock household. Suggestions are pre-written on this static build."
     src: "/prototypes/your-first-week/prototype"
     fullScreenHref: "/prototypes/your-first-week/prototype"
     fullScreenLabel: "Open full screen"
-    note: "Unofficial concept. Not affiliated with Monarch. Mock data only."
+    note: "Unofficial concept by Luis Cielak. Not affiliated with Monarch. Mock data only."
   close:
-    heading: "06 — How we’d know"
+    heading: "05 — How we’d know"
     cells:
       - value: "7 days"
-        label: "The shortest card-required trial in the set. First Week is the answer if the length stays."
+        label: "Tied for shortest with Origin and Rocket Money."
       - value: "Card"
         label: "Required. Cancel at least 24 hours before the trial ends, or the card is billed."
-      - value: "Held"
-        label: "No public baseline, so no conversion rate claimed. The success tests are proposed only."
+      - value: "Hold conversion"
+        label: "No public baseline, so no conversion number is claimed. Watch refunds while holding trial-to-paid."
 ---

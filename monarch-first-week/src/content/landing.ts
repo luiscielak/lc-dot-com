@@ -37,7 +37,7 @@ export const landing = {
         text: 'Builds with AI agents. Runs a role-based team on Nous Research’s Hermes Agent. Founded Cursor Philly in August 2025 — 1,000+ builders.',
       },
       {
-        text: 'He and his wife use Monarch together. He built Finley, a finance agent, on Monarch’s MCP.',
+        text: 'He uses Monarch with his household. He built Finley, a finance agent, on Monarch’s official MCP.',
       },
       {
         text: 'How he works with PMs, researchers, and new-member teams.',

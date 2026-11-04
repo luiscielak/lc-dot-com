@@ -88,6 +88,7 @@ const editorialStat = z.object({
 const editorialCompetitor = z.object({
   app: z.string(),
   take: z.string(),
+  state: z.enum(["confirmed", "not-confirmed"]).optional(),
 });
 
 const editorialJob = z.object({
@@ -99,8 +100,19 @@ const editorialJob = z.object({
 const editorialExperiment = z.object({
   name: z.string(),
   hypothesis: z.string(),
+  control: z.string(),
+  variant: z.string(),
   primary: z.string(),
   guardrail: z.string(),
+});
+
+const editorialPhone = z.object({
+  label: z.string(),
+  title: z.string().optional(),
+  src: z.string(),
+  alt: z.string(),
+  maxCssPx: z.number().positive(),
+  framed: z.boolean().optional(),
 });
 
 const editorialMethodItem = z.object({
@@ -164,7 +176,40 @@ const editorial = z.object({
         shortFree: z.array(editorialCompetitor).min(1),
         shortCard: z.array(editorialCompetitor).min(1),
       }),
+      unconfirmed: z.array(editorialCompetitor).optional(),
       aside: z.string(),
+    })
+    .optional(),
+  weekStrip: z
+    .object({
+      heading: z.string(),
+      caption: z.string(),
+      items: z.array(editorialPhone).min(2),
+    })
+    .optional(),
+  gallery: z
+    .object({
+      heading: z.string(),
+      caption: z.string().optional(),
+      items: z.array(editorialPhone).min(1),
+    })
+    .optional(),
+  process: z
+    .object({
+      heading: z.string(),
+      lofi: z.object({
+        label: z.string(),
+        title: z.string(),
+        body: z.string(),
+      }),
+      midfi: editorialPhone,
+      final: editorialPhone,
+    })
+    .optional(),
+  built: z
+    .object({
+      heading: z.string(),
+      items: z.array(z.object({ label: z.string(), body: z.string() })).min(1),
     })
     .optional(),
   bet: z
@@ -187,11 +232,13 @@ const editorial = z.object({
       items: z.array(editorialExperiment).min(1),
     })
     .optional(),
-  figure: z.object({
-    title: z.string(),
-    caption: z.string(),
-    steps: z.array(editorialStep).min(2),
-  }),
+  figure: z
+    .object({
+      title: z.string(),
+      caption: z.string(),
+      steps: z.array(editorialStep).min(2),
+    })
+    .optional(),
   flows: z
     .object({
       heading: z.string(),

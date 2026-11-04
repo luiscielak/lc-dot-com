@@ -2295,6 +2295,7 @@ html[data-page="resume"] a:hover {
   padding: clamp(1.25rem, 4vw, 2.5rem);
   display: flex;
   justify-content: center;
+  margin-top: 1.5rem;
 }
 
 .ps-panel .figure {

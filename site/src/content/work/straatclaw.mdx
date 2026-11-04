@@ -37,6 +37,22 @@ phones:
     src: "straatclaw/telegram.png"
     alt: "Scout’s morning brief arriving in Telegram through StraatBot, on a phone"
     caption: "Every morning, Scout sends a short brief through StraatBot. It only says something when there’s something worth saying."
+  - label: "Morning brief"
+    src: "straatclaw/straatbot-morning-brief.webp"
+    alt: "Mockup of a StraatBot morning brief on a light phone"
+    caption: "Mockup. A morning brief on the phone: what’s on today, in the chat I already use."
+  - label: "Event check-ins"
+    src: "straatclaw/scout-rsvp-checkins.webp"
+    alt: "Mockup of Scout reporting event RSVP check-ins on a phone"
+    caption: "Mockup. Scout reporting RSVP check-ins for an event, as a short reply."
+  - label: "Open loops"
+    src: "straatclaw/straatbot-open-loops.webp"
+    alt: "Mockup of StraatBot listing open loops for the week on a phone"
+    caption: "Mockup. StraatBot listing the week’s open loops so I can see what’s done and what’s next."
+  - label: "Slack thread per task"
+    src: "straatclaw/slack-travel-thread.webp"
+    alt: "StraatBot posting a structured update in a Slack thread, with private trip details blurred"
+    caption: "A Slack thread per task. StraatBot posts the update in the thread; private lines are blurred."
   - label: "Approval"
     src: "straatclaw/slack-approval.png"
     alt: "A command approval in a Slack thread: Allow Once, Allow Session, Always Allow, or Deny"
@@ -44,12 +60,33 @@ phones:
 teamMap:
   caption: "Hermes Agent is Nous Research’s open-source agent. I run this team on top of it. I did not build Hermes Agent."
 visuals:
+  solution:
+    src: "straatclaw/team-system-map.png"
+    alt: "System map of the StraatClaw agent team running on Hermes Agent, with StraatBot, Scout, Finley, and helpers"
+    caption: "Hermes Agent is Nous Research’s open-source agent. I run this team on top of it. I did not build Hermes Agent."
+    maxCssPx: 800
+  overview:
+    src: "straatclaw/permission-matrix.png"
+    alt: "Rendered permission matrix with L4 External, with approval selected"
+    caption: "The live permission matrix, L4 selected. The table below is the same information as text."
+    maxCssPx: 666
   decisions:
     src: "straatclaw/slack-approval.png"
     alt: "A command approval in a Slack thread: Allow Once, Allow Session, Always Allow, or Deny"
     caption: "The approval moment is the product. The agent shows what it wants to run and why; nothing happens until I answer. The prompt itself is Hermes Agent’s built-in command approval."
     maxCssPx: 400
     phone: true
+gallery:
+  solution:
+    - src: "straatclaw/design-squad-overview.png"
+      alt: "Design Ops cockpit run overview with six staged steps from new project to hi-fi"
+      caption: "Design squad cockpit, run overview. Sample data — a staged flow, not a live client project."
+      maxCssPx: 960
+  decisions:
+    - src: "straatclaw/design-squad-approve.png"
+      alt: "Design Ops cockpit mid-fi stage with Approve and Request revision"
+      caption: "The same approval idea in the design cockpit: mid-fi does not move on until I say so. Sample data."
+      maxCssPx: 960
 ---
 
 {/* TODO(Luis): Confirm start date (draft said May 2026 to present). CMS currently says Ongoing. */}

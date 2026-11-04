@@ -2,6 +2,7 @@
 import { Picture } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { workImage } from "../lib/images";
+import { workBadge } from "../lib/site";
 
 interface Props {
   entry: CollectionEntry<"work">;
@@ -11,6 +12,8 @@ interface Props {
 const { entry, next } = Astro.props;
 const d = entry.data;
 const e = d.editorial!;
+const badge = workBadge(d);
+const nextBadge = next ? workBadge(next.data) : undefined;
 
 const meta = [
   d.role ? { dt: "Role", dd: d.role } : null,
@@ -53,7 +56,7 @@ const flowPanels =
 <article class="editorial-study">
   <header class="es-hero wrap">
     <p class="es-kicker">
-      {d.draft ? <span class="es-badge">Draft</span> : null}
+      {badge ? <span class="es-badge">{badge}</span> : null}
       {e.kicker}
     </p>
     <h1>{d.title}</h1>
@@ -555,7 +558,7 @@ const flowPanels =
       <nav class="es-next wrap">
         <span>Next case study</span>
         <a href={`/work/${next.id}`}>
-          {next.data.draft ? "Draft · " : ""}
+          {nextBadge ? `${nextBadge} · ` : ""}
           {next.data.title}
         </a>
       </nav>

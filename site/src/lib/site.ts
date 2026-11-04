@@ -13,8 +13,15 @@ export const UNLISTED_WORK = new Set(["your-first-week"]);
 /** Draft studies that stay on the site with a Draft badge, but out of the sitemap. */
 export const DRAFT_SITEMAP_SLUGS = [
   "your-first-week",
-  "straatclaw",
 ] as const;
+
+/** Badge in the Draft slot: Draft itself, or a compact status like In progress. */
+export function workBadge(data: { draft?: boolean; status?: string }) {
+  if (data.draft) return "Draft";
+  const status = data.status?.trim();
+  if (status === "In progress") return status;
+  return undefined;
+}
 
 const SITEMAP_EXCLUDE_PATHS = new Set([
   "/motion",

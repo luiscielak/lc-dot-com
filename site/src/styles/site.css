@@ -61,9 +61,9 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 4rem;
+  gap: 2rem;
   margin-top: 6rem;
-  padding: 64px 72px 40px;
+  padding: 40px 72px 28px;
   background: var(--foot-bg);
   color: var(--foot-ink);
   border-top: 1px solid var(--foot-rule);
@@ -78,7 +78,7 @@ a:hover {
 .foot-col {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
 
 .foot-label {
@@ -95,7 +95,7 @@ a:hover {
 .foot-items {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -134,7 +134,7 @@ a:hover {
 
 .foot-mark-glyph {
   display: block;
-  width: 280px;
+  width: 128px;
   aspect-ratio: 966 / 1144;
   background-color: currentColor;
   -webkit-mask: url("/logos/luis-cielak-mark-black.svg") center / contain no-repeat;
@@ -150,7 +150,7 @@ a:hover {
   align-items: baseline;
   gap: 40px;
   margin: 0;
-  padding-bottom: 20px;
+  padding-bottom: 8px;
   font-family: var(--foot-mono);
   font-size: 12px;
   font-weight: 500;
@@ -184,28 +184,49 @@ html[data-page="nameplate"] .site-footer {
 
 @media (max-width: 720px) {
   .site-footer {
-    gap: 2.5rem;
-    padding: 32px 24px 20px;
+    gap: 1.5rem;
+    padding: 24px 24px 16px;
   }
 
   .foot-links {
     gap: 40px;
   }
 
+  .foot-col {
+    gap: 8px;
+  }
+
+  .foot-items {
+    gap: 0;
+  }
+
+  .foot-items a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
   .foot-name {
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
+    gap: 16px;
   }
 
   .foot-mark-glyph {
-    width: 148px;
+    width: 80px;
   }
 
   .foot-baseline {
     flex-direction: column;
     gap: 10px;
     padding-bottom: 0;
+  }
+
+  .foot-top,
+  .foot-meta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 }
 

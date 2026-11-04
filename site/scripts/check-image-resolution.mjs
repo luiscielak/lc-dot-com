@@ -36,8 +36,28 @@ const PHONE_MAX = 320;
 function visualBlocks(block) {
   const visuals = [];
   const cover = yamlString(block, "cover");
+  const coverMobile = yamlString(block, "coverMobile");
   const coverMax = yamlNumber(block, "coverMaxCssPx");
   if (cover && coverMax) visuals.push({ src: cover, maxCssPx: coverMax, field: "cover" });
+  if (coverMobile && coverMax) {
+    visuals.push({ src: coverMobile, maxCssPx: coverMax, field: "coverMobile" });
+  }
+  const figs = topSection(block, "figures");
+  if (figs) {
+    const names = [...figs.matchAll(/\n  ([a-z]+):\n/g)].map((x) => x[1]);
+    const chunks = figs.split(/\n  [a-z]+:\n/).slice(1);
+    names.forEach((name, i) => {
+      const chunk = chunks[i];
+      if (!chunk) return;
+      const src = chunk.match(/(?:^|\n)\s+src:\s*"([^"]+)"/)?.[1];
+      const srcMobile = chunk.match(/srcMobile:\s*"([^"]+)"/)?.[1];
+      const maxCssPx = Number(chunk.match(/maxCssPx:\s*([0-9]+)/)?.[1] || 1200);
+      if (src) visuals.push({ src, maxCssPx, field: `figures.${name}` });
+      if (srcMobile) {
+        visuals.push({ src: srcMobile, maxCssPx, field: `figures.${name}.srcMobile` });
+      }
+    });
+  }
   const poster = block.match(/\n  poster:\\s*"([^"]+)"/);
   if (poster) {
     visuals.push({ src: poster[1], maxCssPx: 400, field: "video.poster" });

@@ -1,39 +1,103 @@
 ---
-import { Picture } from "astro:assets";
+import { Picture, getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import { workImage } from "../lib/images";
 
 interface Props {
   src: string;
+  srcMobile?: string;
   alt: string;
   caption?: string;
-  maxCssPx: number;
+  maxCssPx?: number;
   phone?: boolean;
   framed?: boolean;
+  priority?: boolean;
 }
 
-const { src, alt, caption, maxCssPx, phone, framed } = Astro.props;
+const DEFAULT_MAX = 1200;
+const MOBILE_MQ = "(max-width: 639px)";
+
+const { src, srcMobile, alt, caption, maxCssPx = DEFAULT_MAX, phone, framed, priority } =
+  Astro.props;
 const image = workImage(src);
+const mobileImage = srcMobile ? workImage(srcMobile) : undefined;
 const cap = Math.min(maxCssPx, Math.floor(image.width / 1.5));
-const widths = [
-  ...new Set(
-    [640, 960, 1280, 1600, 1920, 2560, image.width].filter((w) => w <= image.width),
-  ),
-].sort((a, b) => a - b);
+const sizes = `min(100vw - 2rem, ${cap}px)`;
+
+function widthList(img: ImageMetadata) {
+  return [
+    ...new Set([640, 960, 1280, 1600, 1920, 2560, img.width].filter((w) => w <= img.width)),
+  ].sort((a, b) => a - b);
+}
+
+const widths = widthList(image);
+
+function srcSetOf(result: { src: string; srcSet?: { attribute?: string } | string }) {
+  const set = result.srcSet;
+  if (!set) return result.src;
+  if (typeof set === "string") return set;
+  return set.attribute || result.src;
+}
+
+async function sources(img: ImageMetadata) {
+  const list = widthList(img);
+  const widthsForImage = list.length ? list : [img.width];
+  const [avif, webp, fallback] = await Promise.all([
+    getImage({ src: img, format: "avif", widths: widthsForImage }),
+    getImage({ src: img, format: "webp", widths: widthsForImage }),
+    getImage({ src: img, width: Math.min(cap * 2, img.width) }),
+  ]);
+  return { avif, webp, fallback };
+}
+
+const directed = mobileImage
+  ? { mobile: await sources(mobileImage), desktop: await sources(image) }
+  : null;
 ---
 
 <figure
   class:list={["figure", phone && "phone", phone && framed === false && "is-screen"]}
   style={`--figure-max: ${cap}px; --phone-max: ${cap}px`}
   data-src={src}
+  data-src-mobile={srcMobile}
   data-src-width={image.width}
   data-render-max={cap}
 >
-  <Picture
-    src={image}
-    alt={alt}
-    formats={["avif", "webp"]}
-    widths={widths.length ? widths : [image.width]}
-    sizes={`min(100vw - 2rem, ${cap}px)`}
-  />
+  {
+    directed ? (
+      <picture>
+        <source
+          type="image/avif"
+          media={MOBILE_MQ}
+          srcset={srcSetOf(directed.mobile.avif)}
+          sizes={sizes}
+        />
+        <source
+          type="image/webp"
+          media={MOBILE_MQ}
+          srcset={srcSetOf(directed.mobile.webp)}
+          sizes={sizes}
+        />
+        <source type="image/avif" srcset={srcSetOf(directed.desktop.avif)} sizes={sizes} />
+        <source type="image/webp" srcset={srcSetOf(directed.desktop.webp)} sizes={sizes} />
+        <img
+          src={directed.desktop.fallback.src}
+          alt={alt}
+          width={image.width}
+          height={image.height}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
+        />
+      </picture>
+    ) : (
+      <Picture
+        src={image}
+        alt={alt}
+        formats={["avif", "webp"]}
+        widths={widths.length ? widths : [image.width]}
+        sizes={sizes}
+      />
+    )
+  }
   {caption ? <figcaption>{caption}</figcaption> : null}
 </figure>

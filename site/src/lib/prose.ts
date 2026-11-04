@@ -3,6 +3,7 @@ function inline(s: string): string {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/`(.+?)`/g, "<code>$1</code>");
 }
@@ -12,6 +13,9 @@ export function renderProse(text: string): string {
   return chunks
     .map((chunk) => {
       const lines = chunk.split("\n");
+      if (lines.length === 1 && lines[0].startsWith("### ")) {
+        return `<h3>${inline(lines[0].slice(4))}</h3>`;
+      }
       if (lines.every((l) => l.startsWith("|"))) {
         const rows = lines.map((l) =>
           l

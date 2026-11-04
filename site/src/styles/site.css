@@ -2221,6 +2221,21 @@ html[data-page="resume"] a:hover {
   max-width: 44rem;
 }
 
+.ps-hero-figure.ps-panel {
+  margin-top: 2rem;
+}
+
+.ps-subhead {
+  font: var(--type-heading);
+  letter-spacing: var(--type-heading-tracking);
+  margin: 2.5rem 0 0.75rem;
+  max-width: 28ch;
+}
+
+.ps-subhead:first-child {
+  margin-top: 0;
+}
+
 .ps-meta {
   margin: 2rem 0 0;
   color: var(--ps-muted);
@@ -2293,6 +2308,7 @@ html[data-page="resume"] a:hover {
   padding: clamp(1.25rem, 4vw, 2.5rem);
   display: flex;
   justify-content: center;
+  margin-top: 1.5rem;
 }
 
 .ps-panel .figure {

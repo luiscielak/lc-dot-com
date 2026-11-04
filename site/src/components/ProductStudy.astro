@@ -11,26 +11,78 @@ interface Props {
 
 const { entry, next } = Astro.props;
 const d = entry.data;
-const v = d.visuals;
+const figures = d.figures ?? {};
 
 function html(s?: string) {
   return s ? renderProse(s) : "";
 }
 
+type FigureProps = {
+  src: string;
+  srcMobile?: string;
+  alt: string;
+  caption?: string;
+  maxCssPx?: number;
+  phone?: boolean;
+  framed?: boolean;
+};
+
+type Subhead = {
+  heading?: string;
+  body: string;
+  figure?: FigureProps;
+};
+
+function splitSubheads(
+  text: string,
+  figureFor: Record<string, FigureProps | undefined>,
+): Subhead[] {
+  const chunks = text.split(/^(### .+)$/m);
+  const out: Subhead[] = [];
+  const preamble = chunks[0]?.trim();
+  if (preamble) out.push({ body: preamble, figure: figureFor[""] });
+  for (let i = 1; i < chunks.length; i += 2) {
+    const heading = chunks[i].replace(/^###\s+/, "").trim();
+    const body = (chunks[i + 1] ?? "").trim();
+    out.push({ heading, body, figure: figureFor[heading] });
+  }
+  return out;
+}
+
 type Band = {
   heading: string;
   html?: string;
-  figure?: (typeof v)["decisions"];
+  parts?: Subhead[];
 };
 
-// Each feature of the page gets one claim heading and the existing prose.
-const bands: Band[] = [
-  d.solution ? { heading: "A small organization", html: html(d.solution) } : null,
-  d.research ? { heading: d.researchHeading, html: html(d.research) } : null,
-  d.decisions ? { heading: "The permission matrix", html: html(d.decisions) } : null,
-  v.decisions ? { heading: "The approval moment", figure: v.decisions } : null,
-  d.outcome ? { heading: "In daily use", html: html(d.outcome) } : null,
-].filter((b): b is Band => b !== null);
+const bands: Band[] = [];
+if (d.research) bands.push({ heading: d.researchHeading, html: html(d.research) });
+if (d.solution) {
+  bands.push({
+    heading: "A small organization",
+    parts: [{ body: d.solution, figure: figures.system }],
+  });
+}
+if (d.decisions) {
+  bands.push({
+    heading: "The permission matrix",
+    parts: splitSubheads(d.decisions, {
+      "": figures.permissions,
+      "The approval moment": figures.approval,
+      "Two surfaces, on purpose": figures.surfaces,
+    }),
+  });
+}
+if (d.outcome) {
+  bands.push({
+    heading: "In daily use",
+    parts: splitSubheads(d.outcome, {
+      "Running Cursor Philly": figures.philly,
+      "A bug, from screenshot to fix": figures.bugflow,
+      "The design squad": figures.cockpit,
+    }),
+  });
+}
 ---
 
 <article class="product-study">
@@ -42,6 +94,19 @@ const bands: Band[] = [
     <h1>{d.title}</h1>
     <p class="ps-sub">{d.subtitle}</p>
     {d.tldr ? <div class="prose ps-lede" set:html={html(d.tldr)} /> : null}
+    {
+      d.cover ? (
+        <div class="ps-hero-figure ps-panel">
+          <Figure
+            src={d.cover}
+            srcMobile={d.coverMobile}
+            alt={d.coverAlt}
+            maxCssPx={d.coverMaxCssPx}
+            priority
+          />
+        </div>
+      ) : null
+    }
     {
       d.role || d.platforms || d.tools || d.status || d.company || d.years ? (
         <dl class="meta-row ps-meta">
@@ -124,11 +189,17 @@ const bands: Band[] = [
           <h2>{band.heading}</h2>
         </div>
         {band.html ? <div class="prose" set:html={band.html} /> : null}
-        {band.figure ? (
-          <div class="ps-panel">
-            <Figure {...band.figure} />
-          </div>
-        ) : null}
+        {band.parts?.map((part) => (
+          <>
+            {part.heading ? <h3 class="ps-subhead">{part.heading}</h3> : null}
+            {part.body ? <div class="prose" set:html={html(part.body)} /> : null}
+            {part.figure ? (
+              <div class="ps-panel">
+                <Figure {...part.figure} maxCssPx={part.figure.maxCssPx ?? 1200} />
+              </div>
+            ) : null}
+          </>
+        ))}
       </section>
     ))
   }

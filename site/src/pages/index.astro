@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import portrait from "../assets/about-portrait.avif";
 import BrandLockup from "../components/BrandLockup.astro";
 import Base from "../layouts/Base.astro";
-import { isListedWork } from "../lib/site";
+import { isListedWork, workBadge } from "../lib/site";
 
 const studies = (await getCollection("work"))
   .filter((study) => isListedWork(study.id, study.data.listed))
@@ -34,7 +34,7 @@ const plate = [
 const featured = plate.flatMap((item) => {
   const study = studies.find((s) => s.id === item.id);
   if (!study) return [];
-  return [{ ...item, title: study.data.title, draft: study.data.draft }];
+  return [{ ...item, title: study.data.title, badge: workBadge(study.data) }];
 });
 
 const featuredIds = new Set(plate.map((item) => item.id));
@@ -198,7 +198,7 @@ const testimonials = [
                 <span class="plate-index">
                   {item.index} / {item.domain}
                 </span>
-                {item.draft ? <span class="plate-draft">Draft</span> : null}
+                {item.badge ? <span class="plate-draft">{item.badge}</span> : null}
               </span>
               <span class="plate-study">{item.title}</span>
               <span class="plate-blurb">{item.blurb}</span>
@@ -223,22 +223,25 @@ const testimonials = [
       <h2 id="more-work">More work</h2>
       <ol>
         {
-          moreWork.map((study, i) => (
-            <li>
-              <a href={`/work/${study.id}`}>
-                <span class="plate-index">
-                  {String(featured.length + i + 1).padStart(2, "0")}
-                  {study.data.company ? ` / ${study.data.company}` : ""}
-                </span>
-                <span class="plate-study">{study.data.title}</span>
-                <span class="plate-blurb">{study.data.subtitle}</span>
-                {listingResults[study.id] ? (
-                  <span class="plate-result">{listingResults[study.id]}</span>
-                ) : null}
-                {study.data.draft ? <span class="plate-draft">Draft</span> : null}
-              </a>
-            </li>
-          ))
+          moreWork.map((study, i) => {
+            const badge = workBadge(study.data);
+            return (
+              <li>
+                <a href={`/work/${study.id}`}>
+                  <span class="plate-index">
+                    {String(featured.length + i + 1).padStart(2, "0")}
+                    {study.data.company ? ` / ${study.data.company}` : ""}
+                  </span>
+                  <span class="plate-study">{study.data.title}</span>
+                  <span class="plate-blurb">{study.data.subtitle}</span>
+                  {listingResults[study.id] ? (
+                    <span class="plate-result">{listingResults[study.id]}</span>
+                  ) : null}
+                  {badge ? <span class="plate-draft">{badge}</span> : null}
+                </a>
+              </li>
+            );
+          })
         }
       </ol>
     </section>

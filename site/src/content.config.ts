@@ -46,6 +46,8 @@ const phone = z.object({
   src: z.string(),
   alt: z.string(),
   caption: z.string(),
+  /** False when the image is a bare screenshot and the stage should draw the bezel. */
+  framed: z.boolean().optional(),
 });
 
 const featureStageItem = z.object({
@@ -285,6 +287,12 @@ const work = defineCollection({
     presentation: z.enum(["product", "editorial"]).optional(),
     editorial: editorial.optional(),
     phones: z.array(phone).optional(),
+    /** Public-safe roster diagram when a team-map image is not available. */
+    teamMap: z
+      .object({
+        caption: z.string(),
+      })
+      .optional(),
     recreatedNote: z.string().optional(),
     researchHeading: z.enum(["Research & Insights", "Why it mattered"]).default("Research & Insights"),
     researchQuotes: z.array(researchQuote).optional(),

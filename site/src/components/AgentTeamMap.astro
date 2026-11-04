@@ -1,0 +1,37 @@
+---
+interface Props {
+  caption: string;
+}
+
+const { caption } = Astro.props;
+
+const agents = [
+  { name: "StraatBot", role: "Orchestrator. Captures, routes, tracks open loops." },
+  { name: "Scout", role: "Research. Morning briefs, signals, weekly synthesis." },
+  { name: "Finley", role: "Finance. Status and flags only — never raw figures." },
+  { name: "Helpers", role: "Household, food, and travel — each with its own lane." },
+  { name: "Design squad", role: "PRD, wireframes, mid-fi, kit, then a prototype." },
+];
+---
+
+<figure class="agent-map">
+  <div class="agent-map-panel">
+    <p class="agent-map-kicker">The team</p>
+    <ul class="agent-map-roster">
+      {
+        agents.map((agent) => (
+          <li>
+            <strong>{agent.name}</strong>
+            <span>{agent.role}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="agent-map-runtime">
+      <span class="agent-map-kicker">Runs on</span>
+      <strong>Hermes Agent</strong>
+      <span>Open-source runtime from Nous Research. I didn’t build it.</span>
+    </p>
+  </div>
+  <figcaption>{caption}</figcaption>
+</figure>

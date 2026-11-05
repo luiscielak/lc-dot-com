@@ -226,12 +226,13 @@ const testimonials = [
         {
           moreWork.map((study, i) => {
             const badge = workBadge(study.data);
+            const listingLabel = study.data.category ?? study.data.company;
             return (
               <li>
                 <a href={`/work/${study.id}`}>
                   <span class="plate-index">
                     {String(featured.length + i + 1).padStart(2, "0")}
-                    {study.data.company ? ` / ${study.data.company}` : ""}
+                    {listingLabel ? ` / ${listingLabel}` : ""}
                   </span>
                   <span class="plate-study">{study.data.title}</span>
                   <span class="plate-blurb">{study.data.subtitle}</span>

@@ -1,6 +1,6 @@
 ---
 interface Props {
-  caption: string;
+  caption?: string;
 }
 
 const { caption } = Astro.props;
@@ -33,5 +33,5 @@ const agents = [
       <span>Open-source runtime from Nous Research. I didn’t build it.</span>
     </p>
   </div>
-  <figcaption>{caption}</figcaption>
+  {caption ? <figcaption>{caption}</figcaption> : null}
 </figure>

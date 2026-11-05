@@ -9,9 +9,11 @@ interface Props {
   maxCssPx: number;
   phone?: boolean;
   framed?: boolean;
+  /** Above-the-fold cover. Leave unset so lower figures stay lazy. */
+  priority?: boolean;
 }
 
-const { src, alt, caption, maxCssPx, phone, framed } = Astro.props;
+const { src, alt, caption, maxCssPx, phone, framed, priority = false } = Astro.props;
 const image = workImage(src);
 const cap = Math.min(maxCssPx, Math.floor(image.width / 1.5));
 const widths = [
@@ -34,6 +36,8 @@ const widths = [
     formats={["avif", "webp"]}
     widths={widths.length ? widths : [image.width]}
     sizes={`min(100vw - 2rem, ${cap}px)`}
+    loading={priority ? "eager" : "lazy"}
+    fetchpriority={priority ? "high" : "auto"}
   />
   {caption ? <figcaption>{caption}</figcaption> : null}
 </figure>

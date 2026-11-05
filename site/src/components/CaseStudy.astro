@@ -20,6 +20,7 @@ const quotes = d.researchQuotes ?? [];
 const v = d.visuals;
 const gallery = d.gallery ?? {};
 const clips = d.clips ?? [];
+const heroMetrics = entry.id === "field-dispatch" && confirmed.length > 0;
 
 function html(s?: string) {
   return s ? renderProse(s) : "";
@@ -92,6 +93,18 @@ function initials(name: string) {
       ) : null
     }
     {
+      heroMetrics ? (
+        <div class="metrics">
+          {confirmed.map((m) => (
+            <div class="metric">
+              <span class="value">{m.value}</span>
+              <span>{m.label}</span>
+            </div>
+          ))}
+        </div>
+      ) : null
+    }
+    {
       d.video?.section === "header" ? (
         <WorkVideo
           src={d.video.src}
@@ -101,10 +114,12 @@ function initials(name: string) {
           maxCssPx={400}
         />
       ) : v.header ? (
-        <Figure {...v.header} />
+        <Figure {...v.header} priority />
       ) : null
     }
-    {(gallery.header ?? []).map((item) => <Figure {...item} />)}
+    {(gallery.header ?? []).map((item, i) => (
+      <Figure {...item} priority={i === 0 && !v.header} />
+    ))}
     {
       clips
         .filter((c) => c.section === "header")
@@ -118,7 +133,7 @@ function initials(name: string) {
         <h2>TL;DR</h2>
         {d.tldr ? <div class="prose" set:html={html(d.tldr)} /> : null}
         {
-          confirmed.length ? (
+          !heroMetrics && confirmed.length ? (
             <div class="metrics">
               {confirmed.map((m) => (
                 <div class="metric">

@@ -60,6 +60,7 @@ const start = 0;
                   loading={i === start ? "eager" : "lazy"}
                 />
               </div>
+              <p class="phone-slide-caption">{s.caption}</p>
             </div>
           </li>
         ))
@@ -119,9 +120,28 @@ const start = 0;
     const slides = Array.from(stage.querySelectorAll<HTMLElement>(".phone-slide"));
     const captions = Array.from(stage.querySelectorAll<HTMLElement>(".phone-stage-caption-item"));
     const viewport = stage.querySelector<HTMLElement>(".phone-stage-viewport");
+    const stackMq = window.matchMedia("(max-width: 639px)");
     let active = Number(stage.dataset.active ?? "0");
 
+    function stacked() {
+      return stackMq.matches;
+    }
+
     function render() {
+      if (stacked()) {
+        stage.removeAttribute("aria-roledescription");
+        stage.removeAttribute("tabindex");
+        slides.forEach((slide) => {
+          slide.style.removeProperty("--offset");
+          slide.removeAttribute("data-offset");
+          slide.removeAttribute("aria-hidden");
+        });
+        captions.forEach((cap) => cap.removeAttribute("hidden"));
+        return;
+      }
+
+      stage.setAttribute("aria-roledescription", "carousel");
+      stage.tabIndex = 0;
       stage.dataset.active = String(active);
       slides.forEach((slide, i) => {
         // Signed offset from the centered phone: 0 center, -1/+1 neighbors.
@@ -136,6 +156,7 @@ const start = 0;
     }
 
     function go(dir: number) {
+      if (stacked()) return;
       active = (active + dir + count) % count;
       render();
     }
@@ -145,6 +166,7 @@ const start = 0;
     });
 
     stage.addEventListener("keydown", (event) => {
+      if (stacked()) return;
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         go(-1);
@@ -157,10 +179,9 @@ const start = 0;
     // Let a tapped neighbor become the center.
     slides.forEach((slide, i) => {
       slide.addEventListener("click", () => {
-        if (i !== active) {
-          active = i;
-          render();
-        }
+        if (stacked() || i === active) return;
+        active = i;
+        render();
       });
     });
 
@@ -171,6 +192,7 @@ const start = 0;
       let swiping = false;
 
       viewport.addEventListener("pointerdown", (event) => {
+        if (stacked()) return;
         tracking = true;
         swiping = false;
         startX = event.clientX;
@@ -210,6 +232,7 @@ const start = 0;
     reduce.addEventListener("change", () => {
       stage.dataset.reduced = reduce.matches ? "true" : "false";
     });
+    stackMq.addEventListener("change", render);
 
     render();
   });

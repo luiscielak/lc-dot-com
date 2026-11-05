@@ -1,24 +1,29 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import { Banner } from './Banner'
 
 export function PhoneFrame({ children }: { children: ReactNode }) {
-  const [embedded, setEmbedded] = useState(
+  const [embedded] = useState(
     () => typeof window !== 'undefined' && window.self !== window.top,
   )
 
   useEffect(() => {
-    setEmbedded(window.self !== window.top)
-  }, [])
+    document.documentElement.classList.toggle('is-embed', embedded)
+    return () => document.documentElement.classList.remove('is-embed')
+  }, [embedded])
 
   return (
     <div className={embedded ? 'stage stage-embed' : 'stage'}>
       <div className="phone" role="application" aria-label="Your First Week prototype">
-        <div className="phone-notch" aria-hidden="true" />
-        <div className="status-bar" aria-hidden="true">
-          <span>9:41</span>
-          <span>●●●●</span>
+        <div className="phone-chrome">
+          <div className="phone-notch" aria-hidden="true" />
+          <div className="status-bar" aria-hidden="true">
+            <span>9:41</span>
+            <span>●●●●</span>
+          </div>
+          <Banner />
         </div>
-        {children}
+        <div className="phone-app">{children}</div>
       </div>
       {embedded ? null : (
         <p className="desk-note">

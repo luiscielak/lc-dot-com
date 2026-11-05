@@ -15,53 +15,59 @@ recreatedNote: "Unofficial concept by Luis Cielak. Not affiliated with or endors
 cover: "monarch/cover.png"
 coverAlt: "Day 0 of the concept: a goal and a trial card that states the charge date, amount, and cancel-by time"
 coverMaxCssPx: 260
-tldr: "An unofficial concept for Monarch Money’s seven-day trial, which requires a card up front. Each day gives a new household one task. It starts by showing exactly when and how much they’ll be charged, before they connect a single account, and then helps them sort their transactions a group at a time with Quick Sort. You can click through the whole week in a phone prototype."
-overview: "I use Monarch with my household, and I built my finance agent, Finley, on Monarch’s official MCP. When a new household signs up, they get seven days before the first charge, and they have to add a payment method to start. With a window that short, the trial is the product, and it has to earn their trust.\n\nThis concept plans the whole week as one screen a day, each with one job. AI drafts the work, and the member decides whether to mark it reviewed, edit it, or skip it."
+tldr: "One job a day for a new household, from first connect through Quick Sort, in a clickable phone prototype. Unofficial concept. Mock data only. No conversion claims."
+overview: "I use Monarch with my wife at home. I also built Finley, my finance agent, which runs locally on my Mac mini and connects to Monarch through its official MCP. That’s how I kept hitting miscategorized transactions and other data-quality issues — the kind a stronger first week, and an intelligence layer over financial data, budgeting, spending, and investing, could reduce. This is a concept. It doesn’t claim any conversion results."
 editorial:
   kicker: "Unofficial Monarch Money concept"
   weekStrip:
     heading: "The week"
-    caption: "Seven days, from Day 0 to Day 6. Every screen uses mock data."
+    caption: "Day 0 through Day 6, labeled the way the prototype is. Every screen uses mock data."
     items:
       - label: "Day 0"
+        title: "Goal"
         src: "monarch/flow-day0.png"
         alt: "Day 0. Goal choices and a trial card that states Day 7, the amount, and cancel up to 24 hours before."
         maxCssPx: 168
         framed: false
-      - label: "Connect"
+      - label: "Day 0"
+        title: "Connect"
         src: "monarch/flow-connect.png"
         alt: "Connection status with three institutions and an Update action on the stale one."
         maxCssPx: 168
         framed: false
-      - label: "Quick Sort"
+      - label: "Day 1"
+        title: "Quick Sort"
         src: "monarch/flow-quicksort.png"
         alt: "Quick Sort card for Daily Grind suggesting Restaurants & coffee, with Accept, Change, and Skip."
         maxCssPx: 168
         framed: false
-      - label: "Insights"
+      - label: "Day 1"
+        title: "Insights"
         src: "monarch/flow-insights.png"
         alt: "Insights on Daily Grind: suggested category, the reason, and fields the model saw."
         maxCssPx: 168
         framed: false
       - label: "Day 4"
+        title: "Weekly Recap"
         src: "monarch/flow-day4.png"
         alt: "Weekly Recap with four number tiles and household avatars."
         maxCssPx: 168
         framed: false
       - label: "Day 6"
+        title: "The plan"
         src: "monarch/flow-day6.png"
         alt: "Day 6. A week checklist, spent amount, and Keep Core annual."
         maxCssPx: 168
         framed: false
   opener:
-    heading: "00 — Why this case"
-    headline: "This is a product I use at home."
-    body: "I use Monarch with my household, and I built Finley, my finance agent, on Monarch’s official MCP. So I wanted to look closely at the first week, the seven days when a new household decides whether Monarch is worth paying for. This is a concept, so it doesn’t claim any conversion results."
+    heading: "01 — Why this case"
+    headline: "I use Monarch with my wife at home."
+    body: "I also built Finley, my finance agent, which runs locally on my Mac mini and connects to Monarch through its official MCP. That’s how I kept hitting miscategorized transactions and other data-quality issues — the kind a stronger first week, and an intelligence layer over financial data, budgeting, spending, and investing, could reduce. This is a concept. It doesn’t claim any conversion results."
     note: "This is an unofficial concept. It isn’t affiliated with or endorsed by Monarch Money, Inc., and every screen uses a made-up household."
   problem:
-    heading: "01 — Where the first week goes wrong"
-    headline: "New households get stuck on three things: the bill, the bank sync, and the categories."
-    body: "Monarch asks for a payment method before the trial starts. To avoid a charge, you have to cancel at least 24 hours before the seven days are up. In public reviews, the complaints come back to the same few problems: transactions in the wrong category, accounts that stop syncing, transfers counted as spending, and a charge people didn’t see coming."
+    heading: "02 — Where the first week goes wrong"
+    headline: "The first week breaks on the bill, the sync, and the categories."
+    body: "Public reviews keep coming back to the same failures: a charge people didn’t see coming, accounts that stop syncing, and transactions in the wrong category — including transfers counted as spending. Canceling needs a 24-hour lead."
     note: "Based on 500 US reviews, read in October 2026, and a look at eight competing apps. The numbers show what people wrote about most. They aren’t rates for all users."
   stats:
     - value: "500"
@@ -80,7 +86,7 @@ editorial:
       - text: "I canceled within the trial period and they continue to try to charge me for an entire year."
         cite: "queenepeachie, App Store, 1 star, Sep 20, 2026"
   competitors:
-    heading: "02 — How other apps run their trials"
+    heading: "03 — How other apps run their trials"
     fit: "Among the eight apps I compared, Monarch is tied for the shortest paid trial. If Monarch keeps the trial at seven days, this concept is a way to make each of those days count."
     axes:
       xLeft: "No card or free"
@@ -110,9 +116,10 @@ editorial:
       - app: "Origin"
         take: "Usually 7 days. The trial was paused during a $1 offer."
         state: "not-confirmed"
+    unconfirmedLabel: "Not confirmed from primary sources"
     aside: "Rocket Money offers a 7-day Premium trial. Starting it asks you to select a payment method."
   bet:
-    heading: "03 — The bet"
+    heading: "04 — The bet"
     headline: "Give every day of the trial one clear job."
     body: "Each day asks the household to do one thing. AI drafts the work, and the member decides whether to mark it reviewed, edit it, or skip it. A rule only starts running once they say so."
   gallery:
@@ -157,6 +164,21 @@ editorial:
       alt: "Final Day 0 screen with goal choices and a trial card that states the charge date, amount, and cancel-by time."
       maxCssPx: 220
       framed: false
+  decisions:
+    heading: "Design decisions"
+    headline: "Craft choices, not only tests."
+    items:
+      - label: "Transfers first"
+        body: "Sort transfers and card payments before merchants so totals aren’t wrong from the start."
+      - label: "Visible rule order"
+        body: "Show which rule would run. A rule starts only when the member says so."
+      - label: "Say who bills you"
+        body: "Charge date, amount, who bills, and where to cancel — on Day 0 and again on Day 6."
+      - label: "A job for the partner"
+        body: "One small task, like reviewing the transactions the model wasn’t sure about, instead of a blank invite."
+      - label: "Manual path beside AI"
+        body: "Accept, change, or skip. Suggestions can turn off. Edit stays next to the model."
+    note: "The four tests below are how I’d measure these. None have results."
   experiments:
     heading: "How I’d test it"
     note: "These tests are proposals. There’s no public baseline for Monarch’s trial, so none of them have results."
@@ -186,23 +208,18 @@ editorial:
         primary: "Partner active in week 2, per household that sent an invite."
         guardrail: "Invite-related support tickets, privacy complaints, and the inviter’s own Quick Sort completion."
   built:
-    heading: "04 — How I built it"
-    items:
-      - label: "In code"
-        body: "A phone prototype you can click through, filled with a mock household."
-      - label: "Quick Sort"
-        body: "Quick Sort asks an AI model for suggestions and falls back to pre-written ones if the call fails or times out. A Pages Function can run Workers AI behind it, with a hashed cache, a daily cap, a per-IP limit, and an 8-second timeout."
-      - label: "Insights"
-        body: "The Insights panel shows what the model looked at and what it never received: the member’s name, account numbers, balances, and login tokens."
+    heading: "05 — How I built it"
+    body: "A click-through phone week with a mock household. Quick Sort can call a model; the public demo uses scripted suggestions so reviewers can click through without a live model call. Insights shows what the model looked at and what it never received: name, account numbers, balances, and login tokens."
+    note: "A Pages Function can run Workers AI behind it, with a hashed cache, a daily cap, a per-IP limit, and an 8-second timeout."
   prototype:
     heading: "Try the week"
-    body: "Walk through Days 0 to 6 with a mock household. On this version of the site, the AI suggestions are pre-written."
+    body: "Walk through Days 0 to 6 with a mock household. The public demo uses scripted suggestions so reviewers can click through without a live model call."
     src: "/prototypes/your-first-week/prototype"
     fullScreenHref: "/prototypes/your-first-week/prototype"
     fullScreenLabel: "Open full screen"
     note: "Unofficial concept by Luis Cielak. Not affiliated with Monarch. Mock data only."
   close:
-    heading: "05 — What success would look like"
+    heading: "What success would look like"
     cells:
       - value: "7 days"
         label: "Tied with Origin and Rocket Money for the shortest trial."

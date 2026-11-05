@@ -3641,6 +3641,10 @@ html[data-page="resume"] a:hover {
   max-width: 52rem;
 }
 
+.es-block .es-body + .es-method-note {
+  margin-top: 0;
+}
+
 /* Flow clips */
 .es-flows {
   margin-top: var(--es-gap);

@@ -179,6 +179,7 @@ const editorial = z.object({
         shortCard: z.array(editorialCompetitor).min(1),
       }),
       unconfirmed: z.array(editorialCompetitor).optional(),
+      unconfirmedLabel: z.string().optional(),
       aside: z.string(),
     })
     .optional(),
@@ -211,7 +212,9 @@ const editorial = z.object({
   built: z
     .object({
       heading: z.string(),
-      items: z.array(z.object({ label: z.string(), body: z.string() })).min(1),
+      body: z.string().optional(),
+      items: z.array(z.object({ label: z.string(), body: z.string() })).min(1).optional(),
+      note: z.string().optional(),
     })
     .optional(),
   bet: z
@@ -225,6 +228,14 @@ const editorial = z.object({
     .object({
       heading: z.string(),
       items: z.array(editorialJob).min(1),
+    })
+    .optional(),
+  decisions: z
+    .object({
+      heading: z.string(),
+      headline: z.string().optional(),
+      items: z.array(editorialMethodItem).min(1),
+      note: z.string().optional(),
     })
     .optional(),
   experiments: z

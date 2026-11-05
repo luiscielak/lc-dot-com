@@ -249,7 +249,9 @@ const flowPanels =
           {
             e.competitors.unconfirmed?.length ? (
               <div class="es-pos-unconfirmed">
-                <p class="es-pos-unconfirmed-label">Card not confirmed</p>
+                <p class="es-pos-unconfirmed-label">
+                  {e.competitors.unconfirmedLabel ?? "Not confirmed from primary sources"}
+                </p>
                 {e.competitors.unconfirmed.map((item) => (
                   <span class="es-pos-app is-unconfirmed">
                     {item.app}
@@ -368,6 +370,24 @@ const flowPanels =
   }
 
   {
+    e.decisions ? (
+      <section class="es-block wrap" id="decisions">
+        <p class="es-eyebrow">{e.decisions.heading}</p>
+        {e.decisions.headline ? <h2 class="es-block-title">{e.decisions.headline}</h2> : null}
+        <ol class="es-method">
+          {e.decisions.items.map((item) => (
+            <li>
+              <span class="es-method-label">{item.label}</span>
+              <span class="es-method-body">{item.body}</span>
+            </li>
+          ))}
+        </ol>
+        {e.decisions.note ? <p class="es-method-note">{e.decisions.note}</p> : null}
+      </section>
+    ) : null
+  }
+
+  {
     e.experiments ? (
       <section class="es-block wrap" id="experiments">
         <p class="es-eyebrow">{e.experiments.heading}</p>
@@ -400,14 +420,20 @@ const flowPanels =
     e.built ? (
       <section class="es-block wrap" id="built">
         <p class="es-eyebrow">{e.built.heading}</p>
-        <ul class="es-built">
-          {e.built.items.map((item) => (
-            <li>
-              <span class="es-method-label">{item.label}</span>
-              <span class="es-method-body">{item.body}</span>
-            </li>
-          ))}
-        </ul>
+        {e.built.body ? <p class="es-body">{e.built.body}</p> : null}
+        {
+          e.built.items?.length ? (
+            <ul class="es-built">
+              {e.built.items.map((item) => (
+                <li>
+                  <span class="es-method-label">{item.label}</span>
+                  <span class="es-method-body">{item.body}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null
+        }
+        {e.built.note ? <p class="es-method-note">{e.built.note}</p> : null}
       </section>
     ) : null
   }

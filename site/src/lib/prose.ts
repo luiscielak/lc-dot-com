@@ -1,7 +1,3 @@
-export function renderInline(s: string): string {
-  return inline(s);
-}
-
 function inline(s: string): string {
   return s
     .replace(/&/g, "&amp;")

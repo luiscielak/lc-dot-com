@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import Figure from "./Figure.astro";
 import PhoneStage from "./PhoneStage.astro";
 import { workBadge } from "../lib/site";
-import { renderInline, renderProse } from "../lib/prose";
+import { renderProse } from "../lib/prose";
 
 interface Props {
   entry: CollectionEntry<"work">;
@@ -47,8 +47,7 @@ function splitSubheads(
   for (let i = 1; i < chunks.length; i += 2) {
     const heading = chunks[i].replace(/^###\s+/, "").trim();
     const body = (chunks[i + 1] ?? "").trim();
-    const headingKey = heading.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, "$1");
-    out.push({ heading, body, figure: figureFor[headingKey] });
+    out.push({ heading, body, figure: figureFor[heading] });
   }
   return out;
 }
@@ -195,7 +194,7 @@ if (d.outcome) {
         {band.html ? <div class="prose" set:html={band.html} /> : null}
         {band.parts?.map((part) => (
           <>
-            {part.heading ? <h3 class="ps-subhead" set:html={renderInline(part.heading)} /> : null}
+            {part.heading ? <h3 class="ps-subhead">{part.heading}</h3> : null}
             {part.body ? <div class="prose" set:html={html(part.body)} /> : null}
             {part.figure ? (
               <div class="ps-panel">

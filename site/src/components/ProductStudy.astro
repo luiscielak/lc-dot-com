@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import AgentTeamMap from "./AgentTeamMap.astro";
 import Figure from "./Figure.astro";
 import PhoneStage from "./PhoneStage.astro";
 import { workBadge } from "../lib/site";
@@ -13,16 +12,79 @@ interface Props {
 
 const { entry, next } = Astro.props;
 const d = entry.data;
-const v = d.visuals;
-const gallery = d.gallery ?? {};
-const approvalFigures = [v.decisions, ...(gallery.decisions ?? [])].filter(
-  (item): item is NonNullable<typeof v.decisions> => Boolean(item),
-);
+const figures = d.figures ?? {};
 const badge = workBadge(d);
 const nextBadge = next ? workBadge(next.data) : undefined;
 
 function html(s?: string) {
   return s ? renderProse(s) : "";
+}
+
+type FigureProps = {
+  src: string;
+  srcMobile?: string;
+  alt: string;
+  caption?: string;
+  maxCssPx?: number;
+  phone?: boolean;
+  framed?: boolean;
+};
+
+type Subhead = {
+  heading?: string;
+  body: string;
+  figure?: FigureProps;
+};
+
+function splitSubheads(
+  text: string,
+  figureFor: Record<string, FigureProps | undefined>,
+): Subhead[] {
+  const chunks = text.split(/^(### .+)$/m);
+  const out: Subhead[] = [];
+  const preamble = chunks[0]?.trim();
+  if (preamble) out.push({ body: preamble, figure: figureFor[""] });
+  for (let i = 1; i < chunks.length; i += 2) {
+    const heading = chunks[i].replace(/^###\s+/, "").trim();
+    const body = (chunks[i + 1] ?? "").trim();
+    out.push({ heading, body, figure: figureFor[heading] });
+  }
+  return out;
+}
+
+type Band = {
+  heading: string;
+  html?: string;
+  parts?: Subhead[];
+};
+
+const bands: Band[] = [];
+if (d.research) bands.push({ heading: d.researchHeading, html: html(d.research) });
+if (d.solution) {
+  bands.push({
+    heading: "A small organization",
+    parts: [{ body: d.solution, figure: figures.system }],
+  });
+}
+if (d.decisions) {
+  bands.push({
+    heading: "The permission matrix",
+    parts: splitSubheads(d.decisions, {
+      "": figures.permissions,
+      "The approval moment": figures.approval,
+      "Two surfaces, on purpose": figures.surfaces,
+    }),
+  });
+}
+if (d.outcome) {
+  bands.push({
+    heading: "In daily use",
+    parts: splitSubheads(d.outcome, {
+      "Running Cursor Philly": figures.philly,
+      "A bug, from screenshot to fix": figures.bugflow,
+      "The design squad": figures.cockpit,
+    }),
+  });
 }
 ---
 
@@ -35,6 +97,19 @@ function html(s?: string) {
     <h1>{d.title}</h1>
     <p class="ps-sub">{d.subtitle}</p>
     {d.tldr ? <div class="prose ps-lede" set:html={html(d.tldr)} /> : null}
+    {
+      d.cover ? (
+        <div class="ps-hero-figure ps-panel">
+          <Figure
+            src={d.cover}
+            srcMobile={d.coverMobile}
+            alt={d.coverAlt}
+            maxCssPx={d.coverMaxCssPx}
+            priority
+          />
+        </div>
+      ) : null
+    }
     {
       d.role || d.platforms || d.tools || d.status || d.company || d.years ? (
         <dl class="meta-row ps-meta">
@@ -111,81 +186,25 @@ function html(s?: string) {
   }
 
   {
-    d.solution ? (
+    bands.map((band) => (
       <section class="ps-band wrap">
         <div class="ps-band-head">
-          <h2>How it works</h2>
+          <h2>{band.heading}</h2>
         </div>
-        <div class="prose" set:html={html(d.solution)} />
-        {v.solution ? (
-          <div class="ps-panel">
-            <Figure {...v.solution} />
-          </div>
-        ) : d.teamMap ? (
-          <AgentTeamMap caption={d.teamMap.caption} />
-        ) : null}
-        {(gallery.solution ?? []).map((item) => (
-          <div class="ps-panel">
-            <Figure {...item} />
-          </div>
+        {band.html ? <div class="prose" set:html={band.html} /> : null}
+        {band.parts?.map((part) => (
+          <>
+            {part.heading ? <h3 class="ps-subhead">{part.heading}</h3> : null}
+            {part.body ? <div class="prose" set:html={html(part.body)} /> : null}
+            {part.figure ? (
+              <div class="ps-panel">
+                <Figure {...part.figure} maxCssPx={part.figure.maxCssPx ?? 1200} />
+              </div>
+            ) : null}
+          </>
         ))}
       </section>
-    ) : null
-  }
-
-  {
-    d.research ? (
-      <section class="ps-band wrap">
-        <div class="ps-band-head">
-          <h2>{d.researchHeading}</h2>
-        </div>
-        <div class="prose" set:html={html(d.research)} />
-      </section>
-    ) : null
-  }
-
-  {
-    d.decisions ? (
-      <section class="ps-band wrap">
-        <div class="ps-band-head">
-          <h2>Design decisions</h2>
-        </div>
-        <div class="prose" set:html={html(d.decisions)} />
-        {v.overview ? (
-          <div class="ps-panel">
-            <Figure {...v.overview} />
-          </div>
-        ) : null}
-      </section>
-    ) : null
-  }
-
-  {
-    approvalFigures.length ? (
-      <section class="ps-band wrap">
-        <div class="ps-band-head">
-          <h2>The approval moment</h2>
-        </div>
-        <div class:list={["ps-approvals", approvalFigures.length > 1 && "is-pair"]}>
-          {approvalFigures.map((item) => (
-            <div class="ps-panel">
-              <Figure {...item} />
-            </div>
-          ))}
-        </div>
-      </section>
-    ) : null
-  }
-
-  {
-    d.outcome ? (
-      <section class="ps-band wrap">
-        <div class="ps-band-head">
-          <h2>In daily use</h2>
-        </div>
-        <div class="prose" set:html={html(d.outcome)} />
-      </section>
-    ) : null
+    ))
   }
 
   {

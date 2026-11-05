@@ -17,12 +17,25 @@ const researchQuote = z.object({
 
 const visual = z.object({
   src: z.string(),
+  /** Optional art-directed image for viewports below 640px. */
+  srcMobile: z.string().optional(),
   alt: z.string(),
   caption: z.string(),
   /** CSS max width in px this image is allowed to render at. */
   maxCssPx: z.number().positive(),
   phone: z.boolean().optional(),
   /** False when the image is a bare screenshot and the figure should draw the bezel. */
+  framed: z.boolean().optional(),
+});
+
+/** Section figure. `maxCssPx` defaults to 1200 in Figure.astro when omitted. */
+const sectionFigure = z.object({
+  src: z.string(),
+  srcMobile: z.string().optional(),
+  alt: z.string(),
+  caption: z.string().optional(),
+  maxCssPx: z.number().positive().optional(),
+  phone: z.boolean().optional(),
   framed: z.boolean().optional(),
 });
 
@@ -297,6 +310,8 @@ const work = defineCollection({
     tools: z.string().optional(),
     metrics: z.array(metric).default([]),
     cover: z.string(),
+    /** Optional art-directed cover for viewports below 640px. */
+    coverMobile: z.string().optional(),
     coverAlt: z.string(),
     coverMaxCssPx: z.number().positive(),
     order: z.number(),
@@ -313,7 +328,19 @@ const work = defineCollection({
       })
       .optional(),
     recreatedNote: z.string().optional(),
-    researchHeading: z.enum(["Research & Insights", "Why it mattered"]).default("Research & Insights"),
+    researchHeading: z.string().default("Research & Insights"),
+    /** Named section figures for the product-study template. Unused keys are ignored. */
+    figures: z
+      .object({
+        system: sectionFigure.optional(),
+        permissions: sectionFigure.optional(),
+        approval: sectionFigure.optional(),
+        surfaces: sectionFigure.optional(),
+        philly: sectionFigure.optional(),
+        bugflow: sectionFigure.optional(),
+        cockpit: sectionFigure.optional(),
+      })
+      .optional(),
     researchQuotes: z.array(researchQuote).optional(),
     tldr: z.string(),
     overview: z.string(),

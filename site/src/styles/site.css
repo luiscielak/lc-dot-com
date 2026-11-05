@@ -38,6 +38,17 @@ a:hover {
   padding: 0.5rem;
 }
 
+/* WCAG 1.4.11: the default Konstrukt ring is teal #057079 on paper.
+   Ink surfaces (nameplate) need the light teal so the ring stays ≥3:1. */
+:focus-visible {
+  outline: 2px solid #057079;
+  outline-offset: 3px;
+}
+
+html[data-page="nameplate"] :focus-visible {
+  outline-color: #2abfcc;
+}
+
 .wrap {
   width: min(100% - 2rem, var(--page-max));
   margin-inline: auto;
@@ -184,7 +195,7 @@ a.foot-mark:hover {
 }
 
 .site-footer a:focus-visible {
-  outline: 2px solid var(--foot-accent);
+  outline: 2px solid #057079;
   outline-offset: 3px;
 }
 
@@ -227,6 +238,31 @@ html[data-page="nameplate"] .site-footer {
 
   .foot-items a::before,
   .foot-top::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Same hit-area pattern for header and résumé contacts. */
+  .nav-links a,
+  .plate-nav a,
+  .cv-nav a,
+  .cv-contact a,
+  .cv-download,
+  .cv-foot a {
+    position: relative;
+  }
+
+  .nav-links a::before,
+  .plate-nav a::before,
+  .cv-nav a::before,
+  .cv-contact a::before,
+  .cv-download::before,
+  .cv-foot a::before {
     content: "";
     position: absolute;
     left: 50%;
@@ -576,6 +612,45 @@ html[data-page="nameplate"] .site-footer {
   height: auto;
 }
 
+.work-loop-stage,
+.es-flow-phone {
+  position: relative;
+}
+
+.work-loop-toggle {
+  position: absolute;
+  z-index: 2;
+  right: 12px;
+  bottom: 12px;
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 12px;
+  border: 1px solid var(--ink, #17150f);
+  border-radius: 0;
+  background: #f6f4ee;
+  color: #17150f;
+  box-shadow: none;
+  font-family: var(--font-mono, "IBM Plex Mono", ui-monospace, monospace);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.work-loop-toggle:hover {
+  color: #057079;
+  border-color: #057079;
+}
+
+.work-loop-toggle:focus-visible {
+  outline: 2px solid #057079;
+  outline-offset: 3px;
+}
+
 .figure figcaption {
   font: var(--type-meta);
   letter-spacing: var(--type-meta-tracking);
@@ -643,11 +718,11 @@ html[data-page="nameplate"] ::selection {
 html[data-page="nameplate"] .skip:focus {
   background: var(--np-ink);
   color: var(--np-paper);
-  outline: 2px solid var(--np-teal);
+  outline: 2px solid #2abfcc;
 }
 
 html[data-page="nameplate"] a:focus-visible {
-  outline: 2px solid var(--np-teal);
+  outline: 2px solid #2abfcc;
   outline-offset: 3px;
 }
 
@@ -1222,12 +1297,16 @@ html[data-page="nameplate"] a:focus-visible {
   border-top: 1px solid var(--np-rule);
 }
 
-.plate-quotes blockquote {
+.plate-quotes figure {
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin: 0;
   padding: 28px 0 32px;
+}
+
+.plate-quotes figure blockquote {
+  display: contents;
 }
 
 .plate-quote-meta {
@@ -1247,7 +1326,7 @@ html[data-page="nameplate"] a:focus-visible {
   line-height: 36px;
 }
 
-.plate-quotes footer {
+.plate-quotes figcaption {
   margin: 0;
 }
 
@@ -1345,7 +1424,7 @@ html[data-page="nameplate"] a:focus-visible {
   border-top: 0;
 }
 
-.plate-quotes--cards blockquote {
+.plate-quotes--cards .pqc-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1410,6 +1489,7 @@ html[data-page="nameplate"] a:focus-visible {
   color: var(--np-paper);
   font-family: var(--font-display);
   font-size: 15px;
+  font-style: normal;
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 20px;
@@ -1449,6 +1529,10 @@ html[data-page="nameplate"] a:focus-visible {
   border-color: var(--np-paper);
   outline: 2px solid var(--np-paper);
   outline-offset: 2px;
+}
+
+html[data-page="nameplate"] .pqc-link:focus-visible {
+  outline-color: var(--np-paper);
 }
 
 @media (hover: hover) {
@@ -1576,9 +1660,10 @@ html[data-page="resume"] {
   --cv-ink: #17150f;
   --cv-text: #17150f;
   --cv-muted: #726c5e;
-  --cv-faint: #a8a090;
+  /* #746f5f is 4.57:1 on paper. The audit’s #767060 is 4.49 — just under 4.5. */
+  --cv-faint: #746f5f;
   --cv-border: #ded9cc;
-  --cv-accent: #067f8a;
+  --cv-accent: #057079;
   background: var(--cv-bg);
   color: var(--cv-text);
 }
@@ -2732,7 +2817,7 @@ html[data-page="resume"] a:hover {
 }
 
 .lab-toggle:focus-visible {
-  outline: 2px solid var(--np-teal);
+  outline: 2px solid #2abfcc;
   outline-offset: 3px;
 }
 
@@ -3024,9 +3109,9 @@ html[data-page="resume"] a:hover {
   --es-surface: #ffffff;
   --es-ink: #17150f;
   --es-muted: #726c5e;
-  --es-faint: #a8a090;
+  --es-faint: #746f5f;
   --es-rule: #ded9cc;
-  --es-accent: #067f8a;
+  --es-accent: #057079;
   --es-on-accent: #ffffff;
   --es-display: "Space Grotesk", system-ui, sans-serif;
   --es-body: "Inter", system-ui, sans-serif;
@@ -3180,6 +3265,11 @@ html[data-page="resume"] a:hover {
   padding-bottom: 0.5rem;
 }
 
+.es-week-strip:focus-visible {
+  outline: 2px solid #057079;
+  outline-offset: 3px;
+}
+
 .es-week-item,
 .es-gallery-grid li,
 .es-process-step {
@@ -3311,10 +3401,6 @@ html[data-page="resume"] a:hover {
   border-radius: 999px;
   padding: 0.1rem 0.4rem;
   vertical-align: middle;
-}
-
-.es-pos-app.is-unconfirmed {
-  opacity: 0.92;
 }
 
 .es-pos-unconfirmed {

@@ -294,15 +294,21 @@ const testimonials = [
           <div class="plate-quote-marquee">
             <div class="plate-quote-track">
               {[false, true].map((clone) => (
-                <ul class="plate-quote-group" aria-hidden={clone ? "true" : undefined}>
+                <ul
+                  class="plate-quote-group"
+                  aria-hidden={clone ? "true" : undefined}
+                  inert={clone ? true : undefined}
+                >
                   {testimonials.map((item) => (
                     <li>
-                      <blockquote>
-                        <span class="pqc-mark" aria-hidden="true">”</span>
-                        <p class="plate-quote-text">{item.quote}</p>
-                        <footer class="pqc-foot">
+                      <figure class="pqc-card">
+                        <blockquote>
+                          <span class="pqc-mark" aria-hidden="true">”</span>
+                          <p class="plate-quote-text">{item.quote}</p>
+                        </blockquote>
+                        <figcaption class="pqc-foot">
                           <span class="pqc-id">
-                            <span class="pqc-name">{item.name.split(" ")[0]}</span>
+                            <cite class="pqc-name">{item.name.split(" ")[0]}</cite>
                             <span class="pqc-role">{item.role.split(" · ")[0]}</span>
                           </span>
                           <a
@@ -324,8 +330,8 @@ const testimonials = [
                               />
                             </svg>
                           </a>
-                        </footer>
-                      </blockquote>
+                        </figcaption>
+                      </figure>
                     </li>
                   ))}
                 </ul>
@@ -339,17 +345,19 @@ const testimonials = [
           <ul>
             {testimonials.map((item) => (
               <li>
-                <blockquote>
-                  <span class="plate-quote-meta">
-                    <span class="plate-index">{item.index}</span>
-                  </span>
-                  <p class="plate-quote-text">{item.quote}</p>
-                  <footer>
+                <figure>
+                  <blockquote>
+                    <span class="plate-quote-meta">
+                      <span class="plate-index">{item.index}</span>
+                    </span>
+                    <p class="plate-quote-text">{item.quote}</p>
+                  </blockquote>
+                  <figcaption>
                     <cite class="plate-quote-cite">
                       {item.name} · {item.role}
                     </cite>
-                  </footer>
-                </blockquote>
+                  </figcaption>
+                </figure>
               </li>
             ))}
           </ul>

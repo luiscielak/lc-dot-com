@@ -42,12 +42,13 @@ function visualBlocks(block) {
   if (poster) {
     visuals.push({ src: poster[1], maxCssPx: 400, field: "video.poster" });
   }
-  const phones = block.split(/\nphones:\n/)[1];
-  if (phones) {
-    const rest = phones.split(/\n[a-z]+:/)[0];
+  for (const key of ["phones", "dailyPhones"]) {
+    const chunk = block.split(new RegExp(`\\n${key}:\\n`))[1];
+    if (!chunk) continue;
+    const rest = chunk.split(/\n[a-zA-Z][a-zA-Z0-9]*:/)[0];
     const items = [...rest.matchAll(/\n  - [\s\S]*?src:\s*"([^"]+)"/g)];
     items.forEach((m, i) => {
-      visuals.push({ src: m[1], maxCssPx: PHONE_MAX, field: `phones[${i}]` });
+      visuals.push({ src: m[1], maxCssPx: PHONE_MAX, field: `${key}[${i}]` });
     });
   }
   const stage = block.split(/\nfeatureStage:\n/)[1];

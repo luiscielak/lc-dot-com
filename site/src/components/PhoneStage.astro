@@ -25,10 +25,11 @@ const CENTER_MAX = 320;
 const slides = phones.map((p) => {
   const image = workImage(p.src);
   const widths = [320, 480, 640, 960].filter((w) => w <= image.width);
-  return { ...p, image, widths: widths.length ? widths : [image.width] };
+  const ratio = image.height / image.width;
+  return { ...p, image, widths: widths.length ? widths : [image.width], ratio };
 });
 
-const maxRatio = Math.max(...slides.map((s) => s.image.height / s.image.width), 1.67);
+const maxRatio = Math.max(...slides.map((s) => s.ratio), 1.67);
 
 /** Start centered on the first phone; neighbors fan out from there. */
 const start = 0;
@@ -36,7 +37,7 @@ const start = 0;
 
 <section
   class="phone-stage"
-  style={`--phone-center: ${CENTER_MAX}px; --phone-ratio: ${maxRatio}`}
+  style={`--phone-ratio: ${maxRatio}`}
   data-active={start}
   data-count={slides.length}
   aria-roledescription="carousel"
@@ -47,19 +48,21 @@ const start = 0;
     <ul class="phone-stage-track">
       {
         slides.map((s, i) => (
-          <li class="phone-slide" data-index={i} aria-hidden={i === start ? "false" : "true"}>
-            <div class="phone-slide-stack">
-              <span class="phone-slide-label">{s.label}</span>
-              <div class:list={["phone-slide-frame", s.framed === false && "is-screen"]}>
-                <Picture
-                  src={s.image}
-                  alt={s.alt}
-                  formats={["avif", "webp"]}
-                  widths={s.widths}
-                  sizes={`${CENTER_MAX}px`}
-                  loading={i === start ? "eager" : "lazy"}
-                />
-              </div>
+          <li
+            class="phone-slide"
+            data-index={i}
+            style={`--slide-ratio: ${s.ratio}`}
+            aria-hidden={i === start ? "false" : "true"}
+          >
+            <div class:list={["phone-slide-frame", s.framed === false && "is-screen"]}>
+              <Picture
+                src={s.image}
+                alt={s.alt}
+                formats={["avif", "webp"]}
+                widths={s.widths}
+                sizes={`${CENTER_MAX}px`}
+                loading={i < 5 ? "eager" : "lazy"}
+              />
             </div>
           </li>
         ))
@@ -98,6 +101,22 @@ const start = 0;
     ) : null
   }
 
+  {
+    slides.length > 1 ? (
+      <div class="phone-stage-dots" role="tablist" aria-label="Choose a screen">
+        {slides.map((s, i) => (
+          <button
+            type="button"
+            class="phone-stage-dot"
+            data-index={i}
+            aria-label={`Show ${s.label}`}
+            aria-current={i === start ? "true" : undefined}
+          />
+        ))}
+      </div>
+    ) : null
+  }
+
   <p class="phone-stage-caption" aria-live="polite">
     {
       slides.map((s, i) => (
@@ -118,13 +137,14 @@ const start = 0;
 
     const slides = Array.from(stage.querySelectorAll<HTMLElement>(".phone-slide"));
     const captions = Array.from(stage.querySelectorAll<HTMLElement>(".phone-stage-caption-item"));
+    const dots = Array.from(stage.querySelectorAll<HTMLElement>(".phone-stage-dot"));
     const viewport = stage.querySelector<HTMLElement>(".phone-stage-viewport");
     let active = Number(stage.dataset.active ?? "0");
 
     function render() {
       stage.dataset.active = String(active);
       slides.forEach((slide, i) => {
-        // Signed offset from the centered phone: 0 center, -1/+1 neighbors.
+        // Signed offset from the centered phone: 0 center, ±1 / ±2 neighbors.
         let offset = i - active;
         if (offset > count / 2) offset -= count;
         if (offset < -count / 2) offset += count;
@@ -133,6 +153,10 @@ const start = 0;
         slide.setAttribute("aria-hidden", offset === 0 ? "false" : "true");
       });
       captions.forEach((cap, i) => cap.toggleAttribute("hidden", i !== active));
+      dots.forEach((dot, i) => {
+        if (i === active) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
     }
 
     function go(dir: number) {
@@ -142,6 +166,13 @@ const start = 0;
 
     stage.querySelectorAll<HTMLElement>(".phone-stage-arrow").forEach((btn) => {
       btn.addEventListener("click", () => go(Number(btn.dataset.dir ?? "1")));
+    });
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        active = Number(dot.dataset.index ?? "0");
+        render();
+      });
     });
 
     stage.addEventListener("keydown", (event) => {

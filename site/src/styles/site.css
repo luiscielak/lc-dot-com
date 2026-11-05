@@ -2428,15 +2428,20 @@ html[data-page="resume"] a:hover {
 }
 
 .phone-stage {
-  --phone-center: 320px;
+  --phone-center: min(220px, 16vw);
   --phone-ratio: 1.67;
-  --phone-chip: 2.75rem;
+  --phone-height: calc(var(--phone-center) * var(--phone-ratio));
+  --fan-1: 19vw;
+  --fan-2: 36vw;
+  --scale-1: 0.88;
+  --scale-2: 0.76;
   position: relative;
   margin-top: 2.5rem;
   background: var(--surface);
   border: var(--stroke-hairline) solid var(--border);
-  padding: 2.25rem 3.5rem 1.5rem;
+  padding: 2.25rem 4.25rem 1.5rem;
   outline: none;
+  overflow: visible;
 }
 
 .phone-stage:focus-visible {
@@ -2446,8 +2451,8 @@ html[data-page="resume"] a:hover {
 
 .phone-stage-viewport {
   position: relative;
-  height: calc(var(--phone-center) * var(--phone-ratio) + var(--phone-chip));
-  overflow: hidden;
+  height: var(--phone-height);
+  overflow: visible;
   touch-action: pan-y;
 }
 
@@ -2460,47 +2465,32 @@ html[data-page="resume"] a:hover {
 
 .phone-slide {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
   width: var(--phone-center);
-  transform: translateX(-50%);
-  transition:
-    transform 0.4s ease,
-    opacity 0.4s ease;
+  height: auto;
+  transform: translate(-50%, -50%);
+  transition: transform 0.4s ease;
   cursor: pointer;
-}
-
-.phone-slide-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.phone-slide-label {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 1.7rem;
-  margin-bottom: 0.7rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 999px;
-  background: var(--bg);
-  border: var(--stroke-hairline) solid var(--border);
-  font: var(--type-meta);
-  letter-spacing: var(--type-meta-tracking);
-  color: var(--ink);
-  white-space: nowrap;
+  opacity: 1;
+  overflow: visible;
 }
 
 .phone-slide-frame {
   width: 100%;
+  height: auto;
+  overflow: visible;
 }
 
 .phone-slide-frame img,
-.phone-slide-frame picture {
+.phone-slide-frame picture,
+.phone-slide-frame picture img {
   display: block;
   width: 100%;
   height: auto;
+  object-fit: unset;
+  object-position: unset;
+  overflow: visible;
 }
 
 .phone-slide-frame.is-screen {
@@ -2515,35 +2505,30 @@ html[data-page="resume"] a:hover {
   border-radius: 1.7rem;
 }
 
-/* Center phone and its two neighbors; everything else tucks away. */
+/* Five phones in a row at 1440: full opacity, no grey, no blur. */
 .phone-slide[data-offset="0"] {
-  transform: translateX(-50%) scale(1);
-  z-index: 3;
-  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 5;
 }
 
 .phone-slide[data-offset="-1"] {
-  transform: translateX(calc(-50% - 58%)) scale(0.82);
-  z-index: 2;
-  opacity: 0.68;
+  transform: translate(calc(-50% - var(--fan-1)), -50%) scale(var(--scale-1));
+  z-index: 4;
 }
 
 .phone-slide[data-offset="1"] {
-  transform: translateX(calc(-50% + 58%)) scale(0.82);
-  z-index: 2;
-  opacity: 0.68;
+  transform: translate(calc(-50% + var(--fan-1)), -50%) scale(var(--scale-1));
+  z-index: 4;
 }
 
 .phone-slide[data-offset="-2"] {
-  transform: translateX(calc(-50% - 108%)) scale(0.66);
-  z-index: 1;
-  opacity: 0.32;
+  transform: translate(calc(-50% - var(--fan-2)), -50%) scale(var(--scale-2));
+  z-index: 3;
 }
 
 .phone-slide[data-offset="2"] {
-  transform: translateX(calc(-50% + 108%)) scale(0.66);
-  z-index: 1;
-  opacity: 0.32;
+  transform: translate(calc(-50% + var(--fan-2)), -50%) scale(var(--scale-2));
+  z-index: 3;
 }
 
 .phone-slide:not([data-offset="0"]):not([data-offset="-1"]):not([data-offset="1"]):not(
@@ -2566,13 +2551,13 @@ html[data-page="resume"] a:hover {
 
 .phone-stage-controls {
   position: absolute;
-  inset: calc(var(--phone-chip) + 1rem) 0 auto;
-  height: calc(var(--phone-center) * var(--phone-ratio));
+  inset: 2.25rem 0.65rem auto;
+  height: var(--phone-height);
   display: flex;
   justify-content: space-between;
   align-items: center;
   pointer-events: none;
-  z-index: 4;
+  z-index: 6;
 }
 
 .phone-stage-arrow {
@@ -2599,6 +2584,33 @@ html[data-page="resume"] a:hover {
   outline-offset: 2px;
 }
 
+.phone-stage-dots {
+  display: none;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.phone-stage-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border-radius: 50%;
+  border: var(--stroke-hairline) solid var(--border);
+  background: transparent;
+  cursor: pointer;
+}
+
+.phone-stage-dot[aria-current="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.phone-stage-dot:focus-visible {
+  outline: var(--stroke-rail) solid var(--accent);
+  outline-offset: 2px;
+}
+
 .phone-stage-caption {
   margin: 1.25rem auto 0;
   max-width: 44rem;
@@ -2615,14 +2627,12 @@ html[data-page="resume"] a:hover {
   }
 }
 
-@media (max-width: 720px) {
-  .ps-principles ul {
-    grid-template-columns: 1fr;
-  }
-
+/* Three whole phones at tablet widths. */
+@media (max-width: 860px) {
   .phone-stage {
-    --phone-center: min(280px, 68vw);
-    padding-inline: 2.5rem;
+    --phone-center: min(200px, 24vw);
+    --fan-1: 24vw;
+    padding-inline: 3.25rem;
   }
 
   .phone-slide[data-offset="-2"],
@@ -2632,22 +2642,46 @@ html[data-page="resume"] a:hover {
   }
 }
 
-/* Single swipeable phone + chips at 390px. */
-@media (max-width: 390px) {
+@media (max-width: 720px) {
+  .ps-principles ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Single swipeable phone + dots at phone width (390 design).
+   Active slide is in-flow so the whole image sets the height — nothing clips. */
+@media (max-width: 480px) {
   .phone-stage {
-    --phone-center: min(280px, calc(100vw - 3rem));
+    --phone-center: min(280px, calc(100vw - 4rem));
     padding: 1.5rem 0.75rem 1.25rem;
+  }
+
+  .phone-stage-viewport {
+    height: auto;
+    overflow: visible;
+  }
+
+  .phone-slide {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--phone-center);
+    height: auto;
+    transform: translateX(-50%);
+  }
+
+  .phone-slide[data-offset="0"] {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-inline: auto;
+    z-index: 5;
   }
 
   .phone-slide:not([data-offset="0"]) {
     opacity: 0;
     pointer-events: none;
-  }
-
-  .phone-slide-label {
-    white-space: normal;
-    text-align: center;
-    max-width: 100%;
   }
 
   .phone-stage-controls {
@@ -2658,6 +2692,10 @@ html[data-page="resume"] a:hover {
     gap: 1rem;
     margin-top: 1rem;
     pointer-events: auto;
+  }
+
+  .phone-stage-dots {
+    display: flex;
   }
 }
 

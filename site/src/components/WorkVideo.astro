@@ -10,16 +10,26 @@ interface Props {
   maxCssPx: number;
   /** Phone-width frame. Desktop recordings leave this off. */
   phone?: boolean;
+  /** Public URL of a grayscale mask that knocks the device onto `--bg`. */
+  mask?: string;
+  /** Optional VP9-alpha WebM served before the MP4. */
+  webm?: string;
 }
 
-const { src, poster, caption, fallbackAlt, maxCssPx, phone = true } = Astro.props;
+const { src, poster, caption, fallbackAlt, maxCssPx, phone = true, mask, webm } = Astro.props;
 const posterImage = workImage(poster);
 const cap = Math.min(maxCssPx, Math.floor(posterImage.width / 1.5));
+const vars = [
+  phone ? `--phone-max: ${cap}px` : `--figure-max: ${cap}px`,
+  mask ? `--device-mask: url("${mask}")` : "",
+]
+  .filter(Boolean)
+  .join("; ");
 ---
 
 <figure
-  class:list={["figure", phone && "phone"]}
-  style={phone ? `--phone-max: ${cap}px` : `--figure-max: ${cap}px`}
+  class:list={["figure", phone && "phone", mask && "is-knockout"]}
+  style={vars}
   data-src={poster}
   data-src-width={posterImage.width}
   data-render-max={cap}
@@ -33,6 +43,7 @@ const cap = Math.min(maxCssPx, Math.floor(posterImage.width / 1.5));
     poster={posterImage.src}
     aria-label={caption}
   >
+    {webm ? <source src={webm} type="video/webm" /> : null}
     <source src={src} type="video/mp4" />
   </video>
   <div class="js-video-fallback" hidden>
@@ -40,8 +51,9 @@ const cap = Math.min(maxCssPx, Math.floor(posterImage.width / 1.5));
       src={posterImage}
       alt={fallbackAlt}
       formats={["avif", "webp"]}
-      widths={[640, 960]}
+      widths={[640, 960].filter((w) => w <= posterImage.width)}
       sizes={`min(100vw - 2rem, ${cap}px)`}
+      quality={90}
     />
   </div>
   <figcaption>{caption}</figcaption>

@@ -576,6 +576,23 @@ html[data-page="nameplate"] .site-footer {
   height: auto;
 }
 
+/* Knock a device-framed recording onto the page background (`--bg`). */
+.figure.is-knockout {
+  background: transparent;
+}
+
+.figure.is-knockout video,
+.figure.is-knockout .js-video-fallback picture,
+.figure.is-knockout .js-video-fallback img {
+  background: transparent;
+  -webkit-mask-image: var(--device-mask);
+  mask-image: var(--device-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
 .figure figcaption {
   font: var(--type-meta);
   letter-spacing: var(--type-meta-tracking);

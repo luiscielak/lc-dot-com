@@ -2153,6 +2153,15 @@ html[data-page="resume"] a:hover {
   line-height: 1.45;
 }
 
+.about a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+.about a:hover {
+  color: var(--np-teal);
+}
+
 .about-portrait {
   display: block;
   width: 100%;

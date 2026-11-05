@@ -826,6 +826,15 @@ html[data-page="nameplate"] a:focus-visible {
   line-height: 30px;
 }
 
+.plate-bio a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+.plate-bio a:hover {
+  color: var(--np-teal);
+}
+
 .plate-actions {
   display: flex;
   flex-shrink: 0;
@@ -2151,6 +2160,15 @@ html[data-page="resume"] a:hover {
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.45;
+}
+
+.about a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+.about a:hover {
+  color: var(--np-teal);
 }
 
 .about-portrait {

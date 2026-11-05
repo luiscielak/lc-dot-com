@@ -287,6 +287,8 @@ const work = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     company: z.string().optional(),
+    /** Homepage / listing category (e.g. Investing), distinct from the company field. */
+    category: z.string().optional(),
     role: z.string().optional(),
     years: z.string().optional(),
     status: z.string().optional(),

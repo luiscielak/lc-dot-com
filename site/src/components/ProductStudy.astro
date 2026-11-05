@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import Figure from "./Figure.astro";
 import PhoneStage from "./PhoneStage.astro";
+import { workBadge } from "../lib/site";
 import { renderProse } from "../lib/prose";
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 const { entry, next } = Astro.props;
 const d = entry.data;
 const figures = d.figures ?? {};
+const badge = workBadge(d);
+const nextBadge = next ? workBadge(next.data) : undefined;
 
 function html(s?: string) {
   return s ? renderProse(s) : "";
@@ -88,7 +91,7 @@ if (d.outcome) {
 <article class="product-study">
   <header class="ps-hero wrap">
     <p class="ps-kicker">
-      {d.draft ? <span class="badge">Draft</span> : null}
+      {badge ? <span class="badge">{badge}</span> : null}
       Case study
     </p>
     <h1>{d.title}</h1>
@@ -177,7 +180,7 @@ if (d.outcome) {
             thread per task.
           </p>
         </div>
-        <PhoneStage phones={d.phones} />
+        <PhoneStage phones={d.phones} label="StraatClaw on the phone" />
       </section>
     ) : null
   }
@@ -217,7 +220,7 @@ if (d.outcome) {
       <nav class="next wrap">
         <span>Next case study</span>
         <a href={`/work/${next.id}`}>
-          {next.data.draft ? "Draft · " : ""}
+          {nextBadge ? `${nextBadge} · ` : ""}
           {next.data.title}
         </a>
       </nav>

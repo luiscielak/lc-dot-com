@@ -59,6 +59,8 @@ const phone = z.object({
   src: z.string(),
   alt: z.string(),
   caption: z.string(),
+  /** False when the image is a bare screenshot and the stage should draw the bezel. */
+  framed: z.boolean().optional(),
 });
 
 const featureStageItem = z.object({
@@ -101,6 +103,7 @@ const editorialStat = z.object({
 const editorialCompetitor = z.object({
   app: z.string(),
   take: z.string(),
+  state: z.enum(["confirmed", "not-confirmed"]).optional(),
 });
 
 const editorialJob = z.object({
@@ -112,8 +115,19 @@ const editorialJob = z.object({
 const editorialExperiment = z.object({
   name: z.string(),
   hypothesis: z.string(),
+  control: z.string(),
+  variant: z.string(),
   primary: z.string(),
   guardrail: z.string(),
+});
+
+const editorialPhone = z.object({
+  label: z.string(),
+  title: z.string().optional(),
+  src: z.string(),
+  alt: z.string(),
+  maxCssPx: z.number().positive(),
+  framed: z.boolean().optional(),
 });
 
 const editorialMethodItem = z.object({
@@ -159,7 +173,7 @@ const editorial = z.object({
   field: z.object({
     heading: z.string(),
     quotes: z.array(editorialQuote).min(1),
-    note: z.string(),
+    note: z.string().optional(),
   }),
   competitors: z
     .object({
@@ -177,7 +191,40 @@ const editorial = z.object({
         shortFree: z.array(editorialCompetitor).min(1),
         shortCard: z.array(editorialCompetitor).min(1),
       }),
+      unconfirmed: z.array(editorialCompetitor).optional(),
       aside: z.string(),
+    })
+    .optional(),
+  weekStrip: z
+    .object({
+      heading: z.string(),
+      caption: z.string(),
+      items: z.array(editorialPhone).min(2),
+    })
+    .optional(),
+  gallery: z
+    .object({
+      heading: z.string(),
+      caption: z.string().optional(),
+      items: z.array(editorialPhone).min(1),
+    })
+    .optional(),
+  process: z
+    .object({
+      heading: z.string(),
+      lofi: z.object({
+        label: z.string(),
+        title: z.string(),
+        body: z.string(),
+      }),
+      midfi: editorialPhone,
+      final: editorialPhone,
+    })
+    .optional(),
+  built: z
+    .object({
+      heading: z.string(),
+      items: z.array(z.object({ label: z.string(), body: z.string() })).min(1),
     })
     .optional(),
   bet: z
@@ -200,11 +247,13 @@ const editorial = z.object({
       items: z.array(editorialExperiment).min(1),
     })
     .optional(),
-  figure: z.object({
-    title: z.string(),
-    caption: z.string(),
-    steps: z.array(editorialStep).min(2),
-  }),
+  figure: z
+    .object({
+      title: z.string(),
+      caption: z.string(),
+      steps: z.array(editorialStep).min(2),
+    })
+    .optional(),
   flows: z
     .object({
       heading: z.string(),
@@ -226,6 +275,12 @@ const editorial = z.object({
     heading: z.string(),
     cells: z.array(editorialCell).length(3),
   }),
+  reflection: z
+    .object({
+      heading: z.string(),
+      body: z.string(),
+    })
+    .optional(),
 });
 
 const work = defineCollection({
@@ -253,6 +308,12 @@ const work = defineCollection({
     presentation: z.enum(["product", "editorial"]).optional(),
     editorial: editorial.optional(),
     phones: z.array(phone).optional(),
+    /** Public-safe roster diagram when a team-map image is not available. */
+    teamMap: z
+      .object({
+        caption: z.string(),
+      })
+      .optional(),
     recreatedNote: z.string().optional(),
     researchHeading: z.string().default("Research & Insights"),
     /** Named section figures for the product-study template. Unused keys are ignored. */

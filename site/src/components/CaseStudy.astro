@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import Figure from "./Figure.astro";
 import FeatureStage from "./FeatureStage.astro";
 import WorkVideo from "./WorkVideo.astro";
+import { workBadge } from "../lib/site";
 import { renderProse } from "../lib/prose";
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 
 const { entry, next } = Astro.props;
 const d = entry.data;
+const badge = workBadge(d);
+const nextBadge = next ? workBadge(next.data) : undefined;
 const confirmed = d.metrics.filter((m) => m.confirmed);
 const quotes = d.researchQuotes ?? [];
 const v = d.visuals;
@@ -36,7 +39,7 @@ function initials(name: string) {
 <article>
   <header class="cs-header wrap">
     <p class="cs-kicker">
-      {d.draft ? <span class="badge">Draft</span> : null}
+      {badge ? <span class="badge">{badge}</span> : null}
       Case study
     </p>
     <h1>{d.title}</h1>
@@ -257,7 +260,7 @@ function initials(name: string) {
       <nav class="next wrap">
         <span>Next case study</span>
         <a href={`/work/${next.id}`}>
-          {next.data.draft ? "Draft · " : ""}
+          {nextBadge ? `${nextBadge} · ` : ""}
           {next.data.title}
         </a>
       </nav>

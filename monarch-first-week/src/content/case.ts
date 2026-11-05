@@ -13,12 +13,12 @@ export const caseStudy = {
   moment: {
     kicker: 'The moment',
     headline: 'A household opens Monarch with seven days on the clock.',
-    body: 'Payment method required. Cancel at least 24 hours before the trial ends, or the card is billed. Setup lives in a help article, not in the product.',
+    body: 'Payment method required. Cancel at least 24 hours before the trial ends, or the card is billed.',
   },
   tension: {
     kicker: 'The tension',
     headline: 'Week one breaks on the bill, the sync, and the categories.',
-    body: 'Luis uses Monarch with a household. Miscategorizations, sync gaps, transfers counted as spend, a billing surprise. The public record says the same.',
+    body: 'Household use of Monarch shows the same friction the public record does: miscategorizations, sync gaps, transfers counted as spend, a billing surprise.',
     method: '500 most recent US App Store reviews, coded Oct 29, 2026. Counts are signals, not rates.',
     problems: [
       { title: 'Billing surprise', body: 'A card on file, a seven-day clock, and reviews that say the charge still landed.' },
@@ -50,7 +50,7 @@ export const caseStudy = {
   field: {
     kicker: 'The field',
     headline: 'Everyone else gives the first month more room.',
-    fit: 'Monarch’s 7 days is the shortest paid trial in this set. First Week is the design answer if the length stays.',
+    fit: 'Monarch’s 7 days is tied for the shortest paid trial in this set. First Week is the design answer if the length stays.',
     axes: {
       xLeft: 'No card / free',
       xRight: 'Card required',
@@ -68,14 +68,13 @@ export const caseStudy = {
       ],
       shortFree: [
         { app: 'Empower', take: 'Free. No trial needed.' },
-        { app: 'Simplifi', take: 'No trial. Paid at signup.' },
       ],
       shortCard: [
         { app: 'Monarch', take: '7 days, card required' },
-        { app: 'Origin', take: '7 days' },
+        { app: 'Simplifi', take: 'Paid at signup. No trial.' },
       ],
     },
-    aside: 'Rocket Money: 7-day Premium trial (from earlier research, not rechecked). Card not confirmed.',
+    aside: 'Origin: 7 days normally; trial paused during the $1 offer; card not confirmed. Rocket Money: 7-day Premium trial (from earlier research, not rechecked). Card not confirmed.',
   },
   pricing: {
     kicker: 'The price',
@@ -195,7 +194,7 @@ export const caseStudy = {
   reflection: {
     kicker: 'Reflection',
     headline: 'I already live this week.',
-    body: 'A designer who uses Monarch with a household, and who already runs Finley on Monarch’s MCP, can feel when a first week is honest. This concept does not invent a conversion rate. It makes the trial week complete.',
+    body: 'A designer in household use of Monarch, who already runs Finley on Monarch’s official MCP, can feel when a first week is honest. This concept does not invent a conversion rate. It makes the trial week complete.',
   },
   placeholders: {
     household: 'How long you’ve used Monarch, and who does what day to day.',

@@ -128,24 +128,35 @@ a:hover {
   padding-top: 64px;
 }
 
-.foot-mark {
+/* Lock the mark to paper ink in every link state. Konstrukt's `a:visited`
+   (accent mix, #2ABFCC in dark mode) and the global `a:hover` otherwise win
+   on specificity, and a currentColor mask would pick that teal up — the
+   usual case on a phone after visiting `/`. */
+a.foot-mark,
+a.foot-mark:link,
+a.foot-mark:visited,
+a.foot-mark:hover,
+a.foot-mark:active,
+a.foot-mark:focus,
+a.foot-mark:focus-visible {
   display: block;
   flex-shrink: 0;
   line-height: 0;
   color: var(--foot-ink);
+  -webkit-text-fill-color: var(--foot-ink);
+}
+
+a.foot-mark:hover {
+  opacity: 0.72;
 }
 
 .foot-mark-glyph {
   display: block;
   width: 176px;
   aspect-ratio: 966 / 1144;
-  background-color: currentColor;
+  background-color: var(--foot-ink);
   -webkit-mask: url("/logos/luis-cielak-mark-black.svg") center / contain no-repeat;
   mask: url("/logos/luis-cielak-mark-black.svg") center / contain no-repeat;
-}
-
-.foot-mark:hover {
-  color: var(--foot-accent);
 }
 
 .foot-baseline {
@@ -210,6 +221,23 @@ html[data-page="nameplate"] .site-footer {
     flex-direction: column;
     gap: 10px;
     padding-bottom: 0;
+  }
+
+  /* Grow the hit area without stretching the visual stack. */
+  .foot-items a,
+  .foot-top {
+    position: relative;
+  }
+
+  .foot-items a::before,
+  .foot-top::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: 44px;
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -1131,7 +1159,8 @@ html[data-page="nameplate"] a:focus-visible {
   grid-template-areas:
     "index draft"
     "title title"
-    "blurb blurb";
+    "blurb blurb"
+    "result result";
   gap: 8px 16px;
   padding: 28px 0 32px;
   color: inherit;
@@ -1153,6 +1182,11 @@ html[data-page="nameplate"] a:focus-visible {
 .plate-catalog .plate-blurb {
   grid-area: blurb;
   max-width: 42rem;
+}
+
+.plate-catalog .plate-result {
+  grid-area: result;
+  margin-top: 0;
 }
 
 .plate-catalog .plate-draft {
@@ -2315,6 +2349,88 @@ html[data-page="resume"] a:hover {
   margin: 0;
 }
 
+.ps-approvals {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.ps-approvals.is-pair {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.ps-approvals .ps-panel {
+  width: 100%;
+}
+
+/* Public roster — how-it-works figure when a team-map image is not on file. */
+.agent-map {
+  margin: 1.5rem 0 0;
+}
+
+.agent-map-panel {
+  background: var(--surface);
+  border: var(--stroke-hairline) solid var(--border);
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+}
+
+.agent-map-kicker {
+  margin: 0 0 0.75rem;
+  font: var(--type-meta);
+  letter-spacing: var(--type-meta-tracking);
+  text-transform: uppercase;
+  color: var(--ps-muted);
+}
+
+.agent-map-roster {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+.agent-map-roster li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+  background: var(--bg);
+  border: var(--stroke-hairline) solid var(--border);
+}
+
+.agent-map-roster strong,
+.agent-map-runtime strong {
+  font: var(--type-heading);
+  letter-spacing: var(--type-heading-tracking);
+}
+
+.agent-map-roster span,
+.agent-map-runtime span:last-child {
+  color: var(--ps-muted);
+}
+
+.agent-map-runtime {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.1rem;
+  border: var(--stroke-hairline) solid var(--border);
+  background: var(--bg);
+}
+
+.agent-map-runtime .agent-map-kicker {
+  margin: 0;
+}
+
+.agent-map figcaption {
+  font: var(--type-meta);
+  letter-spacing: var(--type-meta-tracking);
+  margin-top: 0.75rem;
+  color: var(--ps-muted);
+}
+
 .ps-close {
   padding-block: var(--ps-gap);
   border-top: var(--stroke-hairline) solid var(--border);
@@ -2333,10 +2449,13 @@ html[data-page="resume"] a:hover {
 
 .phone-stage {
   --phone-center: 320px;
+  --phone-ratio: 1.67;
+  --phone-chip: 2.75rem;
+  position: relative;
   margin-top: 2.5rem;
   background: var(--surface);
   border: var(--stroke-hairline) solid var(--border);
-  padding: 2rem 1rem 1.5rem;
+  padding: 2.25rem 3.5rem 1.5rem;
   outline: none;
 }
 
@@ -2347,8 +2466,9 @@ html[data-page="resume"] a:hover {
 
 .phone-stage-viewport {
   position: relative;
-  height: calc(var(--phone-center) * 1.67 + 2.5rem);
+  height: calc(var(--phone-center) * var(--phone-ratio) + var(--phone-chip));
   overflow: hidden;
+  touch-action: pan-y;
 }
 
 .phone-stage-track {
@@ -2370,14 +2490,30 @@ html[data-page="resume"] a:hover {
   cursor: pointer;
 }
 
+.phone-slide-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .phone-slide-label {
-  display: block;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.7rem;
+  margin-bottom: 0.7rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: var(--bg);
+  border: var(--stroke-hairline) solid var(--border);
   font: var(--type-meta);
   letter-spacing: var(--type-meta-tracking);
-  color: var(--ps-muted);
-  margin-bottom: 0.6rem;
-  height: 1.4em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.phone-slide-frame {
+  width: 100%;
 }
 
 .phone-slide-frame img,
@@ -2385,6 +2521,18 @@ html[data-page="resume"] a:hover {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.phone-slide-frame.is-screen {
+  box-sizing: border-box;
+  padding: 14px;
+  border-radius: 2.4rem;
+  background: color-mix(in srgb, var(--ink) 12%, var(--bg));
+}
+
+.phone-slide-frame.is-screen img,
+.phone-slide-frame.is-screen picture img {
+  border-radius: 1.7rem;
 }
 
 /* Center phone and its two neighbors; everything else tucks away. */
@@ -2395,25 +2543,25 @@ html[data-page="resume"] a:hover {
 }
 
 .phone-slide[data-offset="-1"] {
-  transform: translateX(calc(-50% - 60%)) scale(0.82);
+  transform: translateX(calc(-50% - 58%)) scale(0.82);
   z-index: 2;
   opacity: 0.68;
 }
 
 .phone-slide[data-offset="1"] {
-  transform: translateX(calc(-50% + 60%)) scale(0.82);
+  transform: translateX(calc(-50% + 58%)) scale(0.82);
   z-index: 2;
   opacity: 0.68;
 }
 
 .phone-slide[data-offset="-2"] {
-  transform: translateX(calc(-50% - 112%)) scale(0.66);
+  transform: translateX(calc(-50% - 108%)) scale(0.66);
   z-index: 1;
   opacity: 0.32;
 }
 
 .phone-slide[data-offset="2"] {
-  transform: translateX(calc(-50% + 112%)) scale(0.66);
+  transform: translateX(calc(-50% + 108%)) scale(0.66);
   z-index: 1;
   opacity: 0.32;
 }
@@ -2430,23 +2578,34 @@ html[data-page="resume"] a:hover {
   transition: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .phone-slide {
+    transition: none;
+  }
+}
+
 .phone-stage-controls {
+  position: absolute;
+  inset: calc(var(--phone-chip) + 1rem) 0 auto;
+  height: calc(var(--phone-center) * var(--phone-ratio));
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.25rem;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 4;
 }
 
 .phone-stage-arrow {
+  pointer-events: auto;
   width: 2.75rem;
   height: 2.75rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
   background: var(--bg);
   color: var(--ink);
   border: var(--stroke-hairline) solid var(--border);
-  font-size: 1.1rem;
   cursor: pointer;
 }
 
@@ -2463,6 +2622,7 @@ html[data-page="resume"] a:hover {
 .phone-stage-caption {
   margin: 1.25rem auto 0;
   max-width: 44rem;
+  min-height: 3.2em;
   text-align: center;
   font: var(--type-meta);
   letter-spacing: var(--type-meta-tracking);
@@ -2481,13 +2641,43 @@ html[data-page="resume"] a:hover {
   }
 
   .phone-stage {
-    --phone-center: min(280px, 72vw);
+    --phone-center: min(280px, 68vw);
+    padding-inline: 2.5rem;
   }
 
-  /* Only the centered phone on small screens. */
+  .phone-slide[data-offset="-2"],
+  .phone-slide[data-offset="2"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* Single swipeable phone + chips at 390px. */
+@media (max-width: 390px) {
+  .phone-stage {
+    --phone-center: min(280px, calc(100vw - 3rem));
+    padding: 1.5rem 0.75rem 1.25rem;
+  }
+
   .phone-slide:not([data-offset="0"]) {
     opacity: 0;
     pointer-events: none;
+  }
+
+  .phone-slide-label {
+    white-space: normal;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .phone-stage-controls {
+    position: static;
+    height: auto;
+    inset: auto;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    pointer-events: auto;
   }
 }
 
@@ -2874,7 +3064,7 @@ html[data-page="resume"] a:hover {
 
 /* Hero */
 .es-hero {
-  padding-block: clamp(2.5rem, 6vw, 4.5rem) 0;
+  padding-block: clamp(1.75rem, 4vw, 3rem) 0;
 }
 
 .es-kicker {
@@ -2948,10 +3138,10 @@ html[data-page="resume"] a:hover {
   max-width: 22ch;
 }
 
-/* TL;DR — short claim between hero and opener */
+/* TL;DR — short claim between hero and the week strip */
 .es-tldr {
-  padding-block: clamp(2rem, 4vw, 3rem) 0;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-block: clamp(1.25rem, 3vw, 2rem) 0;
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
   border-top: 1px solid var(--es-ink);
 }
 
@@ -2970,6 +3160,204 @@ html[data-page="resume"] a:hover {
   margin: 0;
 }
 
+/* Week strip — first real screens, right after TL;DR */
+.es-week,
+.es-gallery,
+.es-process {
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.es-week-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.es-week-caption {
+  font-family: var(--es-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--es-faint);
+  margin: 0;
+}
+
+.es-week-strip,
+.es-gallery-grid,
+.es-process-strip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.es-week-strip {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+}
+
+.es-week-item,
+.es-gallery-grid li,
+.es-process-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.es-week-item {
+  flex: 0 0 auto;
+  width: min(42vw, 168px);
+  scroll-snap-align: start;
+}
+
+.es-week-label {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--es-accent);
+}
+
+.es-week-title {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: var(--es-ink);
+}
+
+.es-phone {
+  margin: 0;
+  border-radius: 1.35rem;
+  overflow: hidden;
+  background: #2a2118;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--es-ink) 12%, transparent);
+}
+
+.es-phone img,
+.es-phone picture {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.es-phone.is-screen {
+  padding: 8px;
+  background: color-mix(in srgb, var(--es-ink) 14%, var(--es-bg));
+}
+
+.es-phone.is-screen img {
+  border-radius: 1rem;
+}
+
+.es-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 220px));
+  gap: 1rem 1.25rem;
+}
+
+.es-process-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.es-lofi {
+  margin: 0;
+  padding: 0.85rem 0.9rem;
+  background: var(--es-surface);
+  border: 1px solid var(--es-rule);
+  border-radius: 0.75rem;
+  font-family: var(--es-mono);
+  font-size: 0.62rem;
+  line-height: 1.35;
+  color: var(--es-ink);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.es-built {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+  max-width: 52rem;
+}
+
+.es-built li {
+  display: grid;
+  grid-template-columns: minmax(6rem, 8rem) minmax(0, 1fr);
+  gap: 0.75rem 1.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--es-rule);
+}
+
+.es-built li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.es-exp-ab {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0 0 0.85rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--es-ink);
+}
+
+.es-exp-ab b {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--es-accent);
+  margin-right: 0.4rem;
+}
+
+.es-pos-state {
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-family: var(--es-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--es-faint);
+  border: 1px dashed var(--es-faint);
+  border-radius: 999px;
+  padding: 0.1rem 0.4rem;
+  vertical-align: middle;
+}
+
+.es-pos-app.is-unconfirmed {
+  opacity: 0.92;
+}
+
+.es-pos-unconfirmed {
+  margin-top: 0.75rem;
+  padding: 1rem 1.1rem;
+  border: 1px dashed var(--es-faint);
+  background: color-mix(in srgb, var(--es-surface) 70%, transparent);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  align-items: baseline;
+}
+
+.es-pos-unconfirmed-label {
+  font-family: var(--es-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--es-faint);
+  margin: 0;
+  width: 100%;
+}
+
 /* Split sections — main column plus a mono side note */
 .es-split {
   display: grid;
@@ -2983,6 +3371,10 @@ html[data-page="resume"] a:hover {
 .es-split:first-of-type {
   border-top: 0;
   margin-top: 0;
+}
+
+.es-split.is-single {
+  grid-template-columns: minmax(0, 640px);
 }
 
 .es-eyebrow {
@@ -3444,6 +3836,13 @@ html[data-page="resume"] a:hover {
   line-height: 1.5;
   color: var(--es-ink);
   max-width: 52rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.es-jobs li span {
+  color: var(--es-muted);
 }
 
 .es-jobs li:first-child {
@@ -3708,6 +4107,49 @@ html[data-page="resume"] a:hover {
 
   .es-flow-caption {
     max-width: 40ch;
+  }
+
+  .es-gallery-grid,
+  .es-process-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .es-process-step:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .es-built li {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .es-week-item {
+    width: min(48vw, 180px);
+  }
+
+  .es-hero {
+    padding-block: 1.25rem 0;
+  }
+
+  .es-hero h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .es-meta {
+    gap: 0.85rem 1.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+  }
+
+  .es-tldr {
+    padding-block: 1rem 0;
+    margin-top: 1rem;
+  }
+
+  .es-week,
+  .es-gallery,
+  .es-process {
+    margin-top: 1.15rem;
   }
 }
 

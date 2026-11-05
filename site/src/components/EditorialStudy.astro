@@ -2,6 +2,7 @@
 import { Picture } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { workImage } from "../lib/images";
+import { workBadge } from "../lib/site";
 
 interface Props {
   entry: CollectionEntry<"work">;
@@ -11,6 +12,8 @@ interface Props {
 const { entry, next } = Astro.props;
 const d = entry.data;
 const e = d.editorial!;
+const badge = workBadge(d);
+const nextBadge = next ? workBadge(next.data) : undefined;
 
 const meta = [
   d.role ? { dt: "Role", dd: d.role } : null,
@@ -24,6 +27,20 @@ const prototypeSrc =
   e.prototype && isDev
     ? "http://127.0.0.1:45261/prototype"
     : e.prototype?.src;
+
+function phonePanel<T extends { src: string; maxCssPx: number }>(item: T, i: number) {
+  const image = workImage(item.src);
+  const cap = Math.min(item.maxCssPx, Math.floor(image.width / 1.5));
+  const widths = [...new Set([320, 480, 640, image.width].filter((w) => w <= image.width))].sort(
+    (a, b) => a - b,
+  );
+  return { ...item, image, cap, widths: widths.length ? widths : [image.width], index: i };
+}
+
+const weekPhones = e.weekStrip?.items.map(phonePanel) ?? [];
+const galleryPhones = e.gallery?.items.map(phonePanel) ?? [];
+const processMid = e.process ? phonePanel(e.process.midfi, 0) : null;
+const processFinal = e.process ? phonePanel(e.process.final, 1) : null;
 
 const flowPanels =
   e.flows?.items.map((item, i) => {
@@ -39,7 +56,7 @@ const flowPanels =
 <article class="editorial-study">
   <header class="es-hero wrap">
     <p class="es-kicker">
-      {d.draft ? <span class="es-badge">Draft</span> : null}
+      {badge ? <span class="es-badge">{badge}</span> : null}
       {e.kicker}
     </p>
     <h1>{d.title}</h1>
@@ -56,13 +73,44 @@ const flowPanels =
         </dl>
       ) : null
     }
-    </header>
+  </header>
 
   {
     d.tldr ? (
       <section class="es-tldr wrap" id="tldr">
         <p class="es-eyebrow">TL;DR</p>
         <p class="es-tldr-body">{d.tldr}</p>
+      </section>
+    ) : null
+  }
+
+  {
+    e.weekStrip && weekPhones.length ? (
+      <section class="es-week wrap" id="week" aria-labelledby="es-week-title">
+        <div class="es-week-head">
+          <p class="es-eyebrow" id="es-week-title">{e.weekStrip.heading}</p>
+          <p class="es-week-caption">{e.weekStrip.caption}</p>
+        </div>
+        <ol class="es-week-strip">
+          {
+            weekPhones.map((phone) => (
+              <li class="es-week-item">
+                <figure class:list={["es-phone", phone.framed === false && "is-screen"]}>
+                  <Picture
+                    src={phone.image}
+                    alt={phone.alt}
+                    formats={["avif", "webp"]}
+                    widths={phone.widths}
+                    sizes={`min(42vw, ${phone.cap}px)`}
+                    loading={phone.index === 0 ? "eager" : "lazy"}
+                  />
+                </figure>
+                <span class="es-week-label">{phone.label}</span>
+                {phone.title ? <span class="es-week-title">{phone.title}</span> : null}
+              </li>
+            ))
+          }
+        </ol>
       </section>
     ) : null
   }
@@ -125,7 +173,7 @@ const flowPanels =
     </aside>
   </section>
 
-  <section class="es-split wrap" id="voices">
+  <section class:list={["es-split", "wrap", !e.field.note && "is-single"]} id="voices">
     <div class="es-main">
       <p class="es-eyebrow">{e.field.heading}</p>
       <div class="es-quotes">
@@ -139,10 +187,14 @@ const flowPanels =
         }
       </div>
     </div>
-    <aside class="es-note">
-      <p class="es-note-label">Note</p>
-      <p>{e.field.note}</p>
-    </aside>
+    {
+      e.field.note ? (
+        <aside class="es-note">
+          <p class="es-note-label">Note</p>
+          <p>{e.field.note}</p>
+        </aside>
+      ) : null
+    }
   </section>
 
   {
@@ -158,16 +210,18 @@ const flowPanels =
             <div class="es-pos-y">{e.competitors.axes.yTop}</div>
             <div class="es-pos-cell">
               {e.competitors.cells.longFree.map((item) => (
-                <span class="es-pos-app">
+                <span class:list={["es-pos-app", item.state === "not-confirmed" && "is-unconfirmed"]}>
                   {item.app}
+                  {item.state === "not-confirmed" ? <span class="es-pos-state">Not confirmed</span> : null}
                   <span class="es-pos-take">{item.take}</span>
                 </span>
               ))}
             </div>
             <div class="es-pos-cell">
               {e.competitors.cells.longCard.map((item) => (
-                <span class="es-pos-app">
+                <span class:list={["es-pos-app", item.state === "not-confirmed" && "is-unconfirmed"]}>
                   {item.app}
+                  {item.state === "not-confirmed" ? <span class="es-pos-state">Not confirmed</span> : null}
                   <span class="es-pos-take">{item.take}</span>
                 </span>
               ))}
@@ -175,21 +229,37 @@ const flowPanels =
             <div class="es-pos-y">{e.competitors.axes.yBottom}</div>
             <div class="es-pos-cell">
               {e.competitors.cells.shortFree.map((item) => (
-                <span class="es-pos-app">
+                <span class:list={["es-pos-app", item.state === "not-confirmed" && "is-unconfirmed"]}>
                   {item.app}
+                  {item.state === "not-confirmed" ? <span class="es-pos-state">Not confirmed</span> : null}
                   <span class="es-pos-take">{item.take}</span>
                 </span>
               ))}
             </div>
             <div class="es-pos-cell is-here">
               {e.competitors.cells.shortCard.map((item) => (
-                <span class="es-pos-app">
+                <span class:list={["es-pos-app", item.state === "not-confirmed" && "is-unconfirmed"]}>
                   {item.app}
+                  {item.state === "not-confirmed" ? <span class="es-pos-state">Not confirmed</span> : null}
                   <span class="es-pos-take">{item.take}</span>
                 </span>
               ))}
             </div>
           </div>
+          {
+            e.competitors.unconfirmed?.length ? (
+              <div class="es-pos-unconfirmed">
+                <p class="es-pos-unconfirmed-label">Card not confirmed</p>
+                {e.competitors.unconfirmed.map((item) => (
+                  <span class="es-pos-app is-unconfirmed">
+                    {item.app}
+                    <span class="es-pos-state">Not confirmed</span>
+                    <span class="es-pos-take">{item.take}</span>
+                  </span>
+                ))}
+              </div>
+            ) : null
+          }
           <figcaption class="es-pos-aside">{e.competitors.aside}</figcaption>
         </figure>
       </section>
@@ -213,12 +283,86 @@ const flowPanels =
         <ul class="es-jobs">
           {e.jobs.items.map((job) => (
             <li>
-              <span>
-                When <b>{job.when}</b>, I want to {job.want}, so I can {job.so}.
-              </span>
+              <b>{job.when}</b>
+              <span>→ {job.want}</span>
+              <span>→ {job.so}</span>
             </li>
           ))}
         </ul>
+      </section>
+    ) : null
+  }
+
+  {
+    e.gallery && galleryPhones.length ? (
+      <section class="es-gallery wrap" id="gallery">
+        <div class="es-week-head">
+          <p class="es-eyebrow">{e.gallery.heading}</p>
+          {e.gallery.caption ? <p class="es-week-caption">{e.gallery.caption}</p> : null}
+        </div>
+        <ul class="es-gallery-grid">
+          {
+            galleryPhones.map((phone) => (
+              <li>
+                <figure class:list={["es-phone", phone.framed === false && "is-screen"]}>
+                  <Picture
+                    src={phone.image}
+                    alt={phone.alt}
+                    formats={["avif", "webp"]}
+                    widths={phone.widths}
+                    sizes={`(max-width: 760px) 42vw, ${phone.cap}px`}
+                    loading="lazy"
+                  />
+                </figure>
+                <span class="es-week-label">{phone.label}</span>
+                {phone.title ? <span class="es-week-title">{phone.title}</span> : null}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    ) : null
+  }
+
+  {
+    e.process && processMid && processFinal ? (
+      <section class="es-process wrap" id="process">
+        <p class="es-eyebrow">{e.process.heading}</p>
+        <ol class="es-process-strip">
+          <li class="es-process-step">
+            <span class="es-week-label">{e.process.lofi.label}</span>
+            <span class="es-week-title">{e.process.lofi.title}</span>
+            <pre class="es-lofi">{e.process.lofi.body}</pre>
+          </li>
+          <li class="es-process-step">
+            <span class="es-week-label">{processMid.label}</span>
+            <span class="es-week-title">{processMid.title}</span>
+            <figure class:list={["es-phone", processMid.framed === false && "is-screen"]}>
+              <Picture
+                src={processMid.image}
+                alt={processMid.alt}
+                formats={["avif", "webp"]}
+                widths={processMid.widths}
+                sizes={`min(100vw - 2rem, ${processMid.cap}px)`}
+                loading="lazy"
+              />
+            </figure>
+          </li>
+          <li class="es-process-step">
+            <span class="es-week-label">{processFinal.label}</span>
+            <span class="es-week-title">{processFinal.title}</span>
+            <figure class:list={["es-phone", processFinal.framed === false && "is-screen"]}>
+              <Picture
+                src={processFinal.image}
+                alt={processFinal.alt}
+                formats={["avif", "webp"]}
+                widths={processFinal.widths}
+                sizes={`min(100vw - 2rem, ${processFinal.cap}px)`}
+                loading="lazy"
+              />
+            </figure>
+          </li>
+        </ol>
       </section>
     ) : null
   }
@@ -233,6 +377,14 @@ const flowPanels =
             <li>
               <h3>{item.name}</h3>
               <p>{item.hypothesis}</p>
+              <p class="es-exp-ab">
+                <span>
+                  <b>Control</b> {item.control}
+                </span>
+                <span>
+                  <b>Variant</b> {item.variant}
+                </span>
+              </p>
               <p class="es-exp-meta">
                 <span>Primary: {item.primary}</span>
                 <span>Guardrail: {item.guardrail}</span>
@@ -244,30 +396,50 @@ const flowPanels =
     ) : null
   }
 
-  <section class="es-figure wrap" id="week-map">
-    <div class="es-figure-head">
-      <p class="es-figure-title">{e.figure.title}</p>
-      <p class="es-figure-caption">{e.figure.caption}</p>
-    </div>
-    <ol class="es-steps">
-      {
-        e.figure.steps.map((s, i) => (
-          <>
-            <li class="es-step">
-              <span class="es-step-index">{String(i + 1).padStart(2, "0")}</span>
-              <span class="es-step-label">{s.label}</span>
-              <span class="es-step-title">{s.title}</span>
+  {
+    e.built ? (
+      <section class="es-block wrap" id="built">
+        <p class="es-eyebrow">{e.built.heading}</p>
+        <ul class="es-built">
+          {e.built.items.map((item) => (
+            <li>
+              <span class="es-method-label">{item.label}</span>
+              <span class="es-method-body">{item.body}</span>
             </li>
-            {i < e.figure.steps.length - 1 ? (
-              <li class="es-step-arrow" aria-hidden="true">
-                →
-              </li>
-            ) : null}
-          </>
-        ))
-      }
-    </ol>
-  </section>
+          ))}
+        </ul>
+      </section>
+    ) : null
+  }
+
+  {
+    e.figure ? (
+      <section class="es-figure wrap" id="week-map">
+        <div class="es-figure-head">
+          <p class="es-figure-title">{e.figure.title}</p>
+          <p class="es-figure-caption">{e.figure.caption}</p>
+        </div>
+        <ol class="es-steps">
+          {
+            e.figure.steps.map((s, i) => (
+              <>
+                <li class="es-step">
+                  <span class="es-step-index">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="es-step-label">{s.label}</span>
+                  <span class="es-step-title">{s.title}</span>
+                </li>
+                {i < e.figure!.steps.length - 1 ? (
+                  <li class="es-step-arrow" aria-hidden="true">
+                    →
+                  </li>
+                ) : null}
+              </>
+            ))
+          }
+        </ol>
+      </section>
+    ) : null
+  }
 
   {
     e.flows && flowPanels.length ? (
@@ -386,11 +558,20 @@ const flowPanels =
   </section>
 
   {
+    e.reflection ? (
+      <section class="es-block wrap" id="reflection">
+        <p class="es-eyebrow">{e.reflection.heading}</p>
+        <p class="es-body">{e.reflection.body}</p>
+      </section>
+    ) : null
+  }
+
+  {
     next ? (
       <nav class="es-next wrap">
         <span>Next case study</span>
         <a href={`/work/${next.id}`}>
-          {next.data.draft ? "Draft · " : ""}
+          {nextBadge ? `${nextBadge} · ` : ""}
           {next.data.title}
         </a>
       </nav>

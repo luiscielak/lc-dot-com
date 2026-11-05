@@ -1,6 +1,6 @@
 /** Copy shared by the résumé page and the downloadable PDF. */
 
-export const resumeKicker = "Résumé — 15+ years";
+export const resumeKicker = "Résumé · Design and code";
 
 export const resumeTitle = "Lead Product Designer";
 export const resumeSubtitle = "AI & Enterprise Platforms";

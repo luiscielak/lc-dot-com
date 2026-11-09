@@ -65,14 +65,13 @@ export const roles: ResumeRole[] = [
       "Led UX for a program-level modernization of PMI’s B2B platform, replacing manual and legacy workflows with self-service web experiences — $3.1M in revenue in the first year and $650K saved annually from fraud. Owned the Partner Platform zero-to-one (coupon distribution, certification management) and legacy modernization; translated complex requirements into scalable IA and prototypes, increasing conversions 30%. Owned research and mentored designers.",
   },
   {
-    dates: ["2013 — Present", "Ongoing"],
-    datesFaint: true,
+    dates: ["2013 — 2026"],
     title: "Design Consultant",
     place: "Remote",
     org: "Near-Miss Management",
     scale: "lead",
     summary:
-      "Design the company’s flagship product: an interactive decision-support system that visualizes process risk and alarm data in oil refineries, increasing information transparency for a more comprehensive operator experience. Partner with stakeholders to continuously reassess needs and improve functionality.",
+      "Designed the company’s flagship product: an interactive decision-support system that visualizes process risk and alarm data in oil refineries, increasing information transparency for a more comprehensive operator experience. Partnered with stakeholders to continuously reassess needs and improve functionality.",
   },
   {
     dates: ["2020 — 2021"],

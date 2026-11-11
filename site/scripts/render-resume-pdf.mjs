@@ -9,6 +9,7 @@ import { spawnSync } from "node:child_process";
 import {
   certifications,
   communityBody,
+  communitySince,
   communityTitle,
   competencies,
   education,
@@ -70,10 +71,10 @@ const rolesHtml = roles
   .join("");
 
 const toolsHtml = toolGroups
-  .map(
-    (group) =>
-      `<p class="tool-line"><span class="${group.accent ? "accent" : ""}">${esc(group.title)}</span> — ${esc(group.body)}</p>`,
-  )
+  .map((group) => {
+    const note = group.note ? `<br />${esc(group.note)}` : "";
+    return `<p class="tool-line"><span class="${group.accent ? "accent" : ""}">${esc(group.title)}</span><br />${esc(group.body)}${note}</p>`;
+  })
   .join("");
 
 const eduHtml = education
@@ -90,14 +91,14 @@ const html = `<!doctype html>
       @font-face { font-family: "Inter"; font-weight: 500; src: url("file://${interMed}") format("woff2"); }
       @font-face { font-family: "IBM Plex Mono"; font-weight: 400; src: url("file://${mono}") format("woff2"); }
       @font-face { font-family: "Space Grotesk"; font-weight: 500; src: url("file://${display}") format("woff2"); }
-      @page { size: letter; margin: 0.55in; }
+      @page { size: letter; margin: 0.45in; }
       html, body {
         margin: 0;
         background: #fff;
         color: #17150f;
         font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 10.5pt;
-        line-height: 1.3;
+        font-size: 10pt;
+        line-height: 1.28;
       }
       h1, h2, h3 { margin: 0; font-weight: 600; }
       p { margin: 0; }
@@ -128,7 +129,7 @@ const html = `<!doctype html>
         border-bottom: 1.5pt solid #17150f;
       }
       h2 {
-        margin: 9pt 0 4pt;
+        margin: 7pt 0 3pt;
         font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
         font-size: 8pt;
         font-weight: 500;
@@ -150,8 +151,8 @@ const html = `<!doctype html>
       }
       .roles li {
         break-inside: avoid;
-        margin: 0 0 3pt;
-        padding: 0 0 3pt;
+        margin: 0 0 2pt;
+        padding: 0 0 2pt;
         border-bottom: 0.4pt solid #ded9cc;
       }
       .roles li:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
@@ -185,10 +186,10 @@ const html = `<!doctype html>
       .facts-top { margin-bottom: 5pt; }
       .facts-grid {
         display: grid;
-        grid-template-columns: 0.8fr 1.2fr 1.2fr;
+        grid-template-columns: 0.9fr 1.5fr 1.2fr;
         gap: 12pt;
       }
-      .tool-line { margin: 0 0 4pt; }
+      .tool-line { margin: 0 0 3pt; }
       .tool-line span {
         font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
         font-size: 7.5pt;
@@ -204,7 +205,7 @@ const html = `<!doctype html>
       .facts-grid > div > * + h2,
       .facts-grid > div > * + h3 { margin-top: 7pt; }
       .facts p { line-height: 1.32; }
-      .community-line { margin: 5pt 0 0; }
+      .community-line { margin: 4pt 0 0; }
       .community-line .accent {
         font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
         font-size: 7.5pt;
@@ -266,7 +267,7 @@ const html = `<!doctype html>
           <p>${certifications.map(esc).join("<br />")}</p>
         </div>
       </div>
-      <p class="community-line"><span class="accent">Community</span> — ${esc(communityTitle)}. ${esc(communityBody)}</p>
+      <p class="community-line"><span class="accent">Community</span> — ${esc(communityTitle)} (${esc(communitySince)}). ${esc(communityBody)}</p>
     </section>
     <p class="foot"><span>${esc(resumeFoot)}</span><span>luis@luiscielak.com</span></p>
   </body>

@@ -37,7 +37,7 @@ export type ResumeRole = {
 
 export const roles: ResumeRole[] = [
   {
-    dates: ["2025 — Present", "Contract"],
+    dates: ["2025 — Present"],
     title: "Lead UX Product Designer",
     place: "Malvern, PA",
     org: "Vanguard",
@@ -133,16 +133,34 @@ export const roles: ResumeRole[] = [
 ];
 
 export const competencies =
-  "AI product design (human-in-the-loop) · AI/ML experience design · design systems & component libraries · design-to-code prototyping · information architecture · complex transactional workflows · data visualization & decision support · B2B, enterprise & fintech · qual & quant research · usability, accessibility & heuristic review · cross-functional facilitation · legacy modernization.";
+  "AI product design and human-in-the-loop workflows · Agentic experience design · Design systems and component libraries · Design-to-code prototyping · Information architecture · Complex B2B and fintech workflows · Data visualization and decision support · Research, usability and accessibility · Cross-functional facilitation · Legacy modernization";
 
-export const languages = "Spanish — fluent. English — fluent.";
+export const languages = "English and Spanish, both fluent.";
 
-export const toolGroups = [
-  { title: "AI & agentic workflows", accent: true, body: "Cursor AI · Claude · v0 · Figma Make · Figma MCP · Lovable / Bolt" },
-  { title: "Design & prototyping", body: "Figma · Sketch · Adobe CS · InVision" },
-  { title: "Web & front-end", body: "HTML · CSS/Sass · JavaScript · React · Tailwind · Git" },
-  { title: "Analytics & methods", body: "Power BI · Tableau · D3.js · Python · OOUX · Lean UX · Agile" },
-] as const;
+export type ToolGroup = {
+  title: string;
+  accent?: boolean;
+  body: string;
+  note?: string;
+};
+
+export const toolGroups: ToolGroup[] = [
+  {
+    title: "AI & agentic workflows",
+    accent: true,
+    body: "Cursor · Claude · Figma MCP",
+    note: "Run a role-based agent team built on Nous Research's open-source Hermes Agent.",
+  },
+  {
+    title: "Design & prototyping",
+    body: "Figma (variables, Auto Layout, Dev Mode) · design tokens · prototyping in code · WCAG accessibility",
+  },
+  { title: "Front end", body: "HTML · CSS/Sass · JavaScript · React · Tailwind · Git" },
+  {
+    title: "Methods & analytics",
+    body: "OOUX · Lean UX · Agile · usability testing · Power BI · Tableau · D3.js · Python",
+  },
+];
 
 export const education = [
   { degree: "MS, Interactive Design & Media", school: "Thomas Jefferson University · 2014" },
@@ -154,9 +172,10 @@ export const certifications = [
   "UX Certificate — Nielsen Norman Group, 2024",
 ] as const;
 
-export const communityTitle = "Cursor AI Ambassador — Cursor Philly";
+export const communityTitle = "Founder and Cursor Ambassador, Cursor Philly";
+export const communitySince = "since Aug 2025";
 export const communityBody =
-  "Lead a 1,000+ Philadelphia community (~110 monthly) focused on AI-assisted development; organize monthly meetups and hands-on workshops.";
+  "Grew a Philadelphia community of 1,000+ builders working with AI. Host monthly meetups and hands-on workshops.";
 
 export const resumeFoot = "Luis Cielak — Résumé — 2026";
 export const resumePdfHref = "/luis-cielak-resume.pdf";

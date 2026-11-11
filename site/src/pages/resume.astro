@@ -4,6 +4,7 @@ import Base from "../layouts/Base.astro";
 import {
   certifications,
   communityBody,
+  communitySince,
   communityTitle,
   competencies,
   education,
@@ -126,7 +127,15 @@ import {
         toolGroups.map((group) => (
           <>
             <h2 class:list={[group.accent && "is-accent"]}>{group.title}</h2>
-            <p>{group.body}</p>
+            <p>
+              {group.body}
+              {group.note ? (
+                <>
+                  <br />
+                  {group.note}
+                </>
+              ) : null}
+            </p>
           </>
         ))
       }
@@ -149,6 +158,7 @@ import {
       </p>
       <h2 class="is-accent">Community</h2>
       <p class="cv-degree">{communityTitle}</p>
+      <p class="cv-school">{communitySince}</p>
       <p class="cv-community">{communityBody}</p>
     </div>
   </section>

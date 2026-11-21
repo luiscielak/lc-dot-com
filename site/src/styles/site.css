@@ -784,11 +784,11 @@ html[data-page="nameplate"] a:focus-visible {
 }
 
 .plate-hero {
-  padding: 80px 60px 56px;
+  padding: 40px 64px 20px;
 }
 
 .plate-kicker {
-  margin: 0 0 32px;
+  margin: 0 0 18px;
   color: var(--np-teal);
   font-family: var(--font-mono);
   font-size: 13px;
@@ -801,10 +801,11 @@ html[data-page="nameplate"] a:focus-visible {
   margin: 0;
   color: var(--np-paper);
   font-family: var(--font-display);
-  font-size: clamp(3.25rem, 18.05vw, 16.25rem);
+  /* Sized so the bio, CTAs, and logo row fit a 1440×900 first screen. */
+  font-size: clamp(2.85rem, min(11.2vw, 16.5vh), 9.25rem);
   font-weight: 500;
   letter-spacing: -0.04em;
-  line-height: 0.86;
+  line-height: 0.88;
   text-transform: none;
   text-wrap: wrap;
 }
@@ -813,17 +814,17 @@ html[data-page="nameplate"] a:focus-visible {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 64px;
-  padding: 0 64px 72px;
+  gap: 40px;
+  padding: 0 64px 24px;
 }
 
 .plate-bio {
-  max-width: 560px;
+  max-width: 34rem;
   margin: 0;
   color: var(--np-body);
   font-family: var(--font-sans);
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 17px;
+  line-height: 26px;
 }
 
 .plate-bio a {
@@ -887,9 +888,8 @@ html[data-page="nameplate"] a:focus-visible {
   border-color: color-mix(in srgb, var(--np-teal) 82%, var(--np-ink));
 }
 
-/* Client marks after the work catalog, before the testimonials.
-   Mobile: a still, centered logo wall. Medium: two centered rows (4 / 5).
-   Large: a centered 4 / 3 / 2 taper. Each line centers on its own. */
+/* Client marks in the hero fold. Mobile wraps. Medium: two rows (4 / 5).
+   Large fold: one compact row so the first screen stays intact. */
 .plate-clients {
   display: flex;
   flex-direction: column;
@@ -897,6 +897,12 @@ html[data-page="nameplate"] a:focus-visible {
   margin: 0;
   padding: 28px 64px 48px;
   border-top: 1px solid var(--np-rule);
+}
+
+.plate-clients--fold {
+  gap: 12px;
+  padding: 4px 64px 28px;
+  border-top: 0;
 }
 
 .plate-clients p {
@@ -914,8 +920,8 @@ html[data-page="nameplate"] a:focus-visible {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  column-gap: 48px;
-  row-gap: 28px;
+  column-gap: 32px;
+  row-gap: 24px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -926,16 +932,33 @@ html[data-page="nameplate"] a:focus-visible {
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
+  min-width: 0;
+  height: 2rem;
 }
+
+/* Optical size: a shared 32px slot, then per-mark cap-height so wide
+   wordmarks and compact seals read at a similar weight. */
+.plate-clients--fold li[data-mark="vanguard"] { --logo-h: 16px; }
+.plate-clients--fold li[data-mark="jpmc"] { --logo-h: 13px; }
+.plate-clients--fold li[data-mark="pmi"] { --logo-h: 26px; }
+.plate-clients--fold li[data-mark="ford"] { --logo-h: 22px; }
+.plate-clients--fold li[data-mark="westat"] { --logo-h: 18px; }
+.plate-clients--fold li[data-mark="fm"] { --logo-h: 22px; }
+.plate-clients--fold li[data-mark="elsevier"] { --logo-h: 30px; }
+.plate-clients--fold li[data-mark="usagov"] { --logo-h: 26px; }
+.plate-clients--fold li[data-mark="celgene"] { --logo-h: 26px; }
 
 .plate-clients img {
   display: block;
-  max-width: 100%;
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: var(--logo-h, 18px);
+  object-fit: contain;
+  object-position: center;
   /* One light set. Source files mix white wordmarks with dark seals;
      flattening them keeps every mark readable on the ink ground. */
-  opacity: 0.88;
+  opacity: 0.9;
   filter: brightness(0) invert(1);
   user-select: none;
 }
@@ -966,7 +989,7 @@ html[data-page="nameplate"] a:focus-visible {
   }
 }
 
-/* Large: both breaks, the 4 / 3 / 2 taper. */
+/* Large: both breaks, the 4 / 3 / 2 taper. The fold row stays one line. */
 @media (min-width: 1200px) {
   .plate-client-group {
     column-gap: 72px;
@@ -976,14 +999,48 @@ html[data-page="nameplate"] a:focus-visible {
     display: block;
     height: 32px;
   }
+
+  .plate-clients--fold .plate-client-group {
+    justify-content: flex-start;
+    column-gap: 32px;
+  }
+
+  .plate-clients--fold .plate-client-break,
+  .plate-clients--fold .plate-client-break-late {
+    display: none;
+  }
 }
 
-/* A tighter gap on a phone so the smaller marks share a line.
-   The tuned image sizes stay as they are. */
+/* Phone: wrap by optical width, centered, so the wide Chase wordmark
+   keeps its letter height instead of collapsing in a 1/3 grid. Nine
+   marks settle as 2 / 4 / 3 — no single leftover. */
 @media (max-width: 720px) {
   .plate-client-group {
     column-gap: 32px;
     row-gap: 20px;
+  }
+
+  .plate-clients--fold .plate-client-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+    row-gap: 16px;
+  }
+
+  .plate-clients--fold li[data-mark] {
+    width: auto;
+    height: 2rem;
+  }
+
+  .plate-clients--fold li[data-mark="jpmc"] {
+    flex: 1 1 10rem;
+    max-width: 13rem;
+  }
+
+  .plate-clients--fold .plate-client-break {
+    display: none;
   }
 }
 
@@ -1134,6 +1191,194 @@ html[data-page="nameplate"] a:focus-visible {
   letter-spacing: 0.14em;
   line-height: 12px;
   text-transform: uppercase;
+}
+
+.plate-ai {
+  padding: 40px 64px 44px;
+  border-top: 1px solid var(--np-rule);
+}
+
+.plate-ai h2,
+.plate-featured h2 {
+  margin: 0 0 16px;
+  color: var(--np-teal);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.plate-ai p {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--np-body);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.plate-ai a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+.plate-ai a:hover {
+  color: var(--np-teal);
+}
+
+.plate-featured {
+  padding: 8px 0 0;
+  border-top: 1px solid var(--np-rule);
+  scroll-margin-top: 24px;
+}
+
+.plate-featured h2 {
+  margin: 0;
+  padding: 40px 64px 8px;
+}
+
+.plate-featured > ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plate-feature {
+  min-width: 0;
+  border-top: 1px solid var(--np-rule);
+  border-right: 1px solid var(--np-rule);
+}
+
+.plate-feature:nth-child(2n) {
+  border-right: 0;
+}
+
+.plate-feature.is-wide {
+  grid-column: 1 / -1;
+  border-right: 0;
+}
+
+.plate-feature > a {
+  display: grid;
+  grid-template-rows: auto minmax(220px, 1fr);
+  gap: 24px;
+  height: 100%;
+  padding: 32px 32px 0;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--np-motion);
+}
+
+.plate-feature.is-wide > a {
+  grid-template-columns: minmax(0, 1.2fr) minmax(10rem, 16rem);
+  grid-template-rows: auto;
+  align-items: center;
+  gap: 28px 40px;
+  padding: 36px 64px;
+}
+
+.plate-feature > a:hover,
+.plate-feature > a:focus-visible {
+  background: color-mix(in srgb, var(--np-paper) 5%, transparent);
+}
+
+.plate-feature-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding-bottom: 8px;
+}
+
+.plate-feature-metric,
+.plate-feature-hook {
+  display: block;
+  margin: 4px 0 2px;
+  color: var(--np-paper);
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.plate-feature-metric-value {
+  display: block;
+  font-size: clamp(3rem, 5.4vw, 5.25rem);
+  line-height: 0.9;
+}
+
+.plate-feature-metric-label {
+  display: block;
+  margin-top: 10px;
+  color: var(--np-teal);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.plate-feature-hook {
+  font-size: clamp(1.85rem, 3vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.plate-feature-cta {
+  margin-top: 8px;
+  color: var(--np-teal);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.plate-feature > a:hover .plate-feature-cta,
+.plate-feature > a:focus-visible .plate-feature-cta {
+  color: var(--np-paper);
+}
+
+.plate-feature-figure {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.plate-feature-figure img,
+.plate-feature-figure picture {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.plate-feature:not(.is-wide) .plate-feature-figure img {
+  max-height: 420px;
+  object-fit: contain;
+}
+
+.plate-feature-figure.is-phone {
+  justify-content: flex-end;
+  padding: 0;
+}
+
+.plate-feature-figure.is-screen picture {
+  box-sizing: border-box;
+  width: min(100%, 220px);
+  padding: 10px;
+  border-radius: 2rem;
+  background: color-mix(in srgb, var(--np-paper) 10%, transparent);
+}
+
+.plate-feature-figure.is-screen img {
+  width: 100%;
+  border-radius: 1.4rem;
 }
 
 .plate-catalog {
@@ -1537,24 +1782,44 @@ html[data-page="nameplate"] a:focus-visible {
 @media (max-width: 960px) {
   .plate-intro,
   .plate-clients,
+  .plate-ai,
   .plate-catalog,
   .plate-quotes {
     padding-inline: 20px;
   }
 
   .plate-hero {
-    padding: 48px 20px 32px;
+    padding: 32px 20px 16px;
   }
 
   .plate-intro {
     flex-direction: column;
     align-items: stretch;
-    gap: 28px;
-    padding-bottom: 40px;
+    gap: 24px;
+    padding-bottom: 20px;
+  }
+
+  .plate-clients--fold {
+    padding-inline: 20px;
+    padding-bottom: 16px;
+  }
+
+  .plate-featured h2 {
+    padding-inline: 20px;
+  }
+
+  .plate-feature.is-wide > a {
+    padding-inline: 20px;
   }
 
   .nameplate h1 {
-    font-size: clamp(3.15rem, 16vw, 8rem);
+    font-size: clamp(2.85rem, 15vw, 5.25rem);
+    line-height: 0.9;
+  }
+
+  .plate-bio {
+    font-size: 16px;
+    line-height: 24px;
   }
 
   /* Marquee bleeds to the narrower inset and fades over a shorter edge. */
@@ -2226,6 +2491,43 @@ html[data-page="resume"] a:hover {
 
   .plate-strip > li:last-child {
     border-bottom: 0;
+  }
+
+  .plate-featured > ul {
+    grid-template-columns: 1fr;
+  }
+
+  .plate-feature,
+  .plate-feature:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .plate-feature > a,
+  .plate-feature.is-wide > a {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    padding: 28px 20px 0;
+  }
+
+  .plate-feature.is-wide > a {
+    padding-bottom: 28px;
+  }
+
+  .plate-feature-metric-value {
+    font-size: clamp(2.75rem, 14vw, 4rem);
+  }
+
+  .plate-feature-hook {
+    font-size: clamp(1.6rem, 8vw, 2.15rem);
+  }
+
+  .plate-feature-figure.is-phone {
+    justify-content: center;
+    padding-inline: 48px;
+  }
+
+  .plate-feature-figure.is-screen picture {
+    width: min(100%, 200px);
   }
 }
 

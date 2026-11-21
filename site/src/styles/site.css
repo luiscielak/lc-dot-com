@@ -920,8 +920,8 @@ html[data-page="nameplate"] a:focus-visible {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  column-gap: 48px;
-  row-gap: 28px;
+  column-gap: 32px;
+  row-gap: 24px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -932,23 +932,35 @@ html[data-page="nameplate"] a:focus-visible {
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
+  min-width: 0;
+  height: 2rem;
 }
+
+/* Optical size: a shared 32px slot, then per-mark cap-height so wide
+   wordmarks and compact seals read at a similar weight. */
+.plate-clients--fold li[data-mark="vanguard"] { --logo-h: 16px; }
+.plate-clients--fold li[data-mark="jpmc"] { --logo-h: 13px; }
+.plate-clients--fold li[data-mark="pmi"] { --logo-h: 26px; }
+.plate-clients--fold li[data-mark="ford"] { --logo-h: 22px; }
+.plate-clients--fold li[data-mark="westat"] { --logo-h: 18px; }
+.plate-clients--fold li[data-mark="fm"] { --logo-h: 22px; }
+.plate-clients--fold li[data-mark="elsevier"] { --logo-h: 30px; }
+.plate-clients--fold li[data-mark="usagov"] { --logo-h: 26px; }
+.plate-clients--fold li[data-mark="celgene"] { --logo-h: 26px; }
 
 .plate-clients img {
   display: block;
-  max-width: 100%;
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: var(--logo-h, 18px);
+  object-fit: contain;
+  object-position: center;
   /* One light set. Source files mix white wordmarks with dark seals;
      flattening them keeps every mark readable on the ink ground. */
-  opacity: 0.88;
+  opacity: 0.9;
   filter: brightness(0) invert(1);
   user-select: none;
-}
-
-.plate-clients--fold img {
-  max-height: 24px;
-  width: auto;
 }
 
 .plate-client-group .plate-client-break {
@@ -990,7 +1002,7 @@ html[data-page="nameplate"] a:focus-visible {
 
   .plate-clients--fold .plate-client-group {
     justify-content: flex-start;
-    column-gap: 28px;
+    column-gap: 32px;
   }
 
   .plate-clients--fold .plate-client-break,
@@ -999,8 +1011,9 @@ html[data-page="nameplate"] a:focus-visible {
   }
 }
 
-/* A tighter gap on a phone so the smaller marks share a line.
-   The tuned image sizes stay as they are. */
+/* Phone: wrap by optical width, centered, so the wide Chase wordmark
+   keeps its letter height instead of collapsing in a 1/3 grid. Nine
+   marks settle as 2 / 4 / 3 — no single leftover. */
 @media (max-width: 720px) {
   .plate-client-group {
     column-gap: 32px;
@@ -1008,20 +1021,26 @@ html[data-page="nameplate"] a:focus-visible {
   }
 
   .plate-clients--fold .plate-client-group {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px 10px;
-    justify-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
+    column-gap: 20px;
+    row-gap: 16px;
+  }
+
+  .plate-clients--fold li[data-mark] {
+    width: auto;
+    height: 2rem;
+  }
+
+  .plate-clients--fold li[data-mark="jpmc"] {
+    flex: 1 1 10rem;
+    max-width: 13rem;
   }
 
   .plate-clients--fold .plate-client-break {
     display: none;
-  }
-
-  .plate-clients--fold img {
-    max-height: 18px;
-    max-width: 100%;
   }
 }
 

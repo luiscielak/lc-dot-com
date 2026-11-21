@@ -63,21 +63,21 @@ const listingResults: Record<string, string> = {
 /** Everything else, numbered continuously after the featured strip. */
 const moreWork = studies.filter((study) => !featuredIds.has(study.id));
 
-/** Logo row in the hero fold. Width and height are the rendered pixel size.
- *  Medium screens break after four marks (4 / 5). The fold hides those
- *  breaks at large widths so the marks stay on one compact line. */
+/** Logo row in the hero fold. `width`/`height` are the file’s intrinsic
+ *  pixels (honest aspect). Optical size is `--logo-h` in CSS, not these
+ *  attributes. Medium screens break after four marks (4 / 5). */
 const clientRowBreaks = { mid: 4, late: 7 };
 
 const clients = [
-  { name: "Vanguard", src: "/logos/clients/vanguard.png", width: 132, height: 28 },
-  { name: "JPMorgan Chase", src: "/logos/clients/jpmc.png", width: 196, height: 13 },
-  { name: "PMI", src: "/logos/clients/pmi.svg", width: 108, height: 32 },
-  { name: "Ford", src: "/logos/clients/ford.png", width: 100, height: 36 },
-  { name: "Westat", src: "/logos/clients/westat.png", width: 120, height: 32 },
-  { name: "FM", src: "/logos/clients/fm.png", width: 64, height: 32 },
-  { name: "Elsevier", src: "/logos/clients/elsevier.png", width: 40, height: 44 },
-  { name: "USA.gov", src: "/logos/clients/usagov.png", width: 44, height: 40 },
-  { name: "Celgene", src: "/logos/clients/celgene.png", width: 44, height: 40 },
+  { name: "Vanguard", src: "/logos/clients/vanguard.png", width: 2000, height: 421, mark: "vanguard" },
+  { name: "JPMorgan Chase", src: "/logos/clients/jpmc.png", width: 2000, height: 130, mark: "jpmc" },
+  { name: "PMI", src: "/logos/clients/pmi.svg", width: 105, height: 32, mark: "pmi" },
+  { name: "Ford", src: "/logos/clients/ford.png", width: 1274, height: 457, mark: "ford" },
+  { name: "Westat", src: "/logos/clients/westat.png", width: 1880, height: 495, mark: "westat" },
+  { name: "FM", src: "/logos/clients/fm.png", width: 970, height: 485, mark: "fm" },
+  { name: "Elsevier", src: "/logos/clients/elsevier.png", width: 446, height: 485, mark: "elsevier" },
+  { name: "USA.gov", src: "/logos/clients/usagov.png", width: 372, height: 325, mark: "usagov" },
+  { name: "Celgene", src: "/logos/clients/celgene.png", width: 570, height: 500, mark: "celgene" },
 ];
 
 /**
@@ -202,7 +202,7 @@ const testimonials = [
           {
             clients.map((client, i) => (
               <>
-                <li>
+                <li data-mark={client.mark}>
                   <img
                     src={client.src}
                     alt={client.name}

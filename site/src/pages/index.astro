@@ -13,9 +13,8 @@ const studies = (await getCollection("work"))
 
 /**
  * Featured proof: published cases with product imagery, in the order the
- * hero promises. Metrics and hooks are copied from confirmed frontmatter or
- * already-published listing lines — never invented. Your First Week has no
- * results, so it keeps a non-metric hook.
+ * hero promises. Metrics are copied from confirmed frontmatter or
+ * already-published listing lines — never invented.
  */
 const plate = [
   {
@@ -39,18 +38,6 @@ const plate = [
     image: "field-dispatch/job-detail.png",
     imageAlt: "Phone screen of a single job: a list of crates and services, each marked packed or pending",
   },
-  {
-    id: "your-first-week",
-    index: "03",
-    domain: "Monarch Money · Unofficial concept",
-    blurb: "One job a day for a new household, from first connect through Quick Sort.",
-    hook: "7-day trial, one job a day",
-    image: "monarch/flow-day0.png",
-    imageAlt: "Day 0 of the concept: a goal and a trial card that states the charge date, amount, and cancel-by time",
-    phone: true,
-    framed: false,
-    layout: "wide" as const,
-  },
 ];
 
 const featured = plate.flatMap((item) => {
@@ -71,7 +58,6 @@ const listingResults: Record<string, string> = {
   "making-compare-actually-compare": "4 advice tiers, one comparison",
   "pmi-disciplined-agile": "$2.8M in impact",
   "straatclaw": "In daily personal use",
-  "your-first-week": "7-day trial, one job a day",
 };
 
 /** Everything else, numbered continuously after the featured strip. */
@@ -239,7 +225,7 @@ const testimonials = [
     <section class="plate-ai" aria-labelledby="ai-title">
       <h2 id="ai-title">How I use AI</h2>
       <p>
-        I prototype in code with Cursor, Claude, and React, and I bring Figma into that loop with Figma MCP. I run a role-based agent team on top of Nous Research’s open-source Hermes Agent. I’m the founder and Cursor Ambassador of <a href="https://cursorphilly.com">Cursor Philly</a>. <a href="/work/your-first-week">Your First Week</a> is a case of that practice.
+        I prototype in code with Cursor, Claude, and React, and I bring Figma into that loop with Figma MCP. I run a role-based agent team on top of Nous Research’s open-source Hermes Agent. I’m the founder and Cursor Ambassador of <a href="https://cursorphilly.com">Cursor Philly</a>.
       </p>
     </section>
 
@@ -258,11 +244,7 @@ const testimonials = [
               imageAlt={item.imageAlt}
               metricValue={item.metricValue}
               metricLabel={item.metricLabel}
-              hook={item.hook}
               badge={item.badge}
-              phone={item.phone}
-              framed={item.framed}
-              layout={item.layout}
             />
           ))
         }

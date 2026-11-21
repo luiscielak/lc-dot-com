@@ -2,7 +2,9 @@
 import { getCollection } from "astro:content";
 import portrait from "../assets/about-portrait.avif";
 import BrandLockup from "../components/BrandLockup.astro";
+import HomeFeaturedCard from "../components/HomeFeaturedCard.astro";
 import Base from "../layouts/Base.astro";
+import { resumePdfHref } from "../lib/resume";
 import { isListedWork, workBadge } from "../lib/site";
 
 const studies = (await getCollection("work"))
@@ -10,9 +12,10 @@ const studies = (await getCollection("work"))
   .sort((a, b) => a.data.order - b.data.order);
 
 /**
- * Featured proof: the two strongest published cases, in the order the hero
- * promises. Only cases with a real page are featured — no "case study soon"
- * placeholders in the first position a hiring manager reads.
+ * Featured proof: published cases with product imagery, in the order the
+ * hero promises. Metrics and hooks are copied from confirmed frontmatter or
+ * already-published listing lines — never invented. Your First Week has no
+ * results, so it keeps a non-metric hook.
  */
 const plate = [
   {
@@ -20,14 +23,33 @@ const plate = [
     index: "01",
     domain: "Certification",
     blurb: "Self-service platform that replaced manual B2B workflows.",
-    result: "$3.1M in revenue in the first year",
+    metricValue: "$3.1M",
+    metricLabel: "in revenue in the first year",
+    image: "pmi-partner-platform/cover.png",
+    imageAlt:
+      "Partner Platform admin reports on desktop and the mobile store, showing spend and enrollment for a course",
   },
   {
     id: "field-dispatch",
     index: "02",
     domain: "Logistics",
     blurb: "Workflow platform for specialty moving ops.",
-    result: "47% faster dispatch",
+    metricValue: "47%",
+    metricLabel: "faster dispatch",
+    image: "field-dispatch/job-detail.png",
+    imageAlt: "Phone screen of a single job: a list of crates and services, each marked packed or pending",
+  },
+  {
+    id: "your-first-week",
+    index: "03",
+    domain: "Monarch Money · Unofficial concept",
+    blurb: "One job a day for a new household, from first connect through Quick Sort.",
+    hook: "7-day trial, one job a day",
+    image: "monarch/flow-day0.png",
+    imageAlt: "Day 0 of the concept: a goal and a trial card that states the charge date, amount, and cancel-by time",
+    phone: true,
+    framed: false,
+    layout: "wide" as const,
   },
 ];
 
@@ -55,10 +77,9 @@ const listingResults: Record<string, string> = {
 /** Everything else, numbered continuously after the featured strip. */
 const moreWork = studies.filter((study) => !featuredIds.has(study.id));
 
-/** Logo row after the work catalog, before the testimonials.
- *  Width and height are the rendered pixel size, tuned to a similar visual area.
- *  Medium screens break after four marks (4 / 5). Large screens add a second
- *  break for the 4 / 3 / 2 taper. */
+/** Logo row in the hero fold. Width and height are the rendered pixel size.
+ *  Medium screens break after four marks (4 / 5). The fold hides those
+ *  breaks at large widths so the marks stay on one compact line. */
 const clientRowBreaks = { mid: 4, late: 7 };
 
 const clients = [
@@ -185,39 +206,68 @@ const testimonials = [
         <div class="plate-actions">
           <a class="plate-btn" href="#work">View work <span class="plate-btn-arrow" aria-hidden="true">→</span></a>
           <a class="plate-btn plate-btn-ghost" href="mailto:luis@luiscielak.com">luis@luiscielak.com</a>
+          <a class="plate-btn plate-btn-ghost" href={resumePdfHref} download aria-label="Download résumé PDF">Résumé ↓</a>
         </div>
       </div>
+
+      <section class="plate-clients plate-clients--fold" aria-labelledby="clients-label">
+        <p id="clients-label">Selected clients &amp; employers</p>
+        <ul class="plate-client-group">
+          {
+            clients.map((client, i) => (
+              <>
+                <li>
+                  <img
+                    src={client.src}
+                    alt={client.name}
+                    width={client.width}
+                    height={client.height}
+                    draggable="false"
+                  />
+                </li>
+                {i + 1 === clientRowBreaks.mid ? <li class="plate-client-break" aria-hidden="true" /> : null}
+                {i + 1 === clientRowBreaks.late ? (
+                  <li class="plate-client-break plate-client-break-late" aria-hidden="true" />
+                ) : null}
+              </>
+            ))
+          }
+        </ul>
+      </section>
     </div>
 
-    <ul class="plate-strip" id="work">
-      {
-        featured.map((item) => (
-          <li>
-            <a href={`/work/${item.id}`}>
-              <span class="plate-kicker-row">
-                <span class="plate-index">
-                  {item.index} / {item.domain}
-                </span>
-                {item.badge ? <span class="plate-draft">{item.badge}</span> : null}
-              </span>
-              <span class="plate-study">{item.title}</span>
-              <span class="plate-blurb">{item.blurb}</span>
-              {item.result ? <span class="plate-result">{item.result}</span> : null}
-              <svg
-                class="plate-card-arrow"
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path d="M3 11 11 3M4.5 3H11v6.5" stroke="currentColor" stroke-width="1.25" />
-              </svg>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <section class="plate-ai" aria-labelledby="ai-title">
+      <h2 id="ai-title">How I use AI</h2>
+      <p>
+        I prototype in code with Cursor, Claude, and React, and I bring Figma into that loop with Figma MCP. I run a role-based agent team on top of Nous Research’s open-source Hermes Agent. I’m the founder and Cursor Ambassador of <a href="https://cursorphilly.com">Cursor Philly</a>. <a href="/work/your-first-week">Your First Week</a> is a case of that practice.
+      </p>
+    </section>
+
+    <section class="plate-featured" id="work" aria-labelledby="featured-work">
+      <h2 id="featured-work">Featured work</h2>
+      <ul>
+        {
+          featured.map((item) => (
+            <HomeFeaturedCard
+              href={`/work/${item.id}`}
+              index={item.index}
+              domain={item.domain}
+              title={item.title}
+              blurb={item.blurb}
+              image={item.image}
+              imageAlt={item.imageAlt}
+              metricValue={item.metricValue}
+              metricLabel={item.metricLabel}
+              hook={item.hook}
+              badge={item.badge}
+              phone={item.phone}
+              framed={item.framed}
+              layout={item.layout}
+            />
+          ))
+        }
+      </ul>
+    </section>
 
     <section class="plate-catalog" aria-labelledby="more-work">
       <h2 id="more-work">More work</h2>
@@ -245,31 +295,6 @@ const testimonials = [
           })
         }
       </ol>
-    </section>
-
-    <section class="plate-clients" aria-labelledby="clients-label">
-      <p id="clients-label">Selected clients &amp; employers</p>
-      <ul class="plate-client-group">
-        {
-          clients.map((client, i) => (
-            <>
-              <li>
-                <img
-                  src={client.src}
-                  alt={client.name}
-                  width={client.width}
-                  height={client.height}
-                  draggable="false"
-                />
-              </li>
-              {i + 1 === clientRowBreaks.mid ? <li class="plate-client-break" aria-hidden="true" /> : null}
-              {i + 1 === clientRowBreaks.late ? (
-                <li class="plate-client-break plate-client-break-late" aria-hidden="true" />
-              ) : null}
-            </>
-          ))
-        }
-      </ul>
     </section>
 
     {

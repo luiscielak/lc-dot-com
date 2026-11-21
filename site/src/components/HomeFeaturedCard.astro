@@ -1,0 +1,77 @@
+---
+import { Picture } from "astro:assets";
+import { workImage } from "../lib/images";
+
+interface Props {
+  href: string;
+  index: string;
+  domain: string;
+  title: string;
+  blurb: string;
+  image: string;
+  imageAlt: string;
+  metricValue?: string;
+  metricLabel?: string;
+  hook?: string;
+  badge?: string;
+  phone?: boolean;
+  framed?: boolean;
+  layout?: "tile" | "wide";
+}
+
+const {
+  href,
+  index,
+  domain,
+  title,
+  blurb,
+  image,
+  imageAlt,
+  metricValue,
+  metricLabel,
+  hook,
+  badge,
+  phone,
+  framed,
+  layout = "tile",
+} = Astro.props;
+
+const img = workImage(image);
+const widths = [...new Set([480, 640, 960, 1280, 1600, img.width].filter((w) => w <= img.width))].sort(
+  (a, b) => a - b,
+);
+---
+
+<li class:list={["plate-feature", layout === "wide" && "is-wide"]}>
+  <a href={href}>
+    <div class="plate-feature-copy">
+      <span class="plate-kicker-row">
+        <span class="plate-index">{index} / {domain}</span>
+        {badge ? <span class="plate-draft">{badge}</span> : null}
+      </span>
+      <span class="plate-study">{title}</span>
+      {
+        metricValue ? (
+          <span class="plate-feature-metric">
+            <span class="plate-feature-metric-value">{metricValue}</span>
+            {metricLabel ? <span class="plate-feature-metric-label">{metricLabel}</span> : null}
+          </span>
+        ) : hook ? (
+          <span class="plate-feature-hook">{hook}</span>
+        ) : null
+      }
+      <span class="plate-blurb">{blurb}</span>
+      <span class="plate-feature-cta">View case study <span aria-hidden="true">→</span></span>
+    </div>
+    <figure class:list={["plate-feature-figure", phone && "is-phone", phone && framed === false && "is-screen"]}>
+      <Picture
+        src={img}
+        alt={imageAlt}
+        formats={["avif", "webp"]}
+        widths={widths.length ? widths : [img.width]}
+        sizes={layout === "wide" ? "(max-width: 720px) 70vw, 280px" : "(max-width: 720px) 88vw, 42vw"}
+        loading="eager"
+      />
+    </figure>
+  </a>
+</li>

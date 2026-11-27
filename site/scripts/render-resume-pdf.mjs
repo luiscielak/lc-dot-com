@@ -19,6 +19,7 @@ import {
   resumeFoot,
   resumeKicker,
   resumeLede,
+  resumeName,
   resumeSubtitle,
   resumeTitle,
   roles,
@@ -91,14 +92,14 @@ const html = `<!doctype html>
       @font-face { font-family: "Inter"; font-weight: 500; src: url("file://${interMed}") format("woff2"); }
       @font-face { font-family: "IBM Plex Mono"; font-weight: 400; src: url("file://${mono}") format("woff2"); }
       @font-face { font-family: "Space Grotesk"; font-weight: 500; src: url("file://${display}") format("woff2"); }
-      @page { size: letter; margin: 0.45in; }
+      @page { size: letter; margin: 0.65in; }
       html, body {
         margin: 0;
         background: #fff;
         color: #17150f;
         font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 10pt;
-        line-height: 1.28;
+        font-size: 9.7pt;
+        line-height: 1.26;
       }
       h1, h2, h3 { margin: 0; font-weight: 600; }
       p { margin: 0; }
@@ -111,25 +112,33 @@ const html = `<!doctype html>
         color: #067f8a;
       }
       h1 {
-        margin: 6pt 0 5pt;
+        margin: 6pt 0 1pt;
         font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 17pt;
+        font-size: 20pt;
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+      }
+      .headline {
+        margin: 0 0 5pt;
+        font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 12pt;
         font-weight: 500;
         letter-spacing: -0.02em;
-        line-height: 1.15;
+        line-height: 1.18;
       }
-      h1 span { display: block; color: #726c5e; font-weight: 500; }
-      .lede { margin: 0 0 6pt; }
+      .headline span { display: block; color: #726c5e; font-weight: 500; }
+      .lede { margin: 0 0 5pt; }
       .contact {
         font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
         font-size: 8.5pt;
         letter-spacing: 0.02em;
         color: #17150f;
-        padding-bottom: 8pt;
+        padding-bottom: 7pt;
         border-bottom: 1.5pt solid #17150f;
       }
       h2 {
-        margin: 7pt 0 3pt;
+        margin: 10pt 0 4pt;
         font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
         font-size: 8pt;
         font-weight: 500;
@@ -142,7 +151,7 @@ const html = `<!doctype html>
         display: grid;
         grid-template-columns: 16pt 1fr;
         gap: 8pt;
-        margin: 0 0 2.5pt;
+        margin: 0 0 2pt;
       }
       .impact span {
         font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
@@ -151,10 +160,11 @@ const html = `<!doctype html>
       }
       .roles li {
         break-inside: avoid;
-        margin: 0 0 2pt;
-        padding: 0 0 2pt;
+        margin: 0;
+        padding: 9pt 0 4pt;
         border-bottom: 0.4pt solid #ded9cc;
       }
+      .roles li:first-child { padding-top: 4pt; }
       .roles li:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
       .role-head {
         display: flex;
@@ -172,24 +182,24 @@ const html = `<!doctype html>
       }
       .roles h3 { font-size: 11pt; font-weight: 600; line-height: 1.2; }
       .org {
-        margin: 1pt 0 2pt;
+        margin: 0.5pt 0 1.5pt;
         font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
         font-size: 8pt;
         letter-spacing: 0.02em;
         color: #726c5e;
       }
       .facts {
-        margin-top: 4pt;
-        padding-top: 7pt;
+        margin-top: 3pt;
+        padding-top: 6pt;
         border-top: 1.5pt solid #17150f;
       }
-      .facts-top { margin-bottom: 5pt; }
+      .facts-top { margin-bottom: 4pt; }
       .facts-grid {
         display: grid;
-        grid-template-columns: 0.9fr 1.5fr 1.2fr;
-        gap: 12pt;
+        grid-template-columns: 0.85fr 1.45fr 1.3fr;
+        gap: 10pt;
       }
-      .tool-line { margin: 0 0 3pt; }
+      .tool-line { margin: 0 0 2pt; }
       .tool-line span {
         font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
         font-size: 7.5pt;
@@ -204,18 +214,10 @@ const html = `<!doctype html>
       .facts h3.accent, .facts h2.accent { color: #067f8a; }
       .facts-grid > div > * + h2,
       .facts-grid > div > * + h3 { margin-top: 7pt; }
-      .facts p { line-height: 1.32; }
-      .community-line { margin: 4pt 0 0; }
-      .community-line .accent {
-        font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
-        font-size: 7.5pt;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: #067f8a;
-      }
+      .facts p { line-height: 1.28; }
       .degree {
         font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 10.5pt;
+        font-size: 10pt;
         font-weight: 500;
       }
       .school, .community {
@@ -225,8 +227,8 @@ const html = `<!doctype html>
       .foot {
         display: flex;
         justify-content: space-between;
-        margin-top: 4pt;
-        padding-top: 4pt;
+        margin-top: 2pt;
+        padding-top: 2pt;
         border-top: 1.5pt solid #17150f;
         font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
         font-size: 8pt;
@@ -237,7 +239,8 @@ const html = `<!doctype html>
   </head>
   <body>
     <p class="kicker">${esc(resumeKicker)}</p>
-    <h1>${esc(resumeTitle)}<span>${esc(resumeSubtitle)}</span></h1>
+    <h1>${esc(resumeName)}</h1>
+    <p class="headline">${esc(resumeTitle)}<span>${esc(resumeSubtitle)}</span></p>
     <p class="lede">${esc(resumeLede)}</p>
     <p class="contact">${contact}</p>
 
@@ -256,6 +259,9 @@ const html = `<!doctype html>
         <div>
           <h2>Languages</h2>
           <p>${esc(languages)}</p>
+          <h2 class="accent">Community</h2>
+          <p>${esc(communityTitle)} (${esc(communitySince)}).</p>
+          <p>${esc(communityBody)}</p>
         </div>
         <div>
           ${toolsHtml}
@@ -267,7 +273,6 @@ const html = `<!doctype html>
           <p>${certifications.map(esc).join("<br />")}</p>
         </div>
       </div>
-      <p class="community-line"><span class="accent">Community</span> — ${esc(communityTitle)} (${esc(communitySince)}). ${esc(communityBody)}</p>
     </section>
     <p class="foot"><span>${esc(resumeFoot)}</span><span>luis@luiscielak.com</span></p>
   </body>

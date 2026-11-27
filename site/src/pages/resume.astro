@@ -14,6 +14,7 @@ import {
   resumeFoot,
   resumeKicker,
   resumeLede,
+  resumeName,
   resumePdfHref,
   resumeSubtitle,
   resumeTitle,
@@ -45,10 +46,11 @@ import {
         <p class="cv-kicker">{resumeKicker}</p>
         <a class="cv-download" href={resumePdfHref} download>Download PDF ↓</a>
       </div>
-      <h1>
+      <h1 class="cv-person">{resumeName}</h1>
+      <p class="cv-headline">
         <span class="cv-title">{resumeTitle}</span>
         <span class="cv-title-faint">{resumeSubtitle}</span>
-      </h1>
+      </p>
       <p class="cv-lede">
         {resumeLede}
       </p>

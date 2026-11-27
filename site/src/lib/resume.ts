@@ -2,6 +2,7 @@
 
 export const resumeKicker = "Résumé · Design and code";
 
+export const resumeName = "Luis Cielak";
 export const resumeTitle = "Lead Product Designer";
 export const resumeSubtitle = "AI & Enterprise Platforms";
 
